@@ -559,6 +559,7 @@ const CLIP_CONFIG = {
       attackCfg: null,       // live stat block (startup/active/recovery/dmg/reach/knock/hitStun/blockStun) for whichever hit is currently playing
       blockStunTimer: 0,     // ms -- forced into .blocking, can't move/attack while this is running
       _prevInput: { punch: false, kick: false, taunt: false }, // for edge-detecting fresh button presses (ComboManager only cares about NEW presses, not held state)
+      motion: makeMotion(), // motion-input (special-move) tracker -- see the MOTION INPUTS section
       combo: {
         def: null,            // the COMBOS[...] entry currently in progress, or null
         step: 0,               // which hit within def.hits is currently playing / was last confirmed
@@ -1828,6 +1829,57 @@ const CLIP_CONFIG = {
     };
   }
 
+  // ---------- MOTION INPUTS (optional special-move execution) ----------
+  // Structure adapted from a Street Fighter II clone's ControlHistory: facing-relative
+  // direction/button "tokens" are fed into a per-move cursor that advances on each matching
+  // step and fires when it reaches the end. It's an EXTRA path to the specials this game
+  // already has -- the single Ultimate/Berserk buttons keep working untouched, so casual
+  // players lose nothing. Keyboard, gamepad and the on-screen touch d-pad all feed it the
+  // same `input` object, so it works everywhere for free, and it needs no new sprites.
+  const MOTION_STALL_MS = 500; // max gap between steps before a partial motion resets
+  const SPECIAL_MOVES = [
+    { name: 'ultimate', seq: ['down', 'downForward', 'forward', 'punch'] }, // quarter-circle forward + Punch
+    { name: 'berserk',  seq: ['down', 'downBack', 'back', 'punch'] },       // quarter-circle back + Punch
+  ];
+  function makeMotion(){
+    return { cursors: SPECIAL_MOVES.map(() => 0), stamp: SPECIAL_MOVES.map(() => -1e9), lastDir: null, fired: null };
+  }
+  // Current facing-relative direction token (or null for neutral).
+  function motionDir(f, input){
+    const fwd  = f.facing === 1 ? input.right : input.left;
+    const back = f.facing === 1 ? input.left  : input.right;
+    if (input.down && fwd)  return 'downForward';
+    if (input.down && back) return 'downBack';
+    if (input.down)         return 'down';
+    if (input.up)           return 'up';
+    if (fwd)                return 'forward';
+    if (back)               return 'back';
+    return null;
+  }
+  // Feed one token to every move's cursor with two leniencies: "skip one" (a keyboard player
+  // may omit the diagonal) and "restart on the opening token". A step gap longer than
+  // MOTION_STALL_MS drops the partial motion back to the start.
+  function motionPush(m, token, nowMs){
+    for (let i = 0; i < SPECIAL_MOVES.length; i++){
+      const seq = SPECIAL_MOVES[i].seq;
+      let c = (nowMs - m.stamp[i] > MOTION_STALL_MS) ? 0 : m.cursors[i];
+      if (token === seq[c])          c += 1;
+      else if (token === seq[c + 1]) c += 2;
+      else                           c = (token === seq[0]) ? 1 : 0;
+      m.stamp[i] = nowMs;
+      if (c >= seq.length){ m.fired = SPECIAL_MOVES[i].name; c = 0; }
+      m.cursors[i] = c;
+    }
+  }
+  // Called once per frame per HUMAN fighter, before its action logic reads f.motion.fired.
+  function motionUpdate(f, input, nowMs){
+    const m = f.motion;
+    m.fired = null;
+    const d = motionDir(f, input);
+    if (d !== m.lastDir){ m.lastDir = d; if (d) motionPush(m, d, nowMs); } // push on a fresh direction change
+    if (input.punch && !f._prevInput.punch) motionPush(m, 'punch', nowMs);
+    if (input.kick  && !f._prevInput.kick)  motionPush(m, 'kick', nowMs);
+  }
 
   // ---------- UPDATE ----------
   // ---- base (standalone) attack data: the opening hit of any combo defaults to these values, and
@@ -2706,6 +2758,12 @@ const CLIP_CONFIG = {
       return;
     }
 
+    // Motion inputs run for HUMAN fighters only -- the CPU uses its own decision system
+    // (getInput -> aiThink/trainingCpuThink). Same human/CPU split as getInput uses.
+    if (!(f === p2 && (mode === '1p' || mode === 'arcade' || mode === 'training'))){
+      motionUpdate(f, input, performance.now());
+    }
+
     // Taunt: purely cosmetic, must be interrupted the instant this fighter is hit by anything (a real
     // hit-stun, a knockdown/being-thrown, or forced block-stun) -- one single guard here instead of
     // patching every individual hit-landing call site below, consistent with computeCombatState's
@@ -2849,8 +2907,13 @@ const CLIP_CONFIG = {
         f.tauntTimer = tauntTotalDuration(f.charId);
       }
 
+      // Motion-input specials: QCF+Punch -> Ultimate, QCB+Punch -> Berserk (see MOTION INPUTS).
+      // Only counts when the special is actually usable; a completed motion also consumes the punch
+      // press that finished it, so you don't also throw a normal punch on the same press.
+      const motionUlt = f.motion.fired === 'ultimate' && canUseUltimate(f);
+      const motionBsk = f.motion.fired === 'berserk' && f.manaMs >= f.manaFillMs;
       if (!f.blocking){
-        const punchPressed = input.punch && !f._prevInput.punch;
+        const punchPressed = input.punch && !f._prevInput.punch && !(motionUlt || motionBsk);
         const kickPressed = input.kick && !f._prevInput.kick;
         // Throw input: Light + Heavy "egyszerre" -- de valódi emberi inputnál ez szinte sosem
         // pontosan ugyanabban a frame-ben történik, ezért mindkét friss nyomás egy rövid ideig
@@ -2895,13 +2958,13 @@ const CLIP_CONFIG = {
       // alt-art sprite set swapped in while it's active differs per character. Needs a FULL mana bar
       // to trigger; using it drains the bar to 0 and — from then on — every future recharge takes 20s
       // instead of the first-ever 10s (see the manaMs/manaFillMs regen block below).
-      if (input.special && f.manaMs >= f.manaFillMs){
+      if (motionBsk || (input.special && f.manaMs >= f.manaFillMs)){
         f.manaMs = 0;
         f.manaFillMs = 20000;
         f.berserkActive = 5000;
         banner(`${charName(f.charId)} BERSERK!! 🔥`, 60);
       }
-      if (input.ultimate && canUseUltimate(f)){
+      if (motionUlt || (input.ultimate && canUseUltimate(f))){
         startUltimate(f);
       }
     }
