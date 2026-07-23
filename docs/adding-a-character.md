@@ -19,8 +19,8 @@ A fighter is **art files** + **config in `js/game.js`** + a **manifest entry** i
 
 | System | Art shape | Used by | Config needed |
 | --- | --- | --- | --- |
-| **Base** (single-image) | one PNG per pose (`base/idle.png`, `base/walk.png`, …) | Krisz, Tomi, Laci | none (drawn as-is) |
-| **Clips** (multi-frame) | one folder of numbered frames per pose (`walk/0.png…`) | Barna | a `CLIP_CONFIG` block |
+| **Base** (single-image) | one PNG per pose (`base/idle.png`, `base/walk.png`, …) | Krisz, Laci | none (drawn as-is) |
+| **Clips** (multi-frame) | one folder of numbered frames per pose (`walk/0.png…`) | Tomi, Barna | a `CLIP_CONFIG` block |
 
 Everything else is layered on top of those: `special/` (Berserk alt-art), `ultimate/`, `enter/`,
 `combat2/`. The engine loads **whatever categories exist** for a character (`ensureFighterLoaded`

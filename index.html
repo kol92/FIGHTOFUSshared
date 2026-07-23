@@ -73,7 +73,7 @@
         <div class="modeListGrid">
           <button class="modeListBtn locked" disabled>STORY MODE<span class="modeListBadge">hamarosan</span></button>
           <button class="modeListBtn selected" id="versusModeBtn">VERSUS MODE</button>
-          <button class="modeListBtn locked" disabled>ARCADE MODE<span class="modeListBadge">hamarosan</span></button>
+          <button class="modeListBtn" id="arcadeModeBtn">ARCADE MODE</button>
           <button class="modeListBtn" id="trainingModeBtn">TRAINING MODE</button>
         </div>
         <p class="hintSmall">↑/↓: mozgás &nbsp;•&nbsp; Enter/Space: választás &nbsp;•&nbsp; egér is működik</p>
@@ -119,10 +119,25 @@
     </div>
 
     <div id="charSelect" class="panel">
-      <h2 id="csTitle">PLAYER 1 – VÁLASSZ KARAKTERT</h2>
-      <div class="charGrid" id="charGrid"></div>
-      <button class="ghostBtn" id="charRandomBtn">🎲 VÉLETLEN KARAKTER</button>
-      <p class="hintSmall">Iránybillentyűk / WASD: mozgás &nbsp;•&nbsp; Enter/F: választás &nbsp;•&nbsp; ↓ a rácsból: véletlen karakter gomb &nbsp;•&nbsp; Esc: vissza a főmenübe</p>
+      <div class="csTopBar">
+        <h2 id="csTitle" class="csHeading">PLAYER 1 – VÁLASSZ KARAKTERT</h2>
+        <button class="csRandomBtn" id="charRandomBtn"><span class="csDice">🎲</span>RANDOM</button>
+      </div>
+      <div class="csLayout">
+        <div class="csLeft">
+          <div class="charGrid" id="charGrid"></div>
+        </div>
+        <div class="csPreview" id="csPreview">
+          <div class="csPreviewName" id="csPreviewName"></div>
+          <div class="csPreviewBody">
+            <div class="csStats" id="csStats"></div>
+            <canvas id="csPreviewCanvas" width="212" height="372"></canvas>
+          </div>
+          <div class="csUltLabel">ULTIMATE</div>
+          <div class="csUltName" id="csUltName"></div>
+        </div>
+      </div>
+      <p class="hintSmall">Iránybillentyűk / WASD: mozgás &nbsp;•&nbsp; Enter/F: választás &nbsp;•&nbsp; 🎲 RANDOM: véletlen karakter &nbsp;•&nbsp; Esc: vissza a főmenübe</p>
     </div>
 
     <div id="vsScreen" class="panel">

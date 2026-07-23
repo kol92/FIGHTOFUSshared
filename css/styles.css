@@ -220,24 +220,49 @@
     transform: scale(1.035);
   }
 
-  /* ---- character select grid ---- */
+  /* ---- character select: neon "AAA fighting game" redesign ----
+     Bal oldalon 6x4-es (24 slotos) karakterrács + nagy RANDOM gomb, jobb oldalon a kiválasztott
+     karakter nagy preview panelje (név, sprite, statcsíkok, Ultimate név). A zárolt slotok fekete
+     sziluettet, nagy kérdőjelet és COMING SOON feliratot kapnak. Színvilág: pink/lila neon
+     (#ff4fd8 / #ff2dbf / #8c4dff) fekete-sötétszürke alapon. ---- */
+  .csHeading {
+    font-style: italic; letter-spacing: 3px; text-transform: uppercase;
+    text-shadow: 0 0 12px #ff2dbf, 0 0 32px #8c4dff88;
+  }
+  .csTopBar {
+    display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    width: 100%; max-width: 900px; margin: 0 0 4px;
+  }
+  .csTopBar .csHeading { margin: 0; flex: 1 1 auto; text-align: left; padding-left: 4px; }
+  .csLayout {
+    display: flex; gap: 16px; align-items: stretch; justify-content: center;
+    width: 100%; max-width: 900px; min-height: 0;
+  }
+  .csLeft { display: flex; flex-direction: column; align-items: flex-start; flex: 1 1 auto; min-width: 0; }
   .charGrid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin: 10px 0; width: 100%; max-width: 480px;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+    margin: 2px 0; width: 100%; max-width: 560px;
   }
   .charSlot {
-    position: relative; aspect-ratio: 1 / 1; border-radius: 14px; background: #ffffff0f;
-    border: 2px solid #ffffff33; display: flex; flex-direction: column; align-items: center;
-    justify-content: center; cursor: pointer; overflow: hidden; padding: 6px;
-    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    position: relative; aspect-ratio: 5 / 5.3; border-radius: 10px;
+    background: linear-gradient(165deg, #191322 0%, #0e0a15 70%, #0a0710 100%);
+    border: 2px solid #8c4dff44; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; cursor: pointer; overflow: hidden; padding: 3px;
+    transition: transform 0.14s, box-shadow 0.14s, border-color 0.14s;
   }
-  .charSlot .portraitCanvas { width: 78%; height: 78%; border-radius: 10px; background: #00000033; object-fit: cover; }
-  .charSlot .slotName { font-size: 12px; font-weight: bold; margin-top: 4px; letter-spacing: 0.5px; }
+  .charSlot:not(.locked):hover { transform: scale(1.05); border-color: #ff4fd8aa; box-shadow: 0 0 14px #ff2dbf55; }
+  .charSlot .portraitCanvas { width: 84%; height: 66%; border-radius: 7px; background: #00000044; object-fit: cover; }
+  .charSlot .slotName { font-size: 11px; font-weight: 800; margin-top: 3px; letter-spacing: 1px; }
   .charSlot.cursor {
-    border-color: #ff5fd8; box-shadow: 0 0 18px #ff5fd8cc; transform: scale(1.06); z-index: 1;
+    border-color: #ff4fd8; transform: scale(1.07); z-index: 2;
+    animation: csCursorPulse 1.5s ease-in-out infinite;
   }
-  .charSlot.cursor .slotName { color: #ff9dee; text-shadow: 0 0 8px #ff5fd8; }
-  /* ---- már kiválasztott karakter tartós kerete: P1 = kék, P2/CPU = piros -- ez a lila
+  .charSlot.cursor .slotName { color: #ff9dee; text-shadow: 0 0 8px #ff4fd8; }
+  @keyframes csCursorPulse {
+    0%, 100% { box-shadow: 0 0 12px #ff4fd8aa, 0 0 0 #8c4dff00; }
+    50%      { box-shadow: 0 0 22px #ff2dbfdd, 0 0 38px #8c4dff55; }
+  }
+  /* ---- már kiválasztott karakter tartós kerete: P1 = kék, P2/CPU = piros -- ez a neon
      kurzor-kiemelés UTÁN jön a stíluslapban, hogy a "már kiválasztva" jelzés akkor is látsszon,
      ha a kurzor épp visszatér erre a mezőre a másik játékos választásakor (azonos specificitás
      esetén a későbbi szabály nyer) ---- */
@@ -246,19 +271,82 @@
   .charSlot.pickedP2 { border-color: #ff5050; box-shadow: 0 0 18px #ff5050cc; }
   .charSlot.pickedP2 .slotName { color: #ffb3b3; text-shadow: 0 0 8px #ff5050; }
   .charSlot .slotTag {
-    position: absolute; top: 4px; right: 4px; background: #ff5fd8; color: #1a0b2e; font-size: 10px;
-    font-weight: bold; padding: 2px 6px; border-radius: 8px; box-shadow: 0 0 6px #ff5fd8cc;
+    position: absolute; top: 4px; left: 4px; background: #ff4fd8; color: #1a0b2e; font-size: 10px;
+    font-weight: bold; padding: 2px 7px; border-radius: 8px; box-shadow: 0 0 8px #ff4fd8cc;
   }
   .charSlot .slotTag.tagP1 { background: #3aa0ff; color: #0a1a2e; box-shadow: 0 0 6px #3aa0ffcc; }
   .charSlot .slotTag.tagP2 { background: #ff5050; color: #2e0a0a; box-shadow: 0 0 6px #ff5050cc; }
   .charSlot.locked {
-    cursor: default; background: #ffffff08; border-color: #ffffff1f; opacity: 0.55;
+    cursor: default; background: linear-gradient(165deg, #120e18 0%, #0a0710 100%);
+    border-color: #ffffff14; opacity: 0.85;
   }
-  .charSlot.locked .slotName { font-size: 10px; opacity: 0.8; }
-  .lockIcon { width: 16px; height: 12px; border: 2px solid #999; border-radius: 3px; position: relative; margin-bottom: 10px; }
-  .lockIcon::before {
-    content: ''; position: absolute; top: -9px; left: 1px; width: 9px; height: 9px;
-    border: 2px solid #999; border-bottom: none; border-radius: 6px 6px 0 0;
+  /* zárolt slot: fekete sziluett (fej+váll) + nagy kérdőjel + COMING SOON */
+  .csSilhouette { position: absolute; inset: 8% 12% 26% 12%; opacity: 0.55; pointer-events: none; }
+  .csSilhouette::before {
+    content: ''; position: absolute; top: 4%; left: 50%; transform: translateX(-50%);
+    width: 46%; aspect-ratio: 1/1; border-radius: 50%; background: #000000; box-shadow: 0 0 6px #000;
+  }
+  .csSilhouette::after {
+    content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 92%; height: 46%; border-radius: 45% 45% 12% 12%; background: #000000; box-shadow: 0 0 6px #000;
+  }
+  .csQmark {
+    position: relative; z-index: 1; font-size: 30px; font-weight: 900; color: #56505f;
+    text-shadow: 0 1px 2px #000; margin-bottom: 2px;
+  }
+  .csComingSoon { font-size: 7px !important; letter-spacing: 1.5px; color: #8d8797; opacity: 0.9; }
+  /* ---- jobb oldali karakter PREVIEW panel ---- */
+  .csPreview {
+    flex: 0 0 258px; min-width: 0; border: 2px solid #ff4fd8aa; border-radius: 14px;
+    background: linear-gradient(205deg, #22102f 0%, #140920 55%, #0c0512 100%);
+    box-shadow: 0 0 24px #ff2dbf44, inset 0 0 34px #8c4dff1e;
+    padding: 12px 14px 10px; display: flex; flex-direction: column; align-items: stretch;
+    text-align: left;
+  }
+  .csPreview.csAnimIn { animation: csPreviewIn 0.28s ease-out; }
+  @keyframes csPreviewIn {
+    from { opacity: 0.15; transform: translateX(16px); }
+    to   { opacity: 1;    transform: none; }
+  }
+  .csPreviewName {
+    font-size: 27px; font-weight: 900; font-style: italic; letter-spacing: 3px; color: #fff;
+    text-shadow: 0 0 14px #ff2dbf, 0 0 34px #8c4dff; margin: 0 0 8px; text-transform: uppercase;
+  }
+  .csPreviewBody { display: flex; gap: 10px; flex: 1 1 auto; min-height: 0; align-items: stretch; }
+  .csStats { flex: 1 1 auto; display: flex; flex-direction: column; gap: 7px; justify-content: center; min-width: 0; }
+  .csStatLabel { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #f2eafd; margin-bottom: 2px; text-shadow: 0 0 6px #8c4dff88; }
+  .csStatBar { height: 9px; border-radius: 3px; background: #ffffff12; overflow: hidden; }
+  .csStatFill {
+    height: 100%; width: 0%; border-radius: 3px;
+    background: repeating-linear-gradient(90deg, #ff4fd8 0px 13px, #ff2dbf 13px 15px, #00000000 15px 18px);
+    box-shadow: 0 0 8px #ff2dbfcc;
+    transition: width 0.55s cubic-bezier(.2,.85,.3,1);
+  }
+  #csPreviewCanvas { flex: 0 0 auto; width: 106px; height: 186px; align-self: center; filter: drop-shadow(0 0 12px #8c4dff77); }
+  .csUltLabel { margin-top: 9px; font-size: 12px; font-weight: 900; letter-spacing: 4px; color: #b9a4ff; text-shadow: 0 0 12px #8c4dff; }
+  .csUltName { font-size: 14px; font-weight: 700; font-style: italic; letter-spacing: 1px; color: #fff; text-shadow: 0 0 10px #ff4fd8; }
+  /* ---- neon RANDOM gomb (dobókockával) -- a cím mellett, jobb felül a .csTopBar-ban,
+     hogy ne vigyen el függőleges helyet a rácstól, és ne csússzon rá az alsó infosávra ---- */
+  .csRandomBtn {
+    flex: 0 0 auto; background: #180f24; border: 2px solid #8c4dff; color: #fff; font-weight: 800;
+    letter-spacing: 2px; font-size: 13px; padding: 8px 18px; border-radius: 12px; cursor: pointer;
+    box-shadow: 0 0 14px #8c4dff66; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .csRandomBtn:hover, .csRandomBtn.cursor {
+    border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa, 0 0 40px #8c4dff44; transform: scale(1.04);
+    animation: csCursorPulse 1.5s ease-in-out infinite;
+  }
+  .csDice { font-size: 20px; filter: drop-shadow(0 0 7px #ff4fd8); }
+  /* char-select alsó segédsor: kompaktabb, hogy biztosan a panelen belül maradjon és
+     ne csússzon rá az alatta lévő #controlsHint sávra */
+  #charSelect .hintSmall { margin-top: 4px; font-size: 10px; }
+  /* keskeny képernyőn a preview a rács alá kerül, minden marad használható */
+  @media (max-width: 880px) {
+    .csTopBar { flex-wrap: wrap; justify-content: center; }
+    .csTopBar .csHeading { text-align: center; flex: 1 1 100%; padding-left: 0; }
+    .csLayout { flex-direction: column; align-items: center; }
+    .csPreview { flex: none; width: 100%; max-width: 590px; }
   }
 
   /* ---- stage select grid (thumbnail + name per pálya, + egy "VÉLETLEN" kártya) ---- */

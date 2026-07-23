@@ -113,6 +113,9 @@ window.ASSETS = {
       "ult5": "assets/characters/tomi/ultimate/ult5.png",
       "ult6": "assets/characters/tomi/ultimate/ult6.png",
       "ult7": "assets/characters/tomi/ultimate/ult7.png",
+      "ult8": "assets/characters/tomi/ultimate/ult8.png",
+      "ult9": "assets/characters/tomi/ultimate/ult9.png",
+      "ult10": "assets/characters/tomi/ultimate/ult10.png",
       "ult_bottle": "assets/characters/tomi/ultimate/ult_bottle.png"
     },
     "laci": {
@@ -154,7 +157,12 @@ window.ASSETS = {
       "enter2": "assets/characters/tomi/enter/enter2.png",
       "enter3": "assets/characters/tomi/enter/enter3.png",
       "enter4": "assets/characters/tomi/enter/enter4.png",
-      "enter5": "assets/characters/tomi/enter/enter5.png"
+      "enter5": "assets/characters/tomi/enter/enter5.png",
+      "enter6": "assets/characters/tomi/enter/enter6.png",
+      "enter7": "assets/characters/tomi/enter/enter7.png",
+      "enter8": "assets/characters/tomi/enter/enter8.png",
+      "enter9": "assets/characters/tomi/enter/enter9.png",
+      "enter10": "assets/characters/tomi/enter/enter10.png"
     },
     "laci": {
       "enter1": "assets/characters/laci/enter/enter1.png",
@@ -212,6 +220,194 @@ window.ASSETS = {
     }
   },
   "clips": {
+    "tomi": {
+      "idle": [
+        "assets/characters/tomi/idle/0.png",
+        "assets/characters/tomi/idle/1.png",
+        "assets/characters/tomi/idle/2.png",
+        "assets/characters/tomi/idle/3.png",
+        "assets/characters/tomi/idle/4.png",
+        "assets/characters/tomi/idle/5.png",
+        "assets/characters/tomi/idle/6.png",
+        "assets/characters/tomi/idle/7.png"
+      ],
+      "walk": [
+        "assets/characters/tomi/walk/0.png",
+        "assets/characters/tomi/walk/1.png",
+        "assets/characters/tomi/walk/2.png",
+        "assets/characters/tomi/walk/3.png",
+        "assets/characters/tomi/walk/4.png",
+        "assets/characters/tomi/walk/5.png",
+        "assets/characters/tomi/walk/6.png",
+        "assets/characters/tomi/walk/7.png"
+      ],
+      "backwalk": [
+        "assets/characters/tomi/backwalk/0.png",
+        "assets/characters/tomi/backwalk/1.png",
+        "assets/characters/tomi/backwalk/2.png",
+        "assets/characters/tomi/backwalk/3.png",
+        "assets/characters/tomi/backwalk/4.png",
+        "assets/characters/tomi/backwalk/5.png",
+        "assets/characters/tomi/backwalk/6.png",
+        "assets/characters/tomi/backwalk/7.png"
+      ],
+      "run": [
+        "assets/characters/tomi/run/0.png",
+        "assets/characters/tomi/run/1.png",
+        "assets/characters/tomi/run/2.png",
+        "assets/characters/tomi/run/3.png",
+        "assets/characters/tomi/run/4.png",
+        "assets/characters/tomi/run/5.png",
+        "assets/characters/tomi/run/6.png",
+        "assets/characters/tomi/run/7.png"
+      ],
+      "jump": [
+        "assets/characters/tomi/jump/0.png",
+        "assets/characters/tomi/jump/1.png",
+        "assets/characters/tomi/jump/2.png",
+        "assets/characters/tomi/jump/3.png",
+        "assets/characters/tomi/jump/4.png",
+        "assets/characters/tomi/jump/5.png",
+        "assets/characters/tomi/jump/6.png",
+        "assets/characters/tomi/jump/7.png"
+      ],
+      "punch": [
+        "assets/characters/tomi/punch/0.png",
+        "assets/characters/tomi/punch/1.png",
+        "assets/characters/tomi/punch/2.png",
+        "assets/characters/tomi/punch/3.png",
+        "assets/characters/tomi/punch/4.png",
+        "assets/characters/tomi/punch/5.png",
+        "assets/characters/tomi/punch/6.png",
+        "assets/characters/tomi/punch/7.png"
+      ],
+      "kick": [
+        "assets/characters/tomi/kick/0.png",
+        "assets/characters/tomi/kick/1.png",
+        "assets/characters/tomi/kick/2.png",
+        "assets/characters/tomi/kick/3.png",
+        "assets/characters/tomi/kick/4.png",
+        "assets/characters/tomi/kick/5.png",
+        "assets/characters/tomi/kick/6.png",
+        "assets/characters/tomi/kick/7.png"
+      ],
+      "sweep": [
+        "assets/characters/tomi/sweep/0.png",
+        "assets/characters/tomi/sweep/1.png",
+        "assets/characters/tomi/sweep/2.png",
+        "assets/characters/tomi/sweep/3.png",
+        "assets/characters/tomi/sweep/4.png",
+        "assets/characters/tomi/sweep/5.png",
+        "assets/characters/tomi/sweep/6.png",
+        "assets/characters/tomi/sweep/7.png"
+      ],
+      "block": [
+        "assets/characters/tomi/block/0.png",
+        "assets/characters/tomi/block/1.png",
+        "assets/characters/tomi/block/2.png",
+        "assets/characters/tomi/block/3.png"
+      ],
+      "crouch": [
+        "assets/characters/tomi/crouch/0.png",
+        "assets/characters/tomi/crouch/1.png",
+        "assets/characters/tomi/crouch/2.png",
+        "assets/characters/tomi/crouch/3.png",
+        "assets/characters/tomi/crouch/4.png"
+      ],
+      "crouchBlock": [
+        "assets/characters/tomi/crouchBlock/0.png",
+        "assets/characters/tomi/crouchBlock/1.png",
+        "assets/characters/tomi/crouchBlock/2.png"
+      ],
+      "hit": [
+        "assets/characters/tomi/hit/0.png",
+        "assets/characters/tomi/hit/1.png",
+        "assets/characters/tomi/hit/2.png",
+        "assets/characters/tomi/hit/3.png",
+        "assets/characters/tomi/hit/4.png",
+        "assets/characters/tomi/hit/5.png",
+        "assets/characters/tomi/hit/6.png",
+        "assets/characters/tomi/hit/7.png"
+      ],
+      "knockdown": [
+        "assets/characters/tomi/knockdown/0.png",
+        "assets/characters/tomi/knockdown/1.png",
+        "assets/characters/tomi/knockdown/2.png",
+        "assets/characters/tomi/knockdown/3.png",
+        "assets/characters/tomi/knockdown/4.png",
+        "assets/characters/tomi/knockdown/5.png",
+        "assets/characters/tomi/knockdown/6.png",
+        "assets/characters/tomi/knockdown/7.png"
+      ],
+      "getUp": [
+        "assets/characters/tomi/getUp/0.png",
+        "assets/characters/tomi/getUp/1.png",
+        "assets/characters/tomi/getUp/2.png",
+        "assets/characters/tomi/getUp/3.png",
+        "assets/characters/tomi/getUp/4.png",
+        "assets/characters/tomi/getUp/5.png",
+        "assets/characters/tomi/getUp/6.png",
+        "assets/characters/tomi/getUp/7.png"
+      ],
+      "throw": [
+        "assets/characters/tomi/throw/0.png",
+        "assets/characters/tomi/throw/1.png",
+        "assets/characters/tomi/throw/2.png",
+        "assets/characters/tomi/throw/3.png",
+        "assets/characters/tomi/throw/4.png",
+        "assets/characters/tomi/throw/5.png",
+        "assets/characters/tomi/throw/6.png",
+        "assets/characters/tomi/throw/7.png",
+        "assets/characters/tomi/throw/8.png",
+        "assets/characters/tomi/throw/9.png"
+      ],
+      "beingThrown": [
+        "assets/characters/tomi/beingThrown/0.png",
+        "assets/characters/tomi/beingThrown/1.png",
+        "assets/characters/tomi/beingThrown/2.png",
+        "assets/characters/tomi/beingThrown/3.png",
+        "assets/characters/tomi/beingThrown/4.png",
+        "assets/characters/tomi/beingThrown/5.png",
+        "assets/characters/tomi/beingThrown/6.png",
+        "assets/characters/tomi/beingThrown/7.png",
+        "assets/characters/tomi/beingThrown/8.png",
+        "assets/characters/tomi/beingThrown/9.png"
+      ],
+      "taunt": [
+        "assets/characters/tomi/taunt/0.png",
+        "assets/characters/tomi/taunt/1.png",
+        "assets/characters/tomi/taunt/2.png",
+        "assets/characters/tomi/taunt/3.png",
+        "assets/characters/tomi/taunt/4.png",
+        "assets/characters/tomi/taunt/5.png",
+        "assets/characters/tomi/taunt/6.png",
+        "assets/characters/tomi/taunt/7.png",
+        "assets/characters/tomi/taunt/8.png",
+        "assets/characters/tomi/taunt/9.png"
+      ],
+      "win": [
+        "assets/characters/tomi/win/0.png",
+        "assets/characters/tomi/win/1.png",
+        "assets/characters/tomi/win/2.png",
+        "assets/characters/tomi/win/3.png",
+        "assets/characters/tomi/win/4.png",
+        "assets/characters/tomi/win/5.png",
+        "assets/characters/tomi/win/6.png",
+        "assets/characters/tomi/win/7.png",
+        "assets/characters/tomi/win/8.png",
+        "assets/characters/tomi/win/9.png"
+      ],
+      "lose": [
+        "assets/characters/tomi/lose/0.png",
+        "assets/characters/tomi/lose/1.png",
+        "assets/characters/tomi/lose/2.png",
+        "assets/characters/tomi/lose/3.png",
+        "assets/characters/tomi/lose/4.png",
+        "assets/characters/tomi/lose/5.png",
+        "assets/characters/tomi/lose/6.png",
+        "assets/characters/tomi/lose/7.png"
+      ]
+    },
     "barna": {
       "idle": [
         "assets/characters/barna/idle/0.png",
@@ -406,7 +602,8 @@ window.ASSETS = {
     "morrisons2": "assets/stages/morrisons2.jpg",
     "laciverse": "assets/stages/laciverse.jpg",
     "siofok": "assets/stages/siofok.jpg",
-    "siofok_night": "assets/stages/siofok_night.jpg"
+    "siofok_night": "assets/stages/siofok_night.jpg",
+    "novarock": "assets/stages/novarock.jpg"
   },
   "dom": {
     "logo": "assets/hud/logo.png",

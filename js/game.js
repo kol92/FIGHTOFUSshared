@@ -58,7 +58,7 @@
     else if (gameState === 'VS_SCREEN') renderVsScreen();
   }
   // ---------- LAZY SPRITE LOADING ----------
-  // Sprites used to be built eagerly at startup (all ~300 Images at once). Now only the four
+  // Sprites used to be built eagerly at startup (all ~450 Images at once). Now only the four
   // idle sprites the menus draw are loaded up front; each fighter's full sprite set is built
   // on demand the first time that fighter is needed (ensureFighterLoaded, called from
   // enterVsScreen and, defensively, from drawFighter). Every canvas draw already guards on
@@ -132,6 +132,27 @@
   // data addition here -- drawFighter/pickPose never need another special case.
 
 const CLIP_CONFIG = {
+  tomi: {
+    idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:106.0,y:424.0},{x:106.7,y:422.0},{x:106.5,y:422.0},{x:107.4,y:422.0},{x:105.6,y:423.0},{x:104.6,y:423.0},{x:103.2,y:423.0},{x:104.5,y:423.0}], scale: 0.4951 },
+    walk: { loop: true, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:84.1,y:496.0},{x:71.6,y:494.0},{x:57.4,y:494.0},{x:48.9,y:497.0},{x:55.9,y:494.0},{x:35.0,y:496.0},{x:28.8,y:494.0},{x:49.9,y:494.0}], scale: 0.423 },
+    backwalk: { loop: true, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:107.4,y:482.0},{x:98.0,y:481.0},{x:104.8,y:465.0},{x:116.9,y:465.0},{x:110.2,y:461.0},{x:84.8,y:477.0},{x:94.7,y:479.0},{x:107.3,y:479.0}], scale: 0.4419 },
+    run: { loop: true, frameMs: [70,70,70,70,70,70,70,70], anchors: [{x:159.0,y:390.0},{x:178.8,y:395.0},{x:148.5,y:400.0},{x:170.5,y:385.0},{x:188.6,y:386.0},{x:155.1,y:406.0},{x:147.0,y:409.0},{x:175.8,y:395.0}], scale: 0.5289 },
+    jump: { loop: false, frameMs: [100,100,100,100,100,100,100,100], anchors: [{x:86.0,y:324.0},{x:82.8,y:333.0},{x:18.9,y:418.0},{x:51.2,y:374.0},{x:70.3,y:346.0},{x:57.3,y:308.0},{x:70.7,y:352.0},{x:86.6,y:303.0}], scale: 0.5007 },
+    punch: { loop: false, frameMs: [42,42,42,42,42,42,42,42], anchors: [{x:111.2,y:444.0},{x:131.7,y:403.0},{x:113.9,y:403.0},{x:152.2,y:371.0},{x:143.8,y:390.0},{x:111.1,y:400.0},{x:107.5,y:409.0},{x:107.6,y:413.0}], scale: 0.4714 },
+    kick: { loop: false, frameMs: [56,56,56,56,56,56,56,56], anchors: [{x:107.7,y:438.0},{x:71.9,y:424.0},{x:82.5,y:428.0},{x:108.0,y:411.0},{x:105.3,y:413.0},{x:94.3,y:422.0},{x:107.4,y:424.0},{x:105.2,y:424.0}], scale: 0.4778 },
+    sweep: { loop: false, frameMs: [79,79,79,79,79,79,79,79], anchors: [{x:123.6,y:405.0},{x:101.5,y:298.0},{x:153.3,y:255.0},{x:147.4,y:258.0},{x:159.1,y:256.0},{x:80.5,y:242.0},{x:116.2,y:370.0},{x:114.5,y:420.0}], scale: 0.5168 },
+    block: { loop: false, frameMs: [110,110,110,110], anchors: [{x:109.7,y:418.0},{x:109.0,y:412.0},{x:110.6,y:413.0},{x:110.1,y:417.0}], scale: 0.5007 },
+    crouch: { loop: false, frameMs: [90,90,90,90,90], anchors: [{x:106.6,y:419.0},{x:110.2,y:395.0},{x:135.0,y:321.0},{x:176.0,y:286.0},{x:169.1,y:259.0}], scale: 0.4996 },
+    crouchBlock: { loop: false, frameMs: [90,90,90], anchors: [{x:235.2,y:393.0},{x:182.8,y:357.0},{x:227.9,y:368.0}], scale: 0.3158 },
+    hit: { loop: false, frameMs: [55,55,55,55,55,55,55,55], anchors: [{x:132.2,y:372.0},{x:130.3,y:375.0},{x:233.6,y:334.0},{x:147.4,y:334.0},{x:123.4,y:367.0},{x:109.4,y:415.0},{x:109.4,y:416.0},{x:109.5,y:416.0}], scale: 0.5031 },
+    knockdown: { loop: false, frameMs: [112,112,112,112,112,112,112,112], anchors: [{x:137.1,y:379.0},{x:204.3,y:328.0},{x:225.2,y:257.0},{x:130.0,y:220.0},{x:130.7,y:199.0},{x:147.1,y:137.0},{x:151.3,y:134.0},{x:162.8,y:108.0}], scale: 0.5522 },
+    getUp: { loop: false, frameMs: [70,70,70,70,70,70,70,70], anchors: [{x:125.2,y:163.0},{x:158.2,y:205.0},{x:182.9,y:228.0},{x:111.9,y:287.0},{x:135.2,y:317.0},{x:91.5,y:354.0},{x:98.4,y:378.0},{x:105.6,y:379.0}], scale: 0.5522 },
+    throw: { loop: false, frameMs: [57,57,57,57,57,57,57,57,57,57], anchors: [{x:133.5,y:375.0},{x:138.1,y:366.0},{x:110.2,y:378.0},{x:120.6,y:367.0},{x:116.6,y:363.0},{x:132.0,y:321.0},{x:174.0,y:336.0},{x:134.0,y:303.0},{x:107.8,y:355.0},{x:106.8,y:358.0}], scale: 0.5581 },
+    beingThrown: { loop: false, frameMs: [85,85,85,85,85,85,85,85,85,85], anchors: [{x:117.5,y:272.0},{x:116.8,y:253.0},{x:107.4,y:331.0},{x:102.0,y:328.0},{x:160.2,y:313.0},{x:117.9,y:238.0},{x:116.4,y:177.0},{x:135.3,y:112.0},{x:135.3,y:220.0},{x:97.0,y:350.0}], scale: 0.598 },
+    taunt: { loop: false, frameMs: [130,130,130,130,130,130,130,130,130,130], anchors: [{x:95.4,y:413.0},{x:88.7,y:408.0},{x:91.2,y:413.0},{x:108.5,y:393.0},{x:104.8,y:401.0},{x:77.0,y:395.0},{x:101.8,y:390.0},{x:104.3,y:392.0},{x:88.0,y:415.0},{x:99.4,y:402.0}], scale: 0.5068 },
+    win: { loop: false, frameMs: [140,140,150,160,120,380,320,420,220,280], anchors: [{x:91.5,y:426.0},{x:82.6,y:437.0},{x:99.2,y:417.0},{x:72.5,y:428.0},{x:81.5,y:430.0},{x:88.4,y:454.0},{x:93.8,y:452.0},{x:88.1,y:452.0},{x:73.1,y:426.0},{x:95.8,y:428.0}], scale: 0.4913 },
+    lose: { loop: false, frameMs: [140,140,140,140,140,140,140,140], anchors: [{x:167.9,y:447.0},{x:208.0,y:407.0},{x:155.9,y:316.0},{x:105.4,y:284.0},{x:97.8,y:317.0},{x:98.1,y:293.0},{x:96.8,y:270.0},{x:97.7,y:284.0}], scale: 0.4683 },
+  },
   barna: {
     idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:134.8,y:468.0},{x:131.9,y:467.0},{x:135.5,y:471.0},{x:125.2,y:468.0},{x:137.8,y:460.0},{x:136.5,y:455.0},{x:140.2,y:456.0},{x:131.2,y:456.0}], scale: 0.3934 },
     walk: { loop: true, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:136.3,y:481.0},{x:154.1,y:482.0},{x:151.9,y:478.0},{x:134.3,y:483.0},{x:153.5,y:480.0},{x:142.3,y:483.0},{x:143.8,y:481.0},{x:151.6,y:482.0}], scale: 0.3782 },
@@ -155,7 +176,7 @@ const CLIP_CONFIG = {
     throw: { loop: false, frameMs: [57,57,57,57,57,57,57,57,57,57], anchors: [{x:100.4,y:361.0},{x:153.2,y:334.0},{x:122.3,y:331.0},{x:122.0,y:293.0},{x:125.2,y:313.0},{x:141.0,y:331.0},{x:145.5,y:300.0},{x:148.4,y:334.0},{x:123.5,y:350.0},{x:99.6,y:345.0}], scale: 0.5042 },
     beingThrown: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:158.9,y:277.0},{x:152.7,y:257.0},{x:124.5,y:322.0},{x:96.8,y:302.0},{x:94.9,y:307.0},{x:91.8,y:288.0},{x:119.8,y:231.0},{x:157.0,y:124.0}], scale: 0.5652 },
     taunt: { loop: false, frameMs: [130,130,130,130,130,130,130,130], anchors: [{x:111.3,y:420.0},{x:118.2,y:420.0},{x:109.4,y:420.0},{x:111.2,y:423.0},{x:111.3,y:415.0},{x:111.3,y:417.0},{x:107.6,y:423.0},{x:109.6,y:419.0}], scale: 0.4337 },
-    win: { loop: false, frameMs: [150,150,150,150,150,150,150,150,150,150], anchors: [{x:83.8,y:336.0},{x:76.0,y:356.0},{x:75.0,y:353.0},{x:80.5,y:351.0},{x:74.7,y:351.0},{x:75.6,y:353.0},{x:77.4,y:356.0},{x:74.4,y:354.0},{x:88.2,y:358.0},{x:107.1,y:377.0}], scale: 0.5134 },
+    win: { loop: false, frameMs: [130,140,160,170,170,170,160,160,220,450], anchors: [{x:83.8,y:336.0},{x:76.0,y:356.0},{x:75.0,y:353.0},{x:80.5,y:351.0},{x:74.7,y:351.0},{x:75.6,y:353.0},{x:77.4,y:356.0},{x:74.4,y:354.0},{x:88.2,y:358.0},{x:107.1,y:377.0}], scale: 0.5134 },
     lose: { loop: false, frameMs: [140,140,140,140,140,140,140,140], anchors: [{x:145.2,y:373.0},{x:209.2,y:360.0},{x:138.3,y:300.0},{x:93.8,y:280.0},{x:94.0,y:292.0},{x:91.5,y:281.0},{x:88.9,y:261.0},{x:83.4,y:278.0}], scale: 0.4879 },
   },
 };
@@ -168,14 +189,24 @@ const CLIP_CONFIG = {
     { id: 'krisz', name: 'KRISZ', enabled: true, spriteKey: 'krisz',
       portraitCrop: { x: 20/236, y: 0, w: 196/236, h: 196/344 } },
     { id: 'tomi', name: 'TOMI', enabled: true, spriteKey: 'tomi',
-      portraitCrop: { x: 10/170, y: 0, w: 150/170, h: 150/225 } },
+      portraitCrop: { x: 34/206, y: 0, w: 150/206, h: 170/424 } },
     { id: 'laci', name: 'LACI', enabled: true, spriteKey: 'laci',
       portraitCrop: { x: 15/178, y: 0, w: 148/178, h: 175/310 } },
     { id: 'barna', name: 'BARNA', enabled: true, spriteKey: 'barna',
       portraitCrop: { x: 20/267, y: 0, w: 227/267, h: 257/468 } },
-    { id: 'locked3', name: '', enabled: false },
-    { id: 'locked4', name: '', enabled: false },
+    // 20 zárolt "COMING SOON" slot (6x4-es rács a 4 valódi karakterrel együtt) -- új karakter
+    // hozzáadásához csak cseréld le az egyik zárolt bejegyzést egy valódi definícióra
+    // (id/name/enabled/spriteKey/portraitCrop), a rács és a kurzor-navigáció automatikusan követi
+    ...Array.from({ length: 20 }, (_, i) => ({ id: 'locked' + (i + 1), name: '', enabled: false })),
   ];
+  // Karakterválasztó preview panel adatai: statok (1-10 skálán, egyelőre csak vizuális jelzés,
+  // NEM hat a harcrendszerre) és az Ultimate megjelenített neve karakterenként.
+  const CHAR_META = {
+    krisz: { stats: { POWER: 8, SPEED: 5, RANGE: 6, DEFENSE: 7, TECHNIQUE: 5 }, ultName: 'STOP SIGN SMASH' },
+    tomi:  { stats: { POWER: 6, SPEED: 8, RANGE: 5, DEFENSE: 5, TECHNIQUE: 7 }, ultName: 'DRUNKEN FURY' },
+    laci:  { stats: { POWER: 7, SPEED: 6, RANGE: 8, DEFENSE: 5, TECHNIQUE: 6 }, ultName: 'GRAND FINALE' },
+    barna: { stats: { POWER: 7, SPEED: 7, RANGE: 5, DEFENSE: 6, TECHNIQUE: 8 }, ultName: 'GOLDEN GOAL' },
+  };
   function charById(id){ return CHARACTERS.find(c => c.id === id) || CHARACTERS[0]; }
   function charName(id){ return charById(id).name; }
   // draws a character's IDLE-pose head/shoulder crop into a <canvas>, used by both the
@@ -330,7 +361,7 @@ const CLIP_CONFIG = {
       const d = THROW_CFG.startup + THROW_CFG.active + THROW_CFG.recovery;
       if (d > 0) return (d - f.throwTimer) / d;
     }
-    if (pose === 'taunt') return 1 - f.tauntTimer / TAUNT_DURATION_MS;
+    if (pose === 'taunt') return 1 - f.tauntTimer / tauntTotalDuration(f.charId);
     if (pose === 'ultimate'){
       // owned by f.ultimateActive/f.ultimateElapsed exactly like the old ultimatePoseInfo-driven
       // system -- progress maps 1:1 onto the same poseDurations now used as this clip's frameMs, so
@@ -437,8 +468,8 @@ const CLIP_CONFIG = {
   let mode = '2p';   // '2p' | '1p' | 'training'
   let stage = 'akacfa'; // 'akacfa' (a 'club'/'pub'/'garden' kikapcsolva, de a rajzoló-függvények megmaradtak későbbre)
   // ---- pályaválasztó: adatvezérelt lista + "VÉLETLEN" opció (a stageGrid-et ebből építjük fel) ----
-  const STAGE_LIST = ['akacfa', 'morrisons2', 'laciverse', 'siofok', 'siofok_night']; // ide kerül majd egy új pálya id-je is, ha bővül a lista
-  const STAGE_NAMES = { akacfa: 'AKÁCFA SÖRÖZŐ', morrisons2: "MORRISON'S 2", laciverse: 'LACIVERSE', siofok: 'SIÓFOK (NAPPAL)', siofok_night: 'SIÓFOK (ÉJSZAKA)' };
+  const STAGE_LIST = ['akacfa', 'morrisons2', 'laciverse', 'siofok', 'siofok_night', 'novarock']; // ide kerül majd egy új pálya id-je is, ha bővül a lista
+  const STAGE_NAMES = { akacfa: 'AKÁCFA SÖRÖZŐ', morrisons2: "MORRISON'S 2", laciverse: 'LACIVERSE', siofok: 'SIÓFOK (NAPPAL)', siofok_night: 'SIÓFOK (ÉJSZAKA)', novarock: 'NOVAROCK' };
   let stageCursor = 0;        // highlighted/selected card index a stageGrid-ben (0..STAGE_LIST.length-1 = konkrét pálya, utolsó = VÉLETLEN)
   let stageIsRandom = false;  // true, ha a VÉLETLEN kártya van kiválasztva -- a tényleges pálya csak HARC!-kor sorsolódik ki
 
@@ -467,6 +498,26 @@ const CLIP_CONFIG = {
   const TRAINING_CPU_BEHAVIORS = ['still', 'block', 'crouchBlock', 'attack'];
   const TRAINING_CPU_BEHAVIOR_LABELS = { still: 'MOZDULATLAN', block: 'VÉDEKEZŐ', crouchBlock: 'ALSÓ VÉDEKEZŐ', attack: 'TÁMADÓ' };
   let trainingCpuBehavior = 'still';
+  // ---------- ARCADE MODE ----------
+  // Létra-jelleg: a játékos (P1) egyszer megküzd az összes többi feloldott karakterrel, a
+  // CHARACTERS lista sorrendjében (a saját választása kihagyva), fokozatosan nehezedő CPU-val --
+  // ld. arcadeDifficultyForIndex(). Nincs continue: ha a játékos veszít egy meccset (BO3), a teljes
+  // menetnek vége (Game Over), újra a karakterválasztástól kell kezdeni -- ld. MatchManager.showMatchEnd.
+  let arcadeOpponents = []; // charId-k sorban, a startArcadeRun() tölti fel (p1CharId kihagyva)
+  let arcadeIndex = 0;      // hányadik ellenfélnél tart éppen (0-alapú index az arcadeOpponents-be)
+  function arcadeDifficultyForIndex(i){
+    const n = arcadeOpponents.length;
+    if (n <= 1) return AI_DIFFICULTY_LIST[AI_DIFFICULTY_LIST.length - 1];
+    const levels = AI_DIFFICULTY_LIST.length;
+    const idx = Math.round(i * (levels - 1) / (n - 1)); // egyenletesen elosztva Easy..Insane között
+    return AI_DIFFICULTY_LIST[idx];
+  }
+  function startArcadeRun(){
+    arcadeOpponents = CHARACTERS.filter(c => c.enabled && c.id !== p1CharId).map(c => c.id);
+    arcadeIndex = 0;
+    p2CharId = arcadeOpponents[0];
+    cpuDifficulty = arcadeDifficultyForIndex(0);
+  }
 
   function makeFighter(opts){
     return Object.assign({
@@ -598,7 +649,7 @@ const CLIP_CONFIG = {
     p1 = makeFighter({ x: W*0.28, facing: 1, charId: p1CharId || 'krisz' });
     // 1p módban p2-t a CPU vezérli -- a menüben választott nehézségi szint itt kerül rá a fighterre
     // (2p módban a difficulty mező jelen van, de sosem olvassa senki, mert getInput emberi inputot ad)
-    p2 = makeFighter({ x: W*0.72, facing: -1, charId: p2CharId || 'tomi', difficulty: (mode === '1p') ? cpuDifficulty : 'normal' });
+    p2 = makeFighter({ x: W*0.72, facing: -1, charId: p2CharId || 'tomi', difficulty: (mode === '1p' || mode === 'arcade') ? cpuDifficulty : 'normal' });
     gameOver = false;
     timeLeft = ROUND_TIME;
     timerAcc = 0;
@@ -642,7 +693,8 @@ const CLIP_CONFIG = {
     csStep = 'p1'; csCursor = 0;
     mmCursor = (mode === '1p') ? 1 : 0;
     renderMainMenuCursor();
-    modeListCursor = (mode === 'training') ? 1 : 0;
+    modeListCursor = (mode === 'training') ? 2 : ((mode === 'arcade') ? 1 : 0);
+    arcadeIndex = 0; // visszatérve a menübe, egy esetleges félbehagyott arcade-menet ne maradjon állapotban
     renderModeListCursor();
     showMainMenuStep('modeList'); // always land back on the top-level mode list, never mid-submenu
     document.getElementById('overlay').style.display = 'none';
@@ -663,12 +715,17 @@ const CLIP_CONFIG = {
   }
   function renderModeListCursor(){
     document.getElementById('versusModeBtn').classList.toggle('selected', modeListCursor === 0);
-    document.getElementById('trainingModeBtn').classList.toggle('selected', modeListCursor === 1);
+    document.getElementById('arcadeModeBtn').classList.toggle('selected', modeListCursor === 1);
+    document.getElementById('trainingModeBtn').classList.toggle('selected', modeListCursor === 2);
   }
   function startTrainingMode(){
     mode = 'training';
     trainingCpuBehavior = 'still'; // "A CPU csak egy helyben áll alapból" -- a Szünet menüből állítható át
     enterCharacterSelect();
+  }
+  function startArcadeMode(){
+    mode = 'arcade';
+    enterCharacterSelect(); // csak P1 választ -- utána a startArcadeRun() automatikusan kijelöli az első ellenfelet
   }
   document.getElementById('versusModeBtn').addEventListener('mouseenter', ()=>{ modeListCursor = 0; renderModeListCursor(); });
   document.getElementById('versusModeBtn').addEventListener('click', ()=>{
@@ -676,9 +733,14 @@ const CLIP_CONFIG = {
     showMainMenuStep('versusSubmenu');
     renderMainMenuCursor();
   });
-  document.getElementById('trainingModeBtn').addEventListener('mouseenter', ()=>{ modeListCursor = 1; renderModeListCursor(); });
-  document.getElementById('trainingModeBtn').addEventListener('click', ()=>{
+  document.getElementById('arcadeModeBtn').addEventListener('mouseenter', ()=>{ modeListCursor = 1; renderModeListCursor(); });
+  document.getElementById('arcadeModeBtn').addEventListener('click', ()=>{
     modeListCursor = 1;
+    startArcadeMode();
+  });
+  document.getElementById('trainingModeBtn').addEventListener('mouseenter', ()=>{ modeListCursor = 2; renderModeListCursor(); });
+  document.getElementById('trainingModeBtn').addEventListener('click', ()=>{
+    modeListCursor = 2;
     startTrainingMode();
   });
 
@@ -808,7 +870,7 @@ const CLIP_CONFIG = {
 
   function updateCharSelectTitle(){
     const el = document.getElementById('csTitle');
-    if (csStep === 'p1') el.textContent = 'PLAYER 1 – VÁLASSZ KARAKTERT';
+    if (csStep === 'p1') el.textContent = (mode === 'arcade') ? 'ARCADE MÓD – VÁLASSZ KARAKTERT' : 'PLAYER 1 – VÁLASSZ KARAKTERT';
     else if (csStep === 'p2') el.textContent = 'PLAYER 2 – VÁLASSZ KARAKTERT';
     else el.textContent = 'VÁLASSZ CPU KARAKTERT';
   }
@@ -817,6 +879,8 @@ const CLIP_CONFIG = {
     csStep = 'p1';
     p1CharId = null; p2CharId = null;
     csCursor = 0;
+    csLastGridCursor = 0;
+    csPreviewCharId = null; // a preview panel frissen renderelődjön újra belépéskor
     updateCharSelectTitle();
     renderCharGrid();
     showPanel('charSelect');
@@ -825,28 +889,30 @@ const CLIP_CONFIG = {
   // virtuális, 7. rácshelynek számít (index === CHARACTERS.length) -- így ugyanaz az irányítás
   // (nyilak/WASD/D-Pad + Enter/Cross) éri el, mint bármelyik karaktert, nem kell hozzá külön gomb.
   const RANDOM_CURSOR_IDX = CHARACTERS.length;
-  // moves the highlighted slot in direction (dx,dy) across the 3x2 grid, stepping past locked
+  const CS_GRID_COLS = 6, CS_GRID_ROWS = 4; // 6x4 = 24 slot -- a zárolt helyeket a kurzor átugorja
+  let csLastGridCursor = 0; // ahová a RANDOM gombról Fel-lel visszatérünk (az utolsó rács-pozíció)
+  // moves the highlighted slot in direction (dx,dy) across the 6x4 grid, stepping past locked
   // slots automatically (they can never be landed on) and stopping at the grid edge otherwise --
-  // lefelé lépve az alsó sorból a virtuális VÉLETLEN gombra kerül a kurzor, onnan felfelé pedig
-  // vissza a rács alsó sorába (Barna rekeszéhez).
+  // ha lefelé lépve már nincs több feloldott slot, a kurzor a rács alatti RANDOM gombra kerül,
+  // onnan felfelé pedig vissza az utoljára kiemelt rács-pozícióra.
   function moveCursor(dx, dy){
     if (csCursor === RANDOM_CURSOR_IDX){
-      if (dy < 0){ csCursor = 3; } // Fel a VÉLETLEN gombról -> vissza a rács alsó sorába
+      if (dy < 0){ csCursor = csLastGridCursor; } // Fel a RANDOM gombról -> vissza a rácsba
       highlightCharGridCursor();
       return;
     }
-    const col0 = csCursor % 3, row0 = Math.floor(csCursor / 3);
-    if (dy > 0 && row0 === 1){ // Le az alsó sorból -> a VÉLETLEN gombra
-      csCursor = RANDOM_CURSOR_IDX;
-      highlightCharGridCursor();
-      return;
-    }
-    let col = col0, row = row0;
+    const col0 = csCursor % CS_GRID_COLS, row0 = Math.floor(csCursor / CS_GRID_COLS);
+    let col = col0, row = row0, moved = false;
     while (true){
       col += dx; row += dy;
-      if (col < 0 || col > 2 || row < 0 || row > 1) break; // fell off the grid, don't move
-      const idx = row*3 + col;
-      if (CHARACTERS[idx] && CHARACTERS[idx].enabled){ csCursor = idx; break; }
+      if (col < 0 || col >= CS_GRID_COLS || row < 0 || row >= CS_GRID_ROWS) break; // fell off the grid
+      const idx = row*CS_GRID_COLS + col;
+      if (CHARACTERS[idx] && CHARACTERS[idx].enabled){ csCursor = idx; moved = true; break; }
+    }
+    if (!moved && dy > 0){
+      // lefelé nincs több feloldott slot -> a rács alatti RANDOM gombra ugrunk
+      csLastGridCursor = csCursor;
+      csCursor = RANDOM_CURSOR_IDX;
     }
     highlightCharGridCursor();
   }
@@ -856,6 +922,11 @@ const CLIP_CONFIG = {
     if (!c || !c.enabled) return; // locked slot — can't be confirmed
     if (csStep === 'p1'){
       p1CharId = c.id;
+      if (mode === 'arcade'){
+        startArcadeRun();
+        enterStageSelect();
+        return;
+      }
       csStep = (mode === '1p' || mode === 'training') ? 'cpu' : 'p2';
       csCursor = 0;
       updateCharSelectTitle();
@@ -894,7 +965,7 @@ const CLIP_CONFIG = {
     const isP2Pick = !!(c && c.enabled && p2CharId === c.id);
     const badges = [];
     if (isP1Pick) badges.push('P1');
-    if (isP2Pick) badges.push((mode === '1p' || mode === 'training') ? 'CPU' : 'P2');
+    if (isP2Pick) badges.push((mode === '1p' || mode === 'training' || mode === 'arcade') ? 'CPU' : 'P2');
     return { isP1Pick, isP2Pick, badgeText: badges.join(' / ') };
   }
   function renderCharGrid(){
@@ -931,12 +1002,17 @@ const CLIP_CONFIG = {
         }
         drawPortrait(canvas, c);
       } else {
-        const lock = document.createElement('div');
-        lock.className = 'lockIcon';
-        el.appendChild(lock);
+        // zárolt slot: fekete sziluett (CSS ::before/::after) + nagy kérdőjel + COMING SOON
+        const sil = document.createElement('div');
+        sil.className = 'csSilhouette';
+        el.appendChild(sil);
+        const q = document.createElement('div');
+        q.className = 'csQmark';
+        q.textContent = '?';
+        el.appendChild(q);
         const nameEl = document.createElement('div');
-        nameEl.className = 'slotName';
-        nameEl.textContent = 'HAMAROSAN';
+        nameEl.className = 'slotName csComingSoon';
+        nameEl.textContent = 'COMING SOON';
         el.appendChild(nameEl);
       }
       grid.appendChild(el);
@@ -951,6 +1027,65 @@ const CLIP_CONFIG = {
       el.classList.toggle('cursor', !el.classList.contains('locked') && +el.dataset.idx === csCursor);
     });
     document.getElementById('charRandomBtn').classList.toggle('cursor', csCursor === RANDOM_CURSOR_IDX);
+    if (csCursor !== RANDOM_CURSOR_IDX) csLastGridCursor = csCursor; // ide tér vissza a Fel a RANDOM gombról
+    renderCsPreview(); // a jobb oldali preview panel mindig a kurzor alatti karaktert mutatja
+  }
+
+  // ---------- karakterválasztó: jobb oldali PREVIEW panel ----------
+  // A kurzor alatti karakter nagy képe + statcsíkok + Ultimate név. Zárolt slotra vagy a RANDOM
+  // gombra állva az utoljára mutatott karakter marad kint (nem villog üresre). A statok pusztán
+  // vizuális jellemzők (CHAR_META), a harcrendszert nem befolyásolják.
+  const CS_STAT_KEYS = ['POWER', 'SPEED', 'RANGE', 'DEFENSE', 'TECHNIQUE'];
+  let csPreviewCharId = null; // csak valódi karakterváltáskor fusson a fade/slide + stat animáció
+  function renderCsPreview(){
+    const c = (csCursor >= 0 && csCursor < CHARACTERS.length) ? CHARACTERS[csCursor] : null;
+    if (!c || !c.enabled || c.id === csPreviewCharId) return;
+    csPreviewCharId = c.id;
+    const meta = CHAR_META[c.id] || { stats: {}, ultName: '???' };
+    document.getElementById('csPreviewName').textContent = c.name;
+    document.getElementById('csUltName').textContent = meta.ultName;
+    // statsorok újraépítése -- minden csík 0%-ról indul, és a következő frame-ben kapja meg a
+    // valódi szélességét, így a CSS width-transition "animált feltöltésként" játssza le
+    const statsEl = document.getElementById('csStats');
+    statsEl.innerHTML = '';
+    const fills = [];
+    CS_STAT_KEYS.forEach(k => {
+      const row = document.createElement('div');
+      row.className = 'csStatRow';
+      const lbl = document.createElement('div');
+      lbl.className = 'csStatLabel';
+      lbl.textContent = k;
+      row.appendChild(lbl);
+      const bar = document.createElement('div');
+      bar.className = 'csStatBar';
+      const fill = document.createElement('div');
+      fill.className = 'csStatFill';
+      fill.style.width = '0%';
+      bar.appendChild(fill);
+      row.appendChild(bar);
+      statsEl.appendChild(row);
+      fills.push([fill, Math.max(0, Math.min(10, meta.stats[k] || 0)) * 10]);
+    });
+    requestAnimationFrame(() => fills.forEach(([f, pct]) => { f.style.width = pct + '%'; }));
+    // nagy karakterkép: a teljes idle sprite arányosan, alulra igazítva a preview vászonra
+    const canvas = document.getElementById('csPreviewCanvas');
+    if (canvas && canvas.getContext && typeof canvas.width === 'number'){
+      const c2d = canvas.getContext('2d');
+      c2d.clearRect(0, 0, canvas.width, canvas.height);
+      const img = sprites[c.spriteKey] && sprites[c.spriteKey].idle;
+      if (img && img.complete && img.naturalWidth){
+        const s = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+        const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+        c2d.drawImage(img, (canvas.width - dw) / 2, canvas.height - dh, dw, dh);
+      }
+    }
+    // finom fade/slide újraindítása karakterváltáskor (ugyanaz a reflow-trükk, mint a countdownnál)
+    const panel = document.getElementById('csPreview');
+    if (panel && panel.classList){
+      panel.classList.remove('csAnimIn');
+      void panel.offsetWidth;
+      panel.classList.add('csAnimIn');
+    }
   }
   // single delegated listener for both hover (mouseover bubbles, unlike mouseenter) and click —
   // works no matter how many times the slot elements underneath get rebuilt, since it's bound to
@@ -980,7 +1115,7 @@ const CLIP_CONFIG = {
 
   function renderVsScreen(){
     document.getElementById('vsLabelP1').textContent = 'P1 · ' + charName(p1CharId);
-    document.getElementById('vsLabelP2').textContent = ((mode === '1p' || mode === 'training') ? 'CPU · ' : 'P2 · ') + charName(p2CharId);
+    document.getElementById('vsLabelP2').textContent = ((mode === '1p' || mode === 'training' || mode === 'arcade') ? 'CPU · ' : 'P2 · ') + charName(p2CharId);
     drawPortrait(document.getElementById('vsPortraitP1'), charById(p1CharId));
     drawPortrait(document.getElementById('vsPortraitP2'), charById(p2CharId));
   }
@@ -1104,14 +1239,20 @@ const CLIP_CONFIG = {
     const k = e.key;
     if (gameState === 'MAIN_MENU'){
       if (mainMenuStep === 'modeList'){
-        // Versus Mode és Training Mode közül old fel navigálni (Story/Arcade továbbra is zárolt);
-        // Enter/Space a kiemelt (modeListCursor) opciót választja ki.
-        if (k==='ArrowUp'||k==='ArrowDown'||k==='ArrowLeft'||k==='ArrowRight'||k==='w'||k==='W'||k==='s'||k==='S'||k==='a'||k==='A'||k==='d'||k==='D'){
-          modeListCursor = 1 - modeListCursor;
+        // Versus Mode, Arcade Mode és Training Mode közül old fel navigálni (Story továbbra is zárolt);
+        // Enter/Space a kiemelt (modeListCursor) opciót választja ki. 3 elem, balra/fel eggyel vissza,
+        // jobbra/le eggyel előre, körkörösen.
+        if (k==='ArrowLeft'||k==='ArrowUp'||k==='a'||k==='A'||k==='w'||k==='W'){
+          modeListCursor = (modeListCursor + 2) % 3;
+          renderModeListCursor();
+          e.preventDefault();
+        } else if (k==='ArrowRight'||k==='ArrowDown'||k==='d'||k==='D'||k==='s'||k==='S'){
+          modeListCursor = (modeListCursor + 1) % 3;
           renderModeListCursor();
           e.preventDefault();
         } else if (k==='Enter' || k===' '){
-          if (modeListCursor === 1) startTrainingMode();
+          if (modeListCursor === 1) startArcadeMode();
+          else if (modeListCursor === 2) startTrainingMode();
           else { showMainMenuStep('versusSubmenu'); renderMainMenuCursor(); }
           e.preventDefault();
         }
@@ -1331,12 +1472,16 @@ const CLIP_CONFIG = {
       const pressedNow = (k) => cur[k] && !prev[k]; // csak az első képkockán "true", amikor lenyomják
       if (gameState === 'MAIN_MENU'){
         if (mainMenuStep === 'modeList'){
-          // Versus Mode és Training Mode közül navigálhat, confirm a kiemelt opciót választja ki
-          if (pressedNow('navUp') || pressedNow('navDown') || pressedNow('navLeft') || pressedNow('navRight')){
-            modeListCursor = 1 - modeListCursor; renderModeListCursor();
+          // Versus Mode, Arcade Mode és Training Mode közül navigálhat, confirm a kiemelt opciót választja ki
+          if (pressedNow('navLeft') || pressedNow('navUp')){
+            modeListCursor = (modeListCursor + 2) % 3; renderModeListCursor();
+          }
+          if (pressedNow('navRight') || pressedNow('navDown')){
+            modeListCursor = (modeListCursor + 1) % 3; renderModeListCursor();
           }
           if (pressedNow('confirm')){
-            if (modeListCursor === 1) startTrainingMode();
+            if (modeListCursor === 1) startArcadeMode();
+            else if (modeListCursor === 2) startTrainingMode();
             else { showMainMenuStep('versusSubmenu'); renderMainMenuCursor(); }
           }
         } else { // 'versusSubmenu'
@@ -1667,7 +1812,7 @@ const CLIP_CONFIG = {
   }
 
   function getInput(prefix, f, other, dt){
-    if (mode === '1p' && prefix === 'p2'){
+    if ((mode === '1p' || mode === 'arcade') && prefix === 'p2'){
       return aiThink(f, other, dt);
     }
     if (mode === 'training' && prefix === 'p2'){
@@ -1703,7 +1848,16 @@ const CLIP_CONFIG = {
   const THROW_CFG = { startup: 10, active: 8, recovery: 16, dmg: 13, range: 46, atkType: 'throw' };
   const BEING_THROWN_FRAMES = 41;   // rövid "repülés" fázis a dobás után, mielőtt Knockdown kezdődik (~683ms @60fps, az új BEINGTHROWN klip 8 frame-jéhez igazítva)
   const GETUP_FRAMES = 34;          // Get Up állapot hossza -- Knockdown vége és Idle között (~567ms, az új GETUP klip 8 frame-jéhez igazítva)
-  const TAUNT_DURATION_MS = 1040;   // Taunt teljes hossza (8 frame * 130ms) -- tisztán kozmetikai, nincs sebzés/előny
+  const TAUNT_DURATION_MS = 1040;   // fallback for any character with no dedicated taunt clip
+  // Real taunt length for charId, taken from its own CLIP_CONFIG.taunt frames when present (Barna's
+  // 8-frame clip is still exactly TAUNT_DURATION_MS, Tomi's new 10-frame clip is longer) -- so the
+  // clip always plays back at its own natural per-frame pace instead of being squeezed/stretched to
+  // fit a single shared constant calibrated for a different character's frame count.
+  function tauntTotalDuration(charId){
+    const cfg = CLIP_CONFIG[charId] && CLIP_CONFIG[charId].taunt;
+    if (cfg && cfg.frameMs) return cfg.frameMs.reduce((a,b)=>a+b, 0);
+    return TAUNT_DURATION_MS;
+  }
   const THROW_PUSH_VX = 7;          // vízszintes lökés a Being Thrown fázis alatt ("kis távolságra essen")
   // Throw Direction System: Back Throw esetén az ellenfél nem csak hátrafelé lökődik ugyanazon az
   // oldalon, hanem TÉNYLEGESEN átkerül a dobó karakter másik oldalára (valódi oldalváltás) -- ennyi
@@ -2035,20 +2189,21 @@ const CLIP_CONFIG = {
       hitStopFrames: 6, shakeAmt: 26,
     },
     tomi: {
-      kind: 'projectile',
-      poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7"],
-      // grabbing the 3L bottle + chugging it are held a bit slower for comedic weight; the actual
-      // throw (ult5) plays quick and snappy, then a brief recovery beat before he celebrates.
-      poseDurations: [180, 220, 260, 200, 260, 220, 200],
-      spawnPoseIndex: 4,              // ult5 (index 4) = the throw/release pose — bottle leaves his hand here
-      spawnOffset: { x: 10, y: -85 }, // roughly hand height, just in front of Tomi, in his facing direction
-      projectileType: 'tomi_bottle',
-      ultScale: 0.663,
-      anchors: [
-        {x:83, y:258}, {x:62, y:265}, {x:188,y:308}, {x:60, y:245},
-        {x:95, y:198}, {x:78, y:275}, {x:88, y:275},
-      ],
+      poses: ['ult1','ult2','ult3','ult4','ult5','ult6','ult7','ult8','ult9','ult10'],
+      // uveget felkapja -> magasba emeli -> lenduletes mozdulattal KOZELHARCBAN szetzuzza az ellenfelen
+      // (ult6-nal, ahol a sprite mar a szilankok szetrepuleset mutatja) -> a megmaradt csorba nyakkal
+      // buszke poz. NEM tavolsagi dobas -- kozelre kell allni az ellenfelhez, hogy eltalalja (lasd
+      // hitPoseIndex/reach/hitboxH lent), a regi projectile-mechanika (spawnPoseIndex/projectileType)
+      // ide most mar nem illik, mert az uj sheeten Tomi tenylegesen ra csapja az uveget az ellenfelre.
+      poseDurations: [180,180,160,150,110,140,120,150,200,220],
+      hitPoseIndex: 5, activeOffsetMs: 0, activeLenMs: 140, // ult6 (index 5) = a becsapodas kockaja
+      dmgPct: 0.33, knockVx: 18, knockVy: -6, stun: 60,
+      reach: 110, hitboxH: 120,
+      hitStopFrames: 6, shakeAmt: 26,
+      ultScale: 0.6539,
+      anchors: [{x:113.4, y:343.0}, {x:51.2, y:327.0}, {x:118.1, y:338.0}, {x:93.2, y:389.0}, {x:135.0, y:274.0}, {x:110.3, y:312.0}, {x:86.7, y:318.0}, {x:86.0, y:333.0}, {x:82.4, y:333.0}, {x:55.9, y:320.0}],
     },
+
     laci: {
       kind: 'projectile',
       poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8","ult9"],
@@ -2178,19 +2333,14 @@ const CLIP_CONFIG = {
       ],
     },
     tomi: {
-      // lazan besetal (dzseki meg rajta) -> elkezdi ledobni a vallarol -> lendülettel ledobja a
-      // bordzsekit -> land a foldon, leporolja magat -> harcra kesz (oklok fent) -- az új 5-pózos
-      // sheet ezt egy köztes lépéssel (a váll-lehúzás) bontja finomabbra a régi 4-pózos verzióhoz képest.
-      poses: ["enter1","enter2","enter3","enter4","enter5"],
-      poseDurations: [400, 380, 350, 340, 320],
-      scale: 0.3604,
-      // az anchor x-et itt is a tényleges cipők vízszintes közepéből mértük (nem a kép geometriai
-      // közepéből), különben az aszimmetrikus pózok (pl. a kabátdobás) miatt Tomi minden pózváltáskor
-      // oldalra "ugrott" volna; y minden pózra a kép alsó szélével egyezik (szoros kivágás).
-      anchors: [
-        {x:137.2, y:528}, {x:178.8, y:525}, {x:215.6, y:523}, {x:134.7, y:511}, {x:160.9, y:505},
-      ],
+      // uj, 10-pozos bevonulas (2. verzio): lezseren besetal (borkabatban) -> elkezdi lehuzni a
+      // vallarol -> lelendíti -> földre dobja a kabatot -> leporolja magat -> harci pozba all
+      poses: ['enter1','enter2','enter3','enter4','enter5','enter6','enter7','enter8','enter9','enter10'],
+      poseDurations: [400,380,350,340,330,320,320,310,320,340],
+      scale: 0.5367,
+      anchors: [{x:56.7, y:390.0}, {x:86.5, y:378.0}, {x:94.0, y:376.0}, {x:96.9, y:374.0}, {x:85.9, y:373.0}, {x:81.1, y:370.0}, {x:112.2, y:367.0}, {x:81.2, y:361.0}, {x:124.1, y:375.0}, {x:90.1, y:379.0}],
     },
+
     laci: {
       // besetal napszemüvegben -> leveszi -> kigombolja es leveszi az ingét -> eldobja az inget
       poses: ["enter1","enter2","enter3","enter4"],
@@ -2696,7 +2846,7 @@ const CLIP_CONFIG = {
       const tauntPressed = input.taunt && !f._prevInput.taunt;
       if (tauntPressed && f.tauntTimer <= 0 && !f.blocking && !f.crouching && f.attackTimer <= 0 &&
           f.throwTimer <= 0 && f.staggerTimer <= 0 && f.ultimateActive <= 0){
-        f.tauntTimer = TAUNT_DURATION_MS;
+        f.tauntTimer = tauntTotalDuration(f.charId);
       }
 
       if (!f.blocking){
@@ -3015,7 +3165,7 @@ const CLIP_CONFIG = {
     const other = (f === p1) ? p2 : p1;
     const nm = charName(f.charId);
     if (other.charId === f.charId){
-      const slot = (f === p1) ? 'P1' : ((mode === '1p' || mode === 'training') ? 'CPU' : 'P2');
+      const slot = (f === p1) ? 'P1' : ((mode === '1p' || mode === 'training' || mode === 'arcade') ? 'CPU' : 'P2');
       return `${nm} (${slot})`;
     }
     return nm;
@@ -3100,7 +3250,7 @@ const CLIP_CONFIG = {
   })();
 
   const RoundEndManager = (function(){
-    const HOLD_MS = 1800; // how long the winner/loser pose sits on screen before anything else happens
+    const HOLD_MS = 3200; // how long the winner/loser pose sits on screen before anything else happens
     let active = false, timer = 0, winnerKey = null, matchOver = false;
 
     function start(wKey, isMatchOver){
@@ -3123,9 +3273,38 @@ const CLIP_CONFIG = {
     showMatchEnd(winnerKey){
       const n1 = fighterLabel(p1), n2 = fighterLabel(p2);
       let title, sub;
-      if (winnerKey === 'p1'){ title = `${n1} NYERTE A MECCSET! ${charEmoji(p1.charId)}`; sub = `Végeredmény: ${RoundManager.wins.p1} - ${RoundManager.wins.p2}`; }
-      else if (winnerKey === 'p2'){ title = `${n2} NYERTE A MECCSET! ${charEmoji(p2.charId)}`; sub = `Végeredmény: ${RoundManager.wins.p2} - ${RoundManager.wins.p1}`; }
-      else { title = 'DÖNTETLEN MECCS!'; sub = `Végeredmény: ${RoundManager.wins.p1} - ${RoundManager.wins.p2}`; }
+      const restartBtnEl = document.getElementById('restartBtn');
+      if (mode === 'arcade'){
+        // Létra-mód: győzelemnél a következő ellenfél jön (vagy a teljes menet lezárása, ha ez volt
+        // az utolsó), vereségnél viszont nincs continue -- Game Over, vissza a karakterválasztásig.
+        if (winnerKey === 'p1'){
+          arcadeIndex++;
+          if (arcadeIndex >= arcadeOpponents.length){
+            title = `ARCADE MÓD TELJESÍTVE! 🏆`;
+            sub = `${n1} legyőzte mind a(z) ${arcadeOpponents.length} ellenfelet!`;
+            restartBtnEl.textContent = 'ARCADE ÚJRA';
+            restartBtnEl.dataset.arcadeAction = 'restartLadder';
+          } else {
+            const nextId = arcadeOpponents[arcadeIndex];
+            const nextDiff = arcadeDifficultyForIndex(arcadeIndex);
+            title = `GYŐZTÉL! (${arcadeIndex}/${arcadeOpponents.length}) 🥊`;
+            sub = `Következő ellenfél: ${charName(nextId)} — ${AI_DIFFICULTY[nextDiff].label}`;
+            restartBtnEl.textContent = 'KÖVETKEZŐ ELLENFÉL';
+            restartBtnEl.dataset.arcadeAction = 'nextOpponent';
+          }
+        } else {
+          title = 'GAME OVER';
+          sub = `Kiestél a(z) ${arcadeIndex + 1}. ellenfélnél (${charName(p2.charId)}). Nincs folytatás -- kezdd újra!`;
+          restartBtnEl.textContent = 'ÚJRA AZ ELEJÉTŐL';
+          restartBtnEl.dataset.arcadeAction = 'restartLadder';
+        }
+      } else {
+        restartBtnEl.textContent = 'ÚJRAINDÍTÁS';
+        delete restartBtnEl.dataset.arcadeAction;
+        if (winnerKey === 'p1'){ title = `${n1} NYERTE A MECCSET! ${charEmoji(p1.charId)}`; sub = `Végeredmény: ${RoundManager.wins.p1} - ${RoundManager.wins.p2}`; }
+        else if (winnerKey === 'p2'){ title = `${n2} NYERTE A MECCSET! ${charEmoji(p2.charId)}`; sub = `Végeredmény: ${RoundManager.wins.p2} - ${RoundManager.wins.p1}`; }
+        else { title = 'DÖNTETLEN MECCS!'; sub = `Végeredmény: ${RoundManager.wins.p1} - ${RoundManager.wins.p2}`; }
+      }
       document.getElementById('overTitle').textContent = title;
       document.getElementById('overSub').textContent = sub;
       document.getElementById('overlay').style.display = 'flex';
@@ -3179,13 +3358,37 @@ const CLIP_CONFIG = {
   // decide (after a short beat) whether that was the whole match or just one round of it
   function onRoundEnd(){
     gameOver = true;
+    // Clear any leftover hit-stop freeze from the finishing blow -- otherwise loop()'s RoundEndManager
+    // branch takes priority over the hitstop-decrement branch and hitStopTimer never reaches 0 again,
+    // permanently freezing animDt at 0 and stalling every fighter's Win/Lose animation on frame 1 for
+    // the whole round-end hold AND the match-end screen after it (see loop()'s branch ordering below).
+    hitStopTimer = 0;
     const outcome = determineRoundOutcome();
     RoundManager.recordRoundWin(outcome.winnerKey);
     const matchOver = RoundManager.isMatchOver();
     banner(outcome.title, 999999); // stays up for RoundEndManager's whole hold; hidden explicitly when it ends
     RoundEndManager.start(matchOver ? RoundManager.matchWinnerKey() : null, matchOver);
   }
-  document.getElementById('restartBtn').addEventListener('click', ()=>{ RoundManager.reset(); resetGame(); gameState = 'FIGHT'; lastFrameTs = null; CountdownManager.start(); });
+  document.getElementById('restartBtn').addEventListener('click', ()=>{
+    const btn = document.getElementById('restartBtn');
+    const arcadeAction = btn.dataset.arcadeAction;
+    if (arcadeAction === 'nextOpponent'){
+      // a következő ellenfél már ki van jelölve (arcadeIndex-et showMatchEnd() már növelte) --
+      // csak be kell állítani p2CharId-t/cpuDifficulty-t rá, aztán irány az ÖSSZECSAPÁS képernyő
+      p2CharId = arcadeOpponents[arcadeIndex];
+      cpuDifficulty = arcadeDifficultyForIndex(arcadeIndex);
+      document.getElementById('overlay').style.display = 'none';
+      enterVsScreen();
+      return;
+    }
+    if (arcadeAction === 'restartLadder'){
+      // Game Over vagy a teljes menet teljesítése után -- vissza a karakterválasztáshoz, friss indulás
+      document.getElementById('overlay').style.display = 'none';
+      enterCharacterSelect();
+      return;
+    }
+    RoundManager.reset(); resetGame(); gameState = 'FIGHT'; lastFrameTs = null; CountdownManager.start();
+  });
 
   // ---------- BACKGROUNDS ----------
   function drawClubBg(){
@@ -3300,6 +3503,7 @@ const CLIP_CONFIG = {
     else if (stage === 'laciverse') drawPhotoBg('laciverse', '#20181c');
     else if (stage === 'siofok') drawPhotoBg('siofok', '#2a2318');
     else if (stage === 'siofok_night') drawPhotoBg('siofok_night', '#0d1220');
+    else if (stage === 'novarock') drawPhotoBg('novarock', '#3a2412');
     else if (stage === 'pub') drawPubBg();
     else if (stage === 'garden') drawGardenBg();
     else drawClubBg();

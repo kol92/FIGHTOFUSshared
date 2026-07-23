@@ -32,9 +32,9 @@ Then open <http://localhost:8000/>. Any static file server works (`npx serve`, n
 
 Menus: `↑`/`↓` or `W`/`S` to move, `Enter`/`Space` (or `F`) to confirm, `Esc` to go back. A gamepad is also supported.
 
-**Modes:** Versus (2-player or vs CPU with Easy/Normal/Hard/Insane AI) and Training. Story and Arcade are placeholders ("coming soon").
-**Roster:** Krisz, Tomi, Laci, Barna (two more slots locked).
-**Stages:** Akácfa Söröző, Morrison's 2, Laciverse, Siófok (day), Siófok (night), plus a random pick.
+**Modes:** Versus (2-player or vs CPU with Easy/Normal/Hard/Insane AI), Arcade (fight a ladder of CPU opponents), and Training. Story is a placeholder ("coming soon").
+**Roster:** Krisz, Tomi, Laci, Barna (two more slots locked). The character-select screen shows each fighter's stats and ultimate.
+**Stages:** Akácfa Söröző, Morrison's 2, Laciverse, Siófok (day), Siófok (night), Novarock, plus a random pick.
 
 ## Project structure
 
