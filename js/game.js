@@ -1332,6 +1332,49 @@ const CLIP_CONFIG = {
     btn.addEventListener('mouseleave', off);
   });
 
+  // ---------- ON-SCREEN MOVEMENT STICK (touch) ----------
+  // A draggable analog stick that writes the SAME p1 direction actions as the keyboard/gamepad
+  // (pressed.p1left/right/up/down). Because it can express diagonals, rolling it also performs the
+  // motion-input specials (QCF/QCB). Multitouch-safe via touch identifier, so the stick and a fight
+  // button can be held at the same time. A deadzone keeps a resting thumb from drifting into a input.
+  (function initTouchStick(){
+    const stick = document.getElementById('touchStick');
+    const knob  = document.getElementById('touchStickKnob');
+    if (!stick || !knob) return;
+    const DZ = 0.30;                 // deadzone as a fraction of the stick radius
+    let touchId = null, mouseActive = false;
+    const clearDirs = () => { pressed.p1left = pressed.p1right = pressed.p1up = pressed.p1down = false; };
+    const release = () => { touchId = null; mouseActive = false; clearDirs(); knob.style.transform = 'translate(0,0)'; };
+    function moveTo(clientX, clientY){
+      const r = stick.getBoundingClientRect();
+      const rad = r.width / 2;
+      let dx = (clientX - (r.left + rad)) / rad;
+      let dy = (clientY - (r.top  + rad)) / rad;
+      const mag = Math.hypot(dx, dy);
+      if (mag > 1){ dx /= mag; dy /= mag; }                    // clamp the knob to the rim
+      knob.style.transform = `translate(${dx * rad * 0.6}px, ${dy * rad * 0.6}px)`;
+      pressed.p1left  = dx < -DZ;                              // per-axis threshold keeps diagonals available
+      pressed.p1right = dx >  DZ;
+      pressed.p1up    = dy < -DZ;
+      pressed.p1down  = dy >  DZ;
+    }
+    stick.addEventListener('touchstart', e => {
+      const t = e.changedTouches[0]; touchId = t.identifier; moveTo(t.clientX, t.clientY); e.preventDefault();
+    }, {passive:false});
+    window.addEventListener('touchmove', e => {
+      if (touchId === null) return;
+      for (const t of e.changedTouches){ if (t.identifier === touchId){ moveTo(t.clientX, t.clientY); e.preventDefault(); return; } }
+    }, {passive:false});
+    const endTouch = e => { if (touchId === null) return;
+      for (const t of e.changedTouches){ if (t.identifier === touchId){ release(); return; } } };
+    window.addEventListener('touchend', endTouch);
+    window.addEventListener('touchcancel', endTouch);
+    // mouse fallback so the stick is testable on desktop too
+    stick.addEventListener('mousedown', e => { mouseActive = true; moveTo(e.clientX, e.clientY); e.preventDefault(); });
+    window.addEventListener('mousemove', e => { if (mouseActive) moveTo(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', () => { if (mouseActive) release(); });
+  })();
+
   // ---------- GAMEPAD MANAGER (DualSense + future controllers) ----------
   // Generic, profile-driven gamepad support built on the browser's native Gamepad API. It feeds the
   // SAME pressed{} action-map that keyboard input already writes into above (and that the on-screen
@@ -3934,6 +3977,7 @@ const CLIP_CONFIG = {
   let lastFrameTs = null;
   function loop(ts){
     GamepadManager.poll(); // minden képkockán fut -- menüket és a harcot is vezérli, gameState-től függetlenül
+    document.body.classList.toggle('fighting', gameState === 'FIGHT' || gameState === 'PAUSED'); // on-screen touch controls only during a match
     if (lastFrameTs === null) lastFrameTs = ts;
     let dt = ts - lastFrameTs;
     lastFrameTs = ts;

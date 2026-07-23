@@ -384,22 +384,37 @@
   #controlsHint {
     font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: center; max-width: 960px; padding: 0 8px;
   }
-  #touchLayer {
-    position: absolute; inset: 0; display: none; pointer-events: none; z-index: 4;
-  }
-  .touchSide { position: absolute; bottom: 8px; display: flex; align-items: flex-end; gap: 6px; pointer-events: auto; }
-  #touchLeft { left: 6px; }
-  #touchRight { right: 6px; }
-  .tBtn {
-    width: 44px; height: 44px; border-radius: 50%; background: #ffffff22; border: 2px solid #ffffff77;
-    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; color: #fff;
+  /* ----- On-screen touch controls: analog stick (left) + colored fight buttons (right) ----- */
+  #touchLayer { position: fixed; inset: 0; display: none; pointer-events: none; z-index: 6; }
+  /* Movement stick */
+  #touchStick {
+    position: absolute; left: max(20px, env(safe-area-inset-left)); bottom: 22px;
+    width: 130px; height: 130px; border-radius: 50%; pointer-events: auto; touch-action: none;
+    background: radial-gradient(circle, #ffffff1c, #ffffff08 70%); border: 2px solid #ffffff3a;
     backdrop-filter: blur(2px);
   }
-  .tBtn:active, .tBtn.active { background: #ff5fd899; }
-  .tBtn[data-key$="ultimate"] { font-size: 10px; border-color: #ffd23f99; }
-  .dpad { display: flex; gap: 4px; }
-  .actionCol { display: flex; flex-direction: column; gap: 4px; }
+  #touchStickKnob {
+    position: absolute; left: 50%; top: 50%; width: 62px; height: 62px; margin: -31px 0 0 -31px;
+    border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff9fe6dd, #c026d3cc);
+    border: 2px solid #ffffffbb; box-shadow: 0 3px 12px #000a; will-change: transform;
+  }
+  /* Fight buttons cluster */
+  #touchButtons {
+    position: absolute; right: max(16px, env(safe-area-inset-right)); bottom: 14px;
+    width: 214px; height: 170px; pointer-events: none;
+  }
+  .fb {
+    position: absolute; width: 58px; height: 58px; border-radius: 50%; pointer-events: auto; touch-action: none;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 17px;
+    color: #fff; text-shadow: 0 1px 3px #000b; backdrop-filter: blur(2px); user-select: none;
+  }
+  .fb:active, .fb.active { filter: brightness(1.55); transform: scale(0.93); }
+  .fb-punch   { left: 8px;   bottom: 4px;  width: 66px; height: 66px; background: #38bdf855; border: 2px solid #38bdf8dd; }
+  .fb-kick    { left: 86px;  bottom: 24px; width: 66px; height: 66px; background: #34d39955; border: 2px solid #34d399dd; }
+  .fb-block   { left: 2px;   bottom: 82px; background: #94a3b84d; border: 2px solid #cbd5e1cc; font-size: 20px; }
+  .fb-special { left: 74px;  bottom: 98px; background: #fb923c55; border: 2px solid #fb923cdd; }
+  .fb-ult     { left: 146px; bottom: 44px; background: #e879f955; border: 2px solid #e879f9dd; font-size: 12px; }
   @media (pointer: coarse) {
-    #touchLayer { display: block; }
+    body.fighting #touchLayer { display: block; }
     #controlsHint { display: none; }
   }

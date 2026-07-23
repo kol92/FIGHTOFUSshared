@@ -205,40 +205,17 @@
       </div>
     </div>
 
+    <!-- On-screen controls (touch): analog movement stick on the left, colored fight buttons on the
+         right. The stick feeds the same P1 direction inputs as keyboard/gamepad, so rolling it also
+         performs the motion-input specials (QCF/QCB). Shown only during a fight (see body.fighting). -->
     <div id="touchLayer">
-      <div class="touchSide" id="touchLeft">
-        <div class="dpad">
-          <div class="tBtn" data-key="p1left">◀</div>
-          <div class="actionCol">
-            <div class="tBtn" data-key="p1up">▲</div>
-            <div class="tBtn" data-key="p1down">▼</div>
-          </div>
-          <div class="tBtn" data-key="p1right">▶</div>
-        </div>
-        <div class="actionCol">
-          <div class="tBtn" data-key="p1punch">Ü</div>
-          <div class="tBtn" data-key="p1kick">R</div>
-          <div class="tBtn" data-key="p1block">🛡</div>
-          <div class="tBtn" data-key="p1special">★</div>
-          <div class="tBtn" data-key="p1ultimate">ULT</div>
-        </div>
-      </div>
-      <div class="touchSide" id="touchRight">
-        <div class="actionCol">
-          <div class="tBtn" data-key="p2punch">Ü</div>
-          <div class="tBtn" data-key="p2kick">R</div>
-          <div class="tBtn" data-key="p2block">🛡</div>
-          <div class="tBtn" data-key="p2special">★</div>
-          <div class="tBtn" data-key="p2ultimate">ULT</div>
-        </div>
-        <div class="dpad">
-          <div class="tBtn" data-key="p2left">◀</div>
-          <div class="actionCol">
-            <div class="tBtn" data-key="p2up">▲</div>
-            <div class="tBtn" data-key="p2down">▼</div>
-          </div>
-          <div class="tBtn" data-key="p2right">▶</div>
-        </div>
+      <div id="touchStick"><div id="touchStickKnob"></div></div>
+      <div id="touchButtons">
+        <div class="tBtn fb fb-block"   data-key="p1block">🛡</div>
+        <div class="tBtn fb fb-punch"   data-key="p1punch">Ü</div>
+        <div class="tBtn fb fb-kick"    data-key="p1kick">R</div>
+        <div class="tBtn fb fb-special" data-key="p1special">★</div>
+        <div class="tBtn fb fb-ult"     data-key="p1ultimate">ULT</div>
       </div>
     </div>
   </div>
