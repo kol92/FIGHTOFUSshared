@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fight of Us</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="wrap">
+  <img decoding="async" id="titleLogo" src="assets/hud/logo.png" alt="Fight of Us">
+  <div id="stage-container">
+    <canvas id="game" width="960" height="510"></canvas>
+    <div id="hud">
+      <div class="barBox p1">
+        <div class="hudPortraitCol">
+          <div class="hudPortraitWrap">
+            <canvas class="hudPortrait" id="hudPortraitP1" width="64" height="64"></canvas>
+            <img loading="lazy" decoding="async" class="hudPortraitFrameImg" src="assets/hud/portraitFrameP1.png" alt="">
+          </div>
+          <img loading="lazy" decoding="async" class="hudUltIcon" id="ultIconP1" src="assets/hud/ultIcon.png" alt="">
+        </div>
+        <div class="barBoxInfo">
+          <div class="hudBarStack">
+            <div class="hpFillWrap"><div class="hpFill" id="hpP1"></div></div>
+            <div class="specFillWrap"><div class="specFill" id="specP1"></div></div>
+            <img loading="lazy" decoding="async" class="hudBarFrameImg" src="assets/hud/barFrame.png" alt="">
+            <div class="hudName" id="nameP1">KRISZ</div>
+            <div class="hudBerserkLabel">BERSERK</div>
+            <div class="hudRoundDots" id="roundDotsP1">
+              <img loading="lazy" decoding="async" class="roundDot" src="assets/hud/roundDot.png" alt="">
+              <img loading="lazy" decoding="async" class="roundDot" src="assets/hud/roundDot.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="barBox p2">
+        <div class="hudPortraitCol">
+          <div class="hudPortraitWrap">
+            <canvas class="hudPortrait" id="hudPortraitP2" width="64" height="64"></canvas>
+            <img loading="lazy" decoding="async" class="hudPortraitFrameImg" src="assets/hud/portraitFrameP2.png" alt="">
+          </div>
+          <img loading="lazy" decoding="async" class="hudUltIcon" id="ultIconP2" src="assets/hud/ultIcon.png" alt="">
+        </div>
+        <div class="barBoxInfo">
+          <div class="hudBarStack">
+            <div class="hpFillWrap"><div class="hpFill" id="hpP2"></div></div>
+            <div class="specFillWrap"><div class="specFill" id="specP2"></div></div>
+            <img loading="lazy" decoding="async" class="hudBarFrameImg" src="assets/hud/barFrame.png" alt="">
+            <div class="hudName" id="nameP2">TOMI</div>
+            <div class="hudBerserkLabel">BERSERK</div>
+            <div class="hudRoundDots" id="roundDotsP2">
+              <img loading="lazy" decoding="async" class="roundDot" src="assets/hud/roundDot.png" alt="">
+              <img loading="lazy" decoding="async" class="roundDot" src="assets/hud/roundDot.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="timerWrap">
+      <img loading="lazy" decoding="async" id="timerBadgeImg" src="assets/hud/timerBadge.png" alt="">
+      <div id="timer">60</div>
+      <div id="timerCaption">TIME</div>
+    </div>
+    <div class="comboCounter" id="comboCounterP1"></div>
+    <div class="comboCounter" id="comboCounterP2"></div>
+    <div id="banner"></div>
+    <div id="countdownDisplay"></div>
+
+    <div id="mainMenu" class="panel">
+      <div id="modeListView">
+        <p class="mainMenuSub">Válassz játékmódot</p>
+        <div class="modeListGrid">
+          <button class="modeListBtn locked" disabled>STORY MODE<span class="modeListBadge">hamarosan</span></button>
+          <button class="modeListBtn selected" id="versusModeBtn">VERSUS MODE</button>
+          <button class="modeListBtn locked" disabled>ARCADE MODE<span class="modeListBadge">hamarosan</span></button>
+          <button class="modeListBtn" id="trainingModeBtn">TRAINING MODE</button>
+        </div>
+        <p class="hintSmall">↑/↓: mozgás &nbsp;•&nbsp; Enter/Space: választás &nbsp;•&nbsp; egér is működik</p>
+      </div>
+      <div id="versusSubmenu" style="display:none;">
+        <p class="mainMenuSub">Versus Mode</p>
+        <div class="modeGrid">
+          <button class="modeBtn selected" data-mode="2p" id="modeBtn2p">
+            <div class="modeBtnTitle">PLAYER VERSUS</div>
+            <div class="modeBtnSub">Két játékos, egy gépen</div>
+          </button>
+          <button class="modeBtn" data-mode="1p" id="modeBtn1p">
+            <div class="modeBtnTitle">CPU VERSUS</div>
+            <div class="modeBtnSub">Egyedül a gép ellen</div>
+          </button>
+        </div>
+        <p class="hintSmall" id="versusBackHint">↑/↓ vagy W/S: mozgás &nbsp;•&nbsp; Enter/Space: választás &nbsp;•&nbsp; Esc: vissza &nbsp;•&nbsp; egér is működik</p>
+      </div>
+    </div>
+
+    <div id="difficultySelect" class="panel">
+      <h2>NEHÉZSÉGI SZINT</h2>
+      <p>Válaszd ki, milyen erős legyen a CPU ellenfél</p>
+      <div class="modeGrid" id="difficultyGrid">
+        <button class="modeBtn" data-diff="easy" id="diffBtnEasy">
+          <div class="modeBtnTitle">EASY</div>
+          <div class="modeBtnSub">Lassan reagál, sokat hibázik</div>
+        </button>
+        <button class="modeBtn selected" data-diff="normal" id="diffBtnNormal">
+          <div class="modeBtnTitle">NORMAL</div>
+          <div class="modeBtnSub">Kiegyensúlyozott, néha hibázik</div>
+        </button>
+        <button class="modeBtn" data-diff="hard" id="diffBtnHard">
+          <div class="modeBtnTitle">HARD</div>
+          <div class="modeBtnSub">Gyors, megbízható, bünteti a hibákat</div>
+        </button>
+        <button class="modeBtn" data-diff="insane" id="diffBtnInsane">
+          <div class="modeBtnTitle">INSANE</div>
+          <div class="modeBtnSub">Nagyon gyors, alig hibázik</div>
+        </button>
+      </div>
+      <p class="hintSmall">↑/↓ vagy W/S: mozgás &nbsp;•&nbsp; Enter/Space: választás &nbsp;•&nbsp; Esc: vissza &nbsp;•&nbsp; egér is működik</p>
+    </div>
+
+    <div id="charSelect" class="panel">
+      <h2 id="csTitle">PLAYER 1 – VÁLASSZ KARAKTERT</h2>
+      <div class="charGrid" id="charGrid"></div>
+      <button class="ghostBtn" id="charRandomBtn">🎲 VÉLETLEN KARAKTER</button>
+      <p class="hintSmall">Iránybillentyűk / WASD: mozgás &nbsp;•&nbsp; Enter/F: választás &nbsp;•&nbsp; ↓ a rácsból: véletlen karakter gomb &nbsp;•&nbsp; Esc: vissza a főmenübe</p>
+    </div>
+
+    <div id="vsScreen" class="panel">
+      <h2>ÖSSZECSAPÁS</h2>
+      <div class="vsWrap">
+        <div class="vsCard">
+          <canvas class="vsCanvas" id="vsPortraitP1" width="140" height="140"></canvas>
+          <div class="vsCardLabel" id="vsLabelP1">P1 · KRISZ</div>
+        </div>
+        <div class="vsBigText">VS</div>
+        <div class="vsCard">
+          <canvas class="vsCanvas" id="vsPortraitP2" width="140" height="140"></canvas>
+          <div class="vsCardLabel" id="vsLabelP2">P2 · TOMI</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="menu" class="panel">
+      <h2>PÁLYAVÁLASZTÁS</h2>
+      <p>Válaszd ki a helyszínt, aztán irány a harc!</p>
+      <div class="menuLabel">HELYSZÍN</div>
+      <div class="stageGrid" id="stageGrid"></div>
+      <button class="mainBtn" id="startBtn">HARC! 🥊</button>
+      <button class="ghostBtn" id="stageBackBtn">⬅ VISSZA</button>
+    </div>
+
+    <div id="overlay" class="panel">
+      <h2 id="overTitle">GYŐZELEM!</h2>
+      <p id="overSub">Nyomj Újraindítást a következő körhöz.</p>
+      <div>
+        <button class="mainBtn" id="restartBtn">ÚJRAINDÍTÁS</button>
+      </div>
+      <button class="ghostBtn" id="menuBtn">⬅ VISSZA A MENÜBE</button>
+    </div>
+
+    <div id="pauseMenu" class="panel">
+      <h2>SZÜNET</h2>
+      <div id="pauseMainView">
+        <div class="pauseGrid" id="pauseGrid">
+          <button class="pauseBtn" data-action="resume" id="pauseResumeBtn">▶ FOLYTATÁS</button>
+          <button class="pauseBtn" data-action="restart" id="pauseRestartBtn">🔄 ÚJRAINDÍTÁS</button>
+          <button class="pauseBtn" data-action="cpuBehavior" id="pauseCpuBehaviorBtn" style="display:none;">🤖 CPU VISELKEDÉS</button>
+          <button class="pauseBtn" data-action="quit" id="pauseQuitBtn">⬅ KILÉPÉS A FŐMENÜBE</button>
+        </div>
+        <p class="hintSmall">Esc: folytatás &nbsp;•&nbsp; ↑/↓: navigálás &nbsp;•&nbsp; Enter: választás &nbsp;•&nbsp; egér is működik</p>
+      </div>
+      <div id="pauseCpuBehaviorView" style="display:none;">
+        <p class="mainMenuSub">CPU Viselkedés (Training Mode)</p>
+        <div class="pauseGrid" id="cpuBehaviorGrid">
+          <button class="pauseBtn" id="cpuBehaviorStillBtn">MOZDULATLAN</button>
+          <button class="pauseBtn" id="cpuBehaviorBlockBtn">VÉDEKEZŐ</button>
+          <button class="pauseBtn" id="cpuBehaviorCrouchBlockBtn">ALSÓ VÉDEKEZŐ</button>
+          <button class="pauseBtn" id="cpuBehaviorAttackBtn">TÁMADÓ</button>
+        </div>
+        <p class="hintSmall">Esc: vissza &nbsp;•&nbsp; ↑/↓: navigálás &nbsp;•&nbsp; Enter: választás &nbsp;•&nbsp; egér is működik</p>
+      </div>
+    </div>
+
+    <div id="touchLayer">
+      <div class="touchSide" id="touchLeft">
+        <div class="dpad">
+          <div class="tBtn" data-key="p1left">◀</div>
+          <div class="actionCol">
+            <div class="tBtn" data-key="p1up">▲</div>
+            <div class="tBtn" data-key="p1down">▼</div>
+          </div>
+          <div class="tBtn" data-key="p1right">▶</div>
+        </div>
+        <div class="actionCol">
+          <div class="tBtn" data-key="p1punch">Ü</div>
+          <div class="tBtn" data-key="p1kick">R</div>
+          <div class="tBtn" data-key="p1block">🛡</div>
+          <div class="tBtn" data-key="p1special">★</div>
+          <div class="tBtn" data-key="p1ultimate">ULT</div>
+        </div>
+      </div>
+      <div class="touchSide" id="touchRight">
+        <div class="actionCol">
+          <div class="tBtn" data-key="p2punch">Ü</div>
+          <div class="tBtn" data-key="p2kick">R</div>
+          <div class="tBtn" data-key="p2block">🛡</div>
+          <div class="tBtn" data-key="p2special">★</div>
+          <div class="tBtn" data-key="p2ultimate">ULT</div>
+        </div>
+        <div class="dpad">
+          <div class="tBtn" data-key="p2left">◀</div>
+          <div class="actionCol">
+            <div class="tBtn" data-key="p2up">▲</div>
+            <div class="tBtn" data-key="p2down">▼</div>
+          </div>
+          <div class="tBtn" data-key="p2right">▶</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="controlsHint">
+    <b>P1 (<span id="hintNameP1">KRISZ</span>):</b> A/D mozgás · W ugrás · S guggolás · E blokk (S+E crouch block) · F ütés · G rúgás (S+G gáncs) · F+G dobás · R = Berserk · Q = Ultimate &nbsp;|&nbsp;
+    <b>P2 (<span id="hintNameP2">TOMI</span>):</b> ←/→ mozgás · ↑ ugrás · ↓ guggolás · L blokk (↓+L crouch block) · , ütés · . rúgás (↓+. gáncs) · ,+. dobás · O = Berserk · / = Ultimate
+  </div>
+</div>
+
+<script src="js/assets.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>

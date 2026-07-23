@@ -1,0 +1,317 @@
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: radial-gradient(circle at 50% 20%, #2a1f4d, #0d0818 70%);
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    color: #fff;
+  }
+  #wrap {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; width: 100%; position: relative;
+  }
+  #titleLogo {
+    height: 130px; width: auto; display: block;
+    margin: 4px 0 0 0; filter: drop-shadow(0 0 10px #ff5fd899) drop-shadow(0 0 20px #5f9dff66);
+  }
+  #stage-container {
+    position: relative; width: 100%; max-width: 960px; aspect-ratio: 16/8.5;
+    touch-action: none;
+  }
+  canvas {
+    width: 100%; height: 100%; display: block;
+    background: #1b1440;
+    border: 3px solid #ff5fd8; border-radius: 10px;
+    box-shadow: 0 0 25px rgba(255,95,216,0.5);
+  }
+  #hud {
+    position: absolute; top: 10px; left: 10px; right: 10px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    pointer-events: none; font-size: 13px;
+  }
+  .barBox { width: 44%; display: flex; align-items: flex-start; gap: 8px; }
+  .barBox.p2 { flex-direction: row-reverse; }
+  .barBoxInfo { flex: 1; min-width: 0; padding-top: 2px; }
+
+  /* ---- portrait column: framed portrait + ultimate ready/used icon right below it ---- */
+  .hudPortraitCol { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+  .hudPortraitWrap { position: relative; width: 60px; height: 60px; }
+  .hudPortrait {
+    position: absolute; left: 9%; top: 9%; width: 82%; height: 82%;
+    border-radius: 3px; background: #00000055; object-fit: cover;
+  }
+  .hudPortraitFrameImg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hudUltIcon { width: 26px; height: 26px; filter: drop-shadow(0 1px 3px #000c); transition: filter 0.15s, opacity 0.15s; }
+  .hudUltIcon.ready { filter: drop-shadow(0 0 6px #ffb03f) drop-shadow(0 0 10px #ff8c1fcc); }
+
+  /* ---- bar stack: torn-paper frame image on top, dynamic fills + text/dots layered beneath ---- */
+  .hudBarStack { position: relative; width: 100%; aspect-ratio: 754 / 167; }
+  .hudBarFrameImg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
+  .hpFillWrap {
+    position: absolute; left: 2.7%; top: 40.5%; width: 92%; height: 27%;
+    overflow: hidden; z-index: 1; border-radius: 1px;
+  }
+  .hpFill {
+    position: absolute; left: 0; top: 0; height: 100%; width: 100%;
+    background: linear-gradient(90deg, #eb300c 0%, #fb5818 25%, #fd7620 50%, #fcc75c 80%, #fcf2a1 100%);
+    transition: width 0.15s;
+  }
+  .specFillWrap {
+    position: absolute; left: 21.9%; top: 73%; width: 54.5%; height: 25%;
+    overflow: hidden; z-index: 1; border-radius: 1px;
+  }
+  .specFill {
+    position: absolute; left: 0; top: 0; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #6c1e99 0%, #9934dd 40%, #ac3ff6 70%, #b043f7 100%);
+    transition: width 0.2s;
+  }
+  .hudName {
+    position: absolute; left: 5%; top: 4%; width: 40%; height: 30%;
+    display: flex; align-items: center;
+    font-weight: bold; font-style: italic; font-size: clamp(11px, 1.7vw, 19px);
+    color: #fff; text-shadow: 1px 1px 2px #000, 0 0 8px #ff5fd899;
+    z-index: 2; white-space: nowrap; overflow: hidden;
+  }
+  .hudRoundDots {
+    position: absolute; right: 6%; top: 2%; height: 32%;
+    display: flex; gap: 5%; align-items: center; z-index: 2;
+  }
+  .hudRoundDots img { height: 100%; width: auto; }
+  .hudBerserkLabel {
+    position: absolute; left: 1%; top: 72%; width: 22%; height: 22%;
+    display: flex; align-items: center;
+    font-weight: bold; font-style: italic; font-size: clamp(9px, 1.3vw, 14px);
+    color: #fff; text-shadow: 1px 1px 2px #000, 0 0 6px #b043f799;
+    z-index: 2; white-space: nowrap;
+  }
+
+  /* ---- P2 mirroring: flip the whole bar (frame + fills) so it reads as the mirror image of P1's;
+     counter-flip the name text and round dots back so they stay readable/left-to-right ---- */
+  .barBox.p2 .hudBarStack { transform: scaleX(-1); }
+  .barBox.p2 .hudName, .barBox.p2 .hudRoundDots, .barBox.p2 .hudBerserkLabel { transform: scaleX(-1); }
+  #timerWrap {
+    position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+    width: 108px; pointer-events: none;
+  }
+  #timerBadgeImg { display: block; width: 100%; height: auto; }
+  #timer {
+    position: absolute; left: 0; right: 0; top: 16%; text-align: center;
+    font-weight: bold; font-size: 26px; color: #fff;
+    text-shadow: 0 0 6px #fff, 0 0 14px #b043f7, 0 0 22px #b043f7cc;
+  }
+  #timerCaption {
+    position: absolute; left: 0; right: 0; top: 67%; text-align: center;
+    font-weight: bold; font-size: 10px; letter-spacing: 2px; color: #e8d5ff;
+    text-shadow: 0 1px 3px #000;
+  }
+  #banner {
+    position: absolute; top: 42%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 30px; font-weight: bold; text-align: center; text-shadow: 0 0 12px #000, 0 0 20px #ff5fd8;
+    pointer-events: none; opacity: 0; transition: opacity 0.2s; white-space: nowrap;
+  }
+  #banner.show { opacity: 1; }
+
+  /* Combo Counter: "N HIT" felirat, ami a kombó találatszámával nő és a kombó megszakadása után
+     pár másodperccel elhalványul (lásd ComboManager.update / updateComboCounterUI) */
+  .comboCounter {
+    position: absolute; top: 20%;
+    font-weight: 900; font-style: italic; font-size: 22px; color: #fff183;
+    text-shadow: 0 0 6px #000, 0 0 14px #ff8a00, 0 0 22px #ff8a00cc;
+    pointer-events: none; opacity: 0; transform: scale(0.8);
+    transition: opacity 0.15s, transform 0.15s; white-space: nowrap;
+  }
+  .comboCounter.show { opacity: 1; transform: scale(1); }
+  #comboCounterP1 { left: 4%; }
+  #comboCounterP2 { right: 4%; text-align: right; }
+
+  #countdownDisplay {
+    position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%) scale(0.7);
+    font-size: 72px; font-weight: 900; color: #fff; letter-spacing: 2px;
+    text-shadow: 0 0 18px #ff5fd8, 0 0 34px #ff5fd8, 0 6px 10px #000a;
+    pointer-events: none; opacity: 0; transition: opacity 0.12s, transform 0.18s;
+    white-space: nowrap; z-index: 6;
+  }
+  #countdownDisplay.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+
+  .panel {
+    position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,6,24,0.5) 0%, rgba(10,6,24,0.6) 45%, rgba(10,6,24,0.9) 100%),
+                url(../assets/hud/menuBg.jpg) center/cover no-repeat; display: none;
+    flex-direction: column; align-items: center; justify-content: center; border-radius: 8px;
+    text-align: center; padding: 16px; z-index: 5;
+  }
+  .panel h2 { font-size: 24px; margin: 0 0 4px 0; text-shadow: 0 0 10px #ff5fd8; }
+  .panel p { opacity: 0.85; margin: 2px 0 10px 0; font-size: 12px;}
+  .panel button.mainBtn {
+    background: linear-gradient(90deg,#ff5fd8,#5f9dff); border: none; color: #fff; font-weight: bold;
+    padding: 10px 26px; border-radius: 20px; font-size: 15px; cursor: pointer; margin-top: 8px;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .panel button.ghostBtn {
+    background: transparent; border: 2px solid #fff6; color: #fff; font-weight: bold;
+    padding: 7px 18px; border-radius: 16px; font-size: 12px; cursor: pointer; margin-top: 6px;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  /* billentyűzet/kontroller kurzor kiemelés -- pl. a meccs végi ÚJRAINDÍTÁS / VISSZA A MENÜBE gombokon */
+  .panel button.mainBtn.cursor, .panel button.ghostBtn.cursor {
+    box-shadow: 0 0 16px #ff5fd8aa, 0 0 4px #5f9dff88; transform: scale(1.06);
+  }
+  .panel button.ghostBtn.cursor { border-color: #ff5fd8; }
+  #overlay {
+    display: none;
+    background: linear-gradient(to bottom, rgba(10,6,24,0) 0%, rgba(10,6,24,0) 55%, rgba(10,6,24,0.82) 100%);
+  }
+  #menu { display: none; }
+  #mainMenu {
+    display: flex; justify-content: flex-end; padding-bottom: 26px;
+  }
+  .mainMenuSub { text-shadow: 0 0 8px #000, 0 1px 3px #000; }
+  #charSelect { display: none; }
+  #vsScreen { display: none; }
+
+  .menuRow { display: flex; gap: 10px; margin: 6px 0 4px 0; flex-wrap: wrap; justify-content: center; }
+  .menuLabel { font-size: 11px; opacity: 0.7; letter-spacing: 1px; margin-top: 8px; }
+  .choiceBtn {
+    background: #ffffff14; border: 2px solid #ffffff33; color: #fff; padding: 7px 14px;
+    border-radius: 10px; font-size: 12px; font-weight: bold; cursor: pointer;
+  }
+  .choiceBtn.selected { border-color: #ff5fd8; background: #ff5fd833; box-shadow: 0 0 8px #ff5fd899; }
+  .hintSmall { font-size: 11px; opacity: 0.65; margin-top: 10px; }
+
+  /* ---- main menu mode buttons ---- */
+  .modeGrid { display: flex; flex-direction: column; gap: 12px; margin: 10px 0; width: 100%; max-width: 320px; }
+  .modeBtn {
+    background: #ffffff10; border: 2px solid #ffffff33; color: #fff; border-radius: 14px;
+    padding: 14px 18px; cursor: pointer; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .modeBtn .modeBtnTitle { font-size: 18px; font-weight: bold; letter-spacing: 1px; }
+  .modeBtn .modeBtnSub { font-size: 11px; opacity: 0.75; margin-top: 3px; }
+  .modeBtn.selected {
+    border-color: #ff5fd8; background: #ff5fd822; box-shadow: 0 0 16px #ff5fd8aa, 0 0 4px #5f9dff88 inset;
+    transform: scale(1.035);
+  }
+
+  /* ---- main menu: top-level mode list (Story/Versus/Arcade/Training) -- only Versus Mode is
+     unlocked for now, the other three are greyed-out placeholders for future modes ---- */
+  #modeListView, #versusSubmenu { display: flex; flex-direction: column; align-items: center; width: 100%; }
+  .modeListGrid { display: flex; flex-direction: column; gap: 10px; margin: 10px 0; width: 100%; max-width: 320px; }
+  .modeListBtn {
+    background: #ffffff10; border: 2px solid #ffffff33; color: #fff; border-radius: 14px;
+    padding: 13px 18px; cursor: pointer; font-size: 15px; font-weight: bold; letter-spacing: 1px;
+    font-family: inherit; text-align: center; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .modeListBtn.selected {
+    border-color: #ff5fd8; background: #ff5fd822; box-shadow: 0 0 16px #ff5fd8aa, 0 0 4px #5f9dff88 inset;
+    transform: scale(1.035);
+  }
+  .modeListBtn.locked {
+    opacity: 0.4; cursor: not-allowed; pointer-events: none; filter: grayscale(0.6);
+  }
+  .modeListBtn .modeListBadge { display: block; font-size: 9px; font-weight: normal; letter-spacing: 0.5px; opacity: 0.8; margin-top: 2px; }
+  #versusBackHint { margin-top: 4px; }
+
+  /* ---- pause menu (Escape during FIGHT) ---- */
+  .pauseGrid { display: flex; flex-direction: column; gap: 12px; margin: 10px 0; width: 100%; max-width: 320px; }
+  .pauseBtn {
+    background: #ffffff10; border: 2px solid #ffffff33; color: #fff; border-radius: 14px;
+    padding: 13px 18px; cursor: pointer; font-size: 15px; font-weight: bold; letter-spacing: 0.5px;
+    font-family: inherit; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .pauseBtn.cursor {
+    border-color: #ff5fd8; background: #ff5fd822; box-shadow: 0 0 16px #ff5fd8aa, 0 0 4px #5f9dff88 inset;
+    transform: scale(1.035);
+  }
+
+  /* ---- character select grid ---- */
+  .charGrid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin: 10px 0; width: 100%; max-width: 480px;
+  }
+  .charSlot {
+    position: relative; aspect-ratio: 1 / 1; border-radius: 14px; background: #ffffff0f;
+    border: 2px solid #ffffff33; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; cursor: pointer; overflow: hidden; padding: 6px;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .charSlot .portraitCanvas { width: 78%; height: 78%; border-radius: 10px; background: #00000033; object-fit: cover; }
+  .charSlot .slotName { font-size: 12px; font-weight: bold; margin-top: 4px; letter-spacing: 0.5px; }
+  .charSlot.cursor {
+    border-color: #ff5fd8; box-shadow: 0 0 18px #ff5fd8cc; transform: scale(1.06); z-index: 1;
+  }
+  .charSlot.cursor .slotName { color: #ff9dee; text-shadow: 0 0 8px #ff5fd8; }
+  /* ---- már kiválasztott karakter tartós kerete: P1 = kék, P2/CPU = piros -- ez a lila
+     kurzor-kiemelés UTÁN jön a stíluslapban, hogy a "már kiválasztva" jelzés akkor is látsszon,
+     ha a kurzor épp visszatér erre a mezőre a másik játékos választásakor (azonos specificitás
+     esetén a későbbi szabály nyer) ---- */
+  .charSlot.pickedP1 { border-color: #3aa0ff; box-shadow: 0 0 18px #3aa0ffcc; }
+  .charSlot.pickedP1 .slotName { color: #9dd4ff; text-shadow: 0 0 8px #3aa0ff; }
+  .charSlot.pickedP2 { border-color: #ff5050; box-shadow: 0 0 18px #ff5050cc; }
+  .charSlot.pickedP2 .slotName { color: #ffb3b3; text-shadow: 0 0 8px #ff5050; }
+  .charSlot .slotTag {
+    position: absolute; top: 4px; right: 4px; background: #ff5fd8; color: #1a0b2e; font-size: 10px;
+    font-weight: bold; padding: 2px 6px; border-radius: 8px; box-shadow: 0 0 6px #ff5fd8cc;
+  }
+  .charSlot .slotTag.tagP1 { background: #3aa0ff; color: #0a1a2e; box-shadow: 0 0 6px #3aa0ffcc; }
+  .charSlot .slotTag.tagP2 { background: #ff5050; color: #2e0a0a; box-shadow: 0 0 6px #ff5050cc; }
+  .charSlot.locked {
+    cursor: default; background: #ffffff08; border-color: #ffffff1f; opacity: 0.55;
+  }
+  .charSlot.locked .slotName { font-size: 10px; opacity: 0.8; }
+  .lockIcon { width: 16px; height: 12px; border: 2px solid #999; border-radius: 3px; position: relative; margin-bottom: 10px; }
+  .lockIcon::before {
+    content: ''; position: absolute; top: -9px; left: 1px; width: 9px; height: 9px;
+    border: 2px solid #999; border-bottom: none; border-radius: 6px 6px 0 0;
+  }
+
+  /* ---- stage select grid (thumbnail + name per pálya, + egy "VÉLETLEN" kártya) ---- */
+  .stageGrid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 10px;
+    margin: 8px 0; width: 100%; max-width: 680px;
+  }
+  .stageCard {
+    position: relative; border-radius: 12px; background: #ffffff0f;
+    border: 2px solid #ffffff33; display: flex; flex-direction: column; align-items: center;
+    justify-content: flex-start; cursor: pointer; overflow: hidden; padding: 5px;
+    transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+  }
+  .stageCard .stageThumb {
+    width: 100%; aspect-ratio: 16/9; border-radius: 8px; object-fit: cover;
+    background: #00000055; display: block;
+  }
+  .stageCard .stageRandomIcon {
+    width: 100%; aspect-ratio: 16/9; border-radius: 8px; background: linear-gradient(135deg,#5f2a99,#2a1a4d);
+    display: flex; align-items: center; justify-content: center; font-size: 26px;
+  }
+  .stageCard .stageName { font-size: 10px; font-weight: bold; margin-top: 5px; letter-spacing: 0.3px; text-align: center; line-height: 1.25; }
+  .stageCard.selected {
+    border-color: #ff5fd8; box-shadow: 0 0 16px #ff5fd8cc; transform: scale(1.05); z-index: 1;
+  }
+  .stageCard.selected .stageName { color: #ff9dee; text-shadow: 0 0 8px #ff5fd8; }
+
+  /* ---- VS transition screen ---- */
+  .vsWrap { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 14px 0; }
+  .vsCard { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .vsCard .vsCanvas { width: 130px; height: 130px; border-radius: 14px; border: 2px solid #ff5fd899; background: #00000033; box-shadow: 0 0 20px #ff5fd866; }
+  .vsCard .vsCardLabel { font-size: 13px; font-weight: bold; letter-spacing: 0.5px; }
+  .vsBigText { font-size: 30px; font-weight: bold; color: #ff5fd8; text-shadow: 0 0 14px #ff5fd8; }
+
+  #controlsHint {
+    font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: center; max-width: 960px; padding: 0 8px;
+  }
+  #touchLayer {
+    position: absolute; inset: 0; display: none; pointer-events: none; z-index: 4;
+  }
+  .touchSide { position: absolute; bottom: 8px; display: flex; align-items: flex-end; gap: 6px; pointer-events: auto; }
+  #touchLeft { left: 6px; }
+  #touchRight { right: 6px; }
+  .tBtn {
+    width: 44px; height: 44px; border-radius: 50%; background: #ffffff22; border: 2px solid #ffffff77;
+    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; color: #fff;
+    backdrop-filter: blur(2px);
+  }
+  .tBtn:active, .tBtn.active { background: #ff5fd899; }
+  .tBtn[data-key$="ultimate"] { font-size: 10px; border-color: #ffd23f99; }
+  .dpad { display: flex; gap: 4px; }
+  .actionCol { display: flex; flex-direction: column; gap: 4px; }
+  @media (pointer: coarse) {
+    #touchLayer { display: block; }
+    #controlsHint { display: none; }
+  }
