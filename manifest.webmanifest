@@ -1,0 +1,14 @@
+{
+  "name": "Fight of Us",
+  "short_name": "Fight of Us",
+  "description": "A house-party fighting game with friends.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#0e0b16",
+  "theme_color": "#0e0b16",
+  "icons": [
+    { "src": "icon.jpg", "sizes": "850x850", "type": "image/jpeg", "purpose": "any" }
+  ]
+}
