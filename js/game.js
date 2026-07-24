@@ -3580,8 +3580,8 @@ const CLIP_CONFIG = {
   };
 
   const CountdownManager = (function(){
-    const SEQUENCE = ['5','4','3','2','1','FIGHT!'];
-    const STEP_MS = 1000;      // 5..1 each hold for a full second
+    const SEQUENCE = ['3','2','1','FIGHT!'];
+    const STEP_MS = 1000;      // 3..1 each hold for a full second
     const FIGHT_HOLD_MS = 800; // "FIGHT!" holds a bit under a second
     let active = false, idx = 0, timer = 0, onDone = null;
 
@@ -4249,6 +4249,8 @@ const CLIP_CONFIG = {
     // the menu poster backdrop is hidden (and the fight HUD shown) whenever the game frame is on
     // screen -- the whole match incl. the KO/result overlay, not just FIGHT/PAUSED
     document.body.classList.toggle('inMatch', gameState === 'FIGHT' || gameState === 'PAUSED' || gameState === 'MATCH_END');
+    // while paused the top-left corner button flips from the menu (hamburger) icon to a close (X) icon
+    document.body.classList.toggle('paused', gameState === 'PAUSED');
     if (lastFrameTs === null) lastFrameTs = ts;
     let dt = ts - lastFrameTs;
     lastFrameTs = ts;

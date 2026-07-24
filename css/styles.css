@@ -183,7 +183,7 @@
     font-size: 72px; font-weight: 900; color: #fff; letter-spacing: 2px;
     text-shadow: 0 0 18px #ff5fd8, 0 0 34px #ff5fd8, 0 6px 10px #000a;
     pointer-events: none; opacity: 0; transition: opacity 0.12s, transform 0.18s;
-    white-space: nowrap; z-index: 6;
+    white-space: nowrap; z-index: 4; /* below the menu/panel layer (z-5) so a pause overlay covers it */
   }
   #countdownDisplay.show { opacity: 1; transform: translate(-50%,-50%) scale(1); }
 
@@ -230,6 +230,8 @@
   }
   .choiceBtn.selected { border-color: #ff5fd8; background: #ff5fd833; box-shadow: 0 0 8px #ff5fd899; }
   .hintSmall { font-size: 11px; opacity: 0.65; margin-top: 10px; }
+  /* keyboard/mouse control hints are useless on touch devices -- hide them across all menus */
+  @media (pointer: coarse) { .hintSmall { display: none; } }
 
   /* ---- main menu mode buttons ---- */
   .modeGrid { display: flex; flex-direction: column; gap: 12px; margin: 10px 0; width: 100%; max-width: 320px; }
@@ -263,7 +265,17 @@
   .modeListBtn .modeListBadge { display: block; font-size: 9px; font-weight: normal; letter-spacing: 0.5px; opacity: 0.8; margin-top: 2px; }
   #versusBackHint { margin-top: 4px; }
 
-  /* ---- pause menu (Escape during FIGHT) ---- */
+  /* ---- pause menu (Escape during FIGHT) ----
+     A full-screen dark overlay confined to the viewport (not the short stage box), with its content
+     centered. The frozen fight shows dimmed behind it; the on-screen controls stay visible on top. */
+  #pauseMenu {
+    position: fixed; inset: 0; z-index: 5;
+    justify-content: safe center; overflow-y: auto; overscroll-behavior: contain;
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom, rgba(9,6,17,0.9) 0%, rgba(9,6,17,0.82) 50%, rgba(9,6,17,0.92) 100%);
+  }
+  /* centre the buttons/hint within each pause sub-view */
+  #pauseMainView, #pauseCpuBehaviorView { display: flex; flex-direction: column; align-items: center; width: 100%; }
   .pauseGrid { display: flex; flex-direction: column; gap: 12px; margin: 10px 0; width: 100%; max-width: 320px; }
   .pauseBtn {
     background: #ffffff10; border: 2px solid #ffffff33; color: #fff; border-radius: 14px;
@@ -454,20 +466,24 @@
   #controlsHint {
     font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: center; max-width: 960px; padding: 0 8px;
   }
-  /* ----- Global top-left corner button: back (menu sub-screens) / menu (in a fight) ----- */
+  /* ----- Global top-left corner button: back (menu sub-screens) / menu (in a fight) -----
+     Flat neon box, no glow highlight -- just a small press feedback. */
   #backNav, #fightMenuBtn {
     position: fixed; top: max(8px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left));
     z-index: 8; display: none; align-items: center; justify-content: center;
     width: 42px; height: 42px; border-radius: 12px; cursor: pointer;
     background: #180f24; border: 2px solid #8c4dff; color: #fff; font-size: 20px; font-weight: 800; line-height: 1;
-    box-shadow: 0 0 14px #8c4dff66; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+    transition: transform 0.1s ease;
   }
   #backNav.show { display: flex; }
   /* the in-fight menu button (opens the pause menu) is touch-only and shows for the whole match */
   #fightMenuBtn { pointer-events: auto; }
   @media (pointer: coarse) { body.fighting #fightMenuBtn { display: flex; } }
-  #backNav:hover, #backNav:active,
-  #fightMenuBtn:hover, #fightMenuBtn:active { border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa; transform: scale(1.06); }
+  #backNav:active, #fightMenuBtn:active { transform: scale(0.94); }
+  /* while paused, the corner button swaps its hamburger for a close (X) icon */
+  #fightMenuBtn .fmbClose { display: none; }
+  body.paused #fightMenuBtn .fmbMenu { display: none; }
+  body.paused #fightMenuBtn .fmbClose { display: block; }
   /* leave room for the top-left back button so it doesn't collide with the char-select heading */
   #charSelect .csTopBar { padding-left: 48px; }
 
