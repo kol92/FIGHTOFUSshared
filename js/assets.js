@@ -406,6 +406,42 @@ window.ASSETS = {
         "assets/characters/tomi/lose/5.png",
         "assets/characters/tomi/lose/6.png",
         "assets/characters/tomi/lose/7.png"
+      ],
+      "punch1": [
+        "assets/characters/tomi/punch1/0.png",
+        "assets/characters/tomi/punch1/1.png",
+        "assets/characters/tomi/punch1/2.png",
+        "assets/characters/tomi/punch1/3.png"
+      ],
+      "punch2": [
+        "assets/characters/tomi/punch2/0.png",
+        "assets/characters/tomi/punch2/1.png",
+        "assets/characters/tomi/punch2/2.png",
+        "assets/characters/tomi/punch2/3.png"
+      ],
+      "punch3": [
+        "assets/characters/tomi/punch3/0.png",
+        "assets/characters/tomi/punch3/1.png",
+        "assets/characters/tomi/punch3/2.png",
+        "assets/characters/tomi/punch3/3.png"
+      ],
+      "kick1": [
+        "assets/characters/tomi/kick1/0.png",
+        "assets/characters/tomi/kick1/1.png",
+        "assets/characters/tomi/kick1/2.png",
+        "assets/characters/tomi/kick1/3.png"
+      ],
+      "kick2": [
+        "assets/characters/tomi/kick2/0.png",
+        "assets/characters/tomi/kick2/1.png",
+        "assets/characters/tomi/kick2/2.png",
+        "assets/characters/tomi/kick2/3.png"
+      ],
+      "kick3": [
+        "assets/characters/tomi/kick3/0.png",
+        "assets/characters/tomi/kick3/1.png",
+        "assets/characters/tomi/kick3/2.png",
+        "assets/characters/tomi/kick3/3.png"
       ]
     },
     "barna": {
@@ -587,6 +623,42 @@ window.ASSETS = {
         "assets/characters/barna/lose/5.png",
         "assets/characters/barna/lose/6.png",
         "assets/characters/barna/lose/7.png"
+      ],
+      "punch1": [
+        "assets/characters/barna/punch1/0.png",
+        "assets/characters/barna/punch1/1.png",
+        "assets/characters/barna/punch1/2.png",
+        "assets/characters/barna/punch1/3.png"
+      ],
+      "punch2": [
+        "assets/characters/barna/punch2/0.png",
+        "assets/characters/barna/punch2/1.png",
+        "assets/characters/barna/punch2/2.png",
+        "assets/characters/barna/punch2/3.png"
+      ],
+      "punch3": [
+        "assets/characters/barna/punch3/0.png",
+        "assets/characters/barna/punch3/1.png",
+        "assets/characters/barna/punch3/2.png",
+        "assets/characters/barna/punch3/3.png"
+      ],
+      "kick1": [
+        "assets/characters/barna/kick1/0.png",
+        "assets/characters/barna/kick1/1.png",
+        "assets/characters/barna/kick1/2.png",
+        "assets/characters/barna/kick1/3.png"
+      ],
+      "kick2": [
+        "assets/characters/barna/kick2/0.png",
+        "assets/characters/barna/kick2/1.png",
+        "assets/characters/barna/kick2/2.png",
+        "assets/characters/barna/kick2/3.png"
+      ],
+      "kick3": [
+        "assets/characters/barna/kick3/0.png",
+        "assets/characters/barna/kick3/1.png",
+        "assets/characters/barna/kick3/2.png",
+        "assets/characters/barna/kick3/3.png"
       ]
     }
   },

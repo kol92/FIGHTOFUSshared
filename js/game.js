@@ -150,8 +150,14 @@ const CLIP_CONFIG = {
     throw: { loop: false, frameMs: [57,57,57,57,57,57,57,57,57,57], anchors: [{x:133.5,y:375.0},{x:138.1,y:366.0},{x:110.2,y:378.0},{x:120.6,y:367.0},{x:116.6,y:363.0},{x:132.0,y:321.0},{x:174.0,y:336.0},{x:134.0,y:303.0},{x:107.8,y:355.0},{x:106.8,y:358.0}], scale: 0.5581 },
     beingThrown: { loop: false, frameMs: [85,85,85,85,85,85,85,85,85,85], anchors: [{x:117.5,y:272.0},{x:116.8,y:253.0},{x:107.4,y:331.0},{x:102.0,y:328.0},{x:160.2,y:313.0},{x:117.9,y:238.0},{x:116.4,y:177.0},{x:135.3,y:112.0},{x:135.3,y:220.0},{x:97.0,y:350.0}], scale: 0.598 },
     taunt: { loop: false, frameMs: [130,130,130,130,130,130,130,130,130,130], anchors: [{x:95.4,y:413.0},{x:88.7,y:408.0},{x:91.2,y:413.0},{x:108.5,y:393.0},{x:104.8,y:401.0},{x:77.0,y:395.0},{x:101.8,y:390.0},{x:104.3,y:392.0},{x:88.0,y:415.0},{x:99.4,y:402.0}], scale: 0.5068 },
-    win: { loop: false, frameMs: [140,140,150,160,120,380,320,420,220,280], anchors: [{x:91.5,y:426.0},{x:82.6,y:437.0},{x:99.2,y:417.0},{x:72.5,y:428.0},{x:81.5,y:430.0},{x:88.4,y:454.0},{x:93.8,y:452.0},{x:88.1,y:452.0},{x:73.1,y:426.0},{x:95.8,y:428.0}], scale: 0.4913 },
+    win: { loop: false, frameMs: [140,140,150,160,120,380,320,420], anchors: [{x:91.5,y:426.0},{x:82.6,y:437.0},{x:99.2,y:417.0},{x:72.5,y:428.0},{x:81.5,y:430.0},{x:88.4,y:454.0},{x:93.8,y:452.0},{x:88.1,y:452.0}], scale: 0.4913 }, // frissítve: 8 kockán áll meg (szelfizés), a 9-10. kocka nem játszódik le
     lose: { loop: false, frameMs: [140,140,140,140,140,140,140,140], anchors: [{x:167.9,y:447.0},{x:208.0,y:407.0},{x:155.9,y:316.0},{x:105.4,y:284.0},{x:97.8,y:317.0},{x:98.1,y:293.0},{x:96.8,y:270.0},{x:97.7,y:284.0}], scale: 0.4683 },
+    punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0}], scale: 0.64 },
+    punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0}], scale: 0.64 },
+    punch3: { loop: false, frameMs: [42,42,42,42], anchors: [{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0},{x:165.6,y:313.0}], scale: 0.64 },
+    kick1: { loop: false, frameMs: [56,56,56,56], anchors: [{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0}], scale: 0.5442 },
+    kick2: { loop: false, frameMs: [56,56,56,56], anchors: [{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0}], scale: 0.5442 },
+    kick3: { loop: false, frameMs: [56,56,56,56], anchors: [{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0},{x:133.9,y:427.0}], scale: 0.5442 },
   },
   barna: {
     idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:134.8,y:468.0},{x:131.9,y:467.0},{x:135.5,y:471.0},{x:125.2,y:468.0},{x:137.8,y:460.0},{x:136.5,y:455.0},{x:140.2,y:456.0},{x:131.2,y:456.0}], scale: 0.3934 },
@@ -178,6 +184,12 @@ const CLIP_CONFIG = {
     taunt: { loop: false, frameMs: [130,130,130,130,130,130,130,130], anchors: [{x:111.3,y:420.0},{x:118.2,y:420.0},{x:109.4,y:420.0},{x:111.2,y:423.0},{x:111.3,y:415.0},{x:111.3,y:417.0},{x:107.6,y:423.0},{x:109.6,y:419.0}], scale: 0.4337 },
     win: { loop: false, frameMs: [130,140,160,170,170,170,160,160,220,450], anchors: [{x:83.8,y:336.0},{x:76.0,y:356.0},{x:75.0,y:353.0},{x:80.5,y:351.0},{x:74.7,y:351.0},{x:75.6,y:353.0},{x:77.4,y:356.0},{x:74.4,y:354.0},{x:88.2,y:358.0},{x:107.1,y:377.0}], scale: 0.5134 },
     lose: { loop: false, frameMs: [140,140,140,140,140,140,140,140], anchors: [{x:145.2,y:373.0},{x:209.2,y:360.0},{x:138.3,y:300.0},{x:93.8,y:280.0},{x:94.0,y:292.0},{x:91.5,y:281.0},{x:88.9,y:261.0},{x:83.4,y:278.0}], scale: 0.4879 },
+    punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0}], scale: 0.49 },
+    punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0}], scale: 0.49 },
+    punch3: { loop: false, frameMs: [42,42,42,42], anchors: [{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0},{x:127.1,y:400.0}], scale: 0.49 },
+    kick1: { loop: false, frameMs: [56,56,56,56], anchors: [{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0}], scale: 0.48 },
+    kick2: { loop: false, frameMs: [56,56,56,56], anchors: [{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0}], scale: 0.48 },
+    kick3: { loop: false, frameMs: [56,56,56,56], anchors: [{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0},{x:134.1,y:418.0}], scale: 0.48 },
   },
 };
 
@@ -252,8 +264,19 @@ const CLIP_CONFIG = {
     if (f.staggerTimer > 0) return 'hit';
     if (f.tauntTimer > 0) return 'taunt'; // purely cosmetic -- see updateFighter's interrupt guard
     if (f.attackTimer > 0 && f.attackType === 'sweep') return 'sweep';
-    if (f.attackTimer > 0 && f.attackType === 'punch') return 'punch';
-    if (f.attackTimer > 0 && f.attackType === 'kick') return 'kick';
+    if (f.attackTimer > 0 && f.attackType === 'punch'){
+      // Punch Combo (Tomi/Barna): 3 dedicated per-hit clips (punch1/punch2/punch3), selected by
+      // which step of the chain is currently playing (f.combo.step, 0-indexed). Characters with no
+      // such clip data (Krisz/Laci) transparently fall back to the single legacy 'punch' pose --
+      // hasClipFor is the same generic check used everywhere else in this file, so this needed zero
+      // new architecture, only new data (see SPRITE_DATA_CLIPS/CLIP_CONFIG).
+      const stepPose = f.attackStepPose; // latched at attack start; survives a whiff's combo reset
+      return (stepPose && hasClipFor(f.charId, stepPose)) ? stepPose : 'punch';
+    }
+    if (f.attackTimer > 0 && f.attackType === 'kick'){
+      const stepPose = f.attackStepPose;
+      return (stepPose && hasClipFor(f.charId, stepPose)) ? stepPose : 'kick';
+    }
     // Crouch Block: dedicated pose, distinct from plain Crouch -- protects only against Sweep (see
     // computeGuardType/resolveGuardOutcome), loops for as long as guardType stays 'crouch'.
     if (f.guardType === 'crouch') return 'crouchBlock';
@@ -339,7 +362,7 @@ const CLIP_CONFIG = {
   // that free-run on the animation clock (idle/walk/jump/block/win/lose/...). READ-ONLY on gameplay
   // state: nothing here may ever write a combat field.
   function posePlaybackProgress(f, pose){
-    if (pose === 'punch' || pose === 'kick' || pose === 'sweep'){
+    if (pose === 'sweep' || pose.indexOf('punch') === 0 || pose.indexOf('kick') === 0){
       const cfg = f.attackCfg || (pose === 'sweep' ? SWEEP_CFG : ATTACKS[pose]);
       if (cfg && f.attackTimer > 0){
         const d = attackDuration(cfg);
@@ -2029,7 +2052,28 @@ const CLIP_CONFIG = {
   // v1: Tomi és Laci egyelőre ugyanazt a ÜÜR / RR kombót kapja, mint Krisz (lásd a kérés példáját) --
   // ez a két sor bármikor lecserélhető saját, karakterenként egyedi COMBOS bejegyzésre, a rendszer
   // maga már most is teljesen karakterenkénti (nincs semmi hardcode-olva Krisz-specifikusan).
-  COMBOS.tomi = COMBOS.krisz;
+  // Punch Combo / Kick Combo: a same-button 3-hit chain (Jab->Cross->Hook / Kick1->Kick2->Kick3),
+  // each hit stronger than the last, third hit strongest -- per the "Combo rendszer atalakitas"
+  // spec. Tomi and Barna share the exact same stat blocks (identical mechanic for both); Krisz
+  // and Laci are explicitly OUT of scope for this rework and keep their existing Light/Heavy combo.
+  const PUNCH_CHAIN_HITS = [
+    { startup:4, active:5, recovery:7,  dmg:5,  reach:40, knock:1,  hitStun:16, blockStun:8,  atkType:'high' }, // Jab -- light push, keeps combo in range
+    { startup:4, active:5, recovery:8,  dmg:7,  reach:44, knock:2,  hitStun:18, blockStun:9,  atkType:'high' }, // Cross -- light push, keeps combo in range
+    { startup:6, active:7, recovery:12, dmg:13, reach:50, knock:12, hitStun:26, blockStun:13, atkType:'high' }, // Hook -- 3rd hit always triggers the global knockdown push (KNOCKDOWN_PUSH), sends far
+  ];
+  const KICK_CHAIN_HITS = [
+    { startup:6, active:7, recovery:10, dmg:8,  reach:56, knock:2,  hitStun:20, blockStun:10, atkType:'high' }, // light push, keeps combo in range
+    { startup:6, active:7, recovery:11, dmg:10, reach:58, knock:3,  hitStun:22, blockStun:11, atkType:'high' }, // light push, keeps combo in range
+    { startup:8, active:9, recovery:15, dmg:17, reach:66, knock:15, hitStun:30, blockStun:16, atkType:'high' }, // 3rd hit always triggers the global knockdown push (KNOCKDOWN_PUSH), sends far
+  ];
+  COMBOS.tomi = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
+  COMBOS.barna = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
   COMBOS.laci = COMBOS.krisz;
 
   const COMBO_WINDOW_MS = 300;        // Combo Window: találat/blokk után ennyi ideig fogadja el a következő inputot (250-350ms)
@@ -2120,6 +2164,10 @@ const CLIP_CONFIG = {
       f.combo.buffered = null; f.combo.bufferTimer = 0;
       const hit = def.hits[stepIdx];
       f.attackType = def.input[stepIdx];
+      // latch the per-step art pose for the WHOLE duration of this hit -- pickPose reads this
+      // instead of f.combo.def, so a whiff (which resets the combo bookkeeping mid-swing via
+      // onWhiff) can no longer cut the visible animation short / swap art mid-swing.
+      f.attackStepPose = def.input[stepIdx] + (stepIdx + 1);
       f.attackCfg = hit;
       f.attackTimer = attackDuration(hit);
       f.hasHit = false;
@@ -2136,6 +2184,7 @@ const CLIP_CONFIG = {
       } else {
         f.combo.def = null; f.combo.step = 0;
         f.attackType = inputName;
+        f.attackStepPose = null; // plain non-combo attack -> legacy 'punch'/'kick' pose
         f.attackCfg = ATTACKS[inputName];
         f.attackTimer = attackDuration(ATTACKS[inputName]);
         f.hasHit = false;
@@ -2220,6 +2269,7 @@ const CLIP_CONFIG = {
   function startSweep(f){
     resetCombo(f); // a Sweep nem indít/folytat semmilyen ComboManager-kombót
     f.attackType = 'sweep';
+    f.attackStepPose = null;
     f.attackCfg = SWEEP_CFG;
     f.attackTimer = attackDuration(SWEEP_CFG);
     f.hasHit = false;
@@ -2811,9 +2861,17 @@ const CLIP_CONFIG = {
   }
 
   function updateFighter(f, other, input, dt){
+    // Frame-rate-fuggetlenseg: minden "kepkockankenti" mennyiseg itt (regi-stilusu animacios
+    // kockakban szamolt idozitok, sebesseg-integracio, surlodas/lassitas szorzok) dtScale-lel van
+    // skalazva, hogy a valodi sebesseg/idotartam a kijelzo kepfrissitesetol fuggetlenul ugyanaz
+    // maradjon. dtScale pontosan 1, ha dt=16ms (az eredeti, 60fps-t feltetelezo egy-kockas lepes),
+    // tehat a referencia-utemnel semmi nem valtozik -- egy 120Hz-es kijelzon (dt~8ms) viszont mostantol
+    // helyesen felakkora lepes tortenik kockankent, ahelyett hogy csendben duplajara gyorsulna minden
+    // mozgas/utes/knockdown, mint korabban.
+    const dtScale = dt / 16;
     if (f.hp <= 0){
-      f.vx *= 0.9;
-      f.vy += GRAVITY; f.y += f.vy;
+      f.vx *= Math.pow(0.9, dtScale);
+      f.vy += GRAVITY*dtScale; f.y += f.vy*dtScale;
       if (f.y >= GROUND_Y){ f.y = GROUND_Y; f.vy = 0; }
       return;
     }
@@ -2837,13 +2895,13 @@ const CLIP_CONFIG = {
     // amint lejár, automatikusan Get Up-ba lép (még mindig nem irányítható, még mindig sebezhetetlen),
     // és csak ennek a lejártával tér vissza Idle-be -- lásd isInvulnerable() + a lenti mozgás-tiltó ág.
     if (f.knockdownTimer > 0){
-      f.knockdownTimer--;
+      f.knockdownTimer -= dtScale;
       if (f.knockdownTimer <= 0) f.getUpTimer = GETUP_FRAMES;
     } else if (f.getUpTimer > 0){
-      f.getUpTimer--;
+      f.getUpTimer -= dtScale;
     } else if (f.beingThrownTimer > 0){
       // Being Thrown: rövid "repülés" a dobás után, utána Knockdown -- ld. a Throw hit-detection lentebb
-      f.beingThrownTimer--;
+      f.beingThrownTimer -= dtScale;
       if (f.beingThrownTimer <= 0){
         f.knockdownTimer = KNOCKDOWN_FRAMES;
         // A Knockdown klip saját 8 kockája EGY TELJES "állva megütve -> földre zuhan" ívet rajzol le,
@@ -2858,16 +2916,16 @@ const CLIP_CONFIG = {
 
     if (f.knockdownTimer > 0 || f.getUpTimer > 0 || f.beingThrownTimer > 0){
       // teljesen zárolt állapotok -- semmilyen input nem számít, csak a fizika/lecsengés fut tovább
-      f.vx *= 0.9;
+      f.vx *= Math.pow(0.9, dtScale);
     } else if (f.staggerTimer > 0){
-      f.staggerTimer--;
-      f.vx *= 0.9;
+      f.staggerTimer -= dtScale;
+      f.vx *= Math.pow(0.9, dtScale);
       if (f.ultimateActive > 0) f.ultimateActive = 0; // punished out of the ultimate mid-animation
     } else if (f.ultimateActive > 0){
       // ---- Ultimate playback: the player can't cancel out of this early (no input below matters
       // until it's over), but a real hit from the opponent still knocks them out of it via the
       // staggerTimer branch above — that's what makes whiffing this move actually punishable.
-      f.vx *= 0.85;
+      f.vx *= Math.pow(0.85, dtScale);
       // delta-time driven, not frame-counted: playback speed stays identical regardless of refresh
       // rate / dropped frames, and every pose's on-screen duration matches its configured real duration
       f.ultimateElapsed += dt;
@@ -2927,7 +2985,7 @@ const CLIP_CONFIG = {
       // Taunt playback: locks movement/attacks (like Ultimate does) while it plays, decays in real ms,
       // and automatically falls through to Idle once it reaches 0 -- see pickPose's `tauntTimer>0`
       // branch and CLIP_CONFIG.taunt (non-looping, one-shot).
-      f.vx *= 0.85;
+      f.vx *= Math.pow(0.85, dtScale);
       f.tauntTimer = Math.max(0, f.tauntTimer - dt);
     } else {
       // ---- Guard: külön Block gombbal, NEM automatikus. High Block (Block) / Crouch Block (Le+Block)
@@ -2947,10 +3005,10 @@ const CLIP_CONFIG = {
         f.movingBack = f.facing === 1 ? (!!input.left && !input.right) : (!!input.right && !input.left);
         if (input.left){ f.vx = -MOVE_SPEED*speedMul; }
         else if (input.right){ f.vx = MOVE_SPEED*speedMul; }
-        else { f.vx *= 0.75; }
+        else { f.vx *= Math.pow(0.75, dtScale); }
         if (input.up && f.onGround){ f.vy = JUMP_V; f.onGround = false; }
       } else {
-        f.vx *= 0.8;
+        f.vx *= Math.pow(0.8, dtScale);
         f.movingBack = false;
       }
       // ---- Combo System + Sweep + Throw: edge-triggered (csak az ÚJ, friss gombnyomás számít, nem a
@@ -3042,12 +3100,12 @@ const CLIP_CONFIG = {
     // Throw chord-buffer ablakok lejárnak, ha nem jön a másik gomb a THROW_CHORD_WINDOW_MS-en belül
     if (f.throwChordPunchTimer > 0) f.throwChordPunchTimer = Math.max(0, f.throwChordPunchTimer - dt);
     if (f.throwChordKickTimer > 0) f.throwChordKickTimer = Math.max(0, f.throwChordKickTimer - dt);
-    if (f.hitFlash > 0) f.hitFlash--;
+    if (f.hitFlash > 0) f.hitFlash -= dtScale;
     ComboManager.update(f, dt);
 
-    f.vy += GRAVITY;
-    f.x += f.vx;
-    f.y += f.vy;
+    f.vy += GRAVITY*dtScale;
+    f.x += f.vx*dtScale;
+    f.y += f.vy*dtScale;
     if (f.y >= GROUND_Y){ f.y = GROUND_Y; f.vy = 0; f.onGround = true; }
     f.x = Math.max(10, Math.min(W - f.w - 10, f.x));
 
@@ -3076,7 +3134,7 @@ const CLIP_CONFIG = {
     }
 
     if (f.attackTimer > 0){
-      f.attackTimer--;
+      f.attackTimer -= dtScale;
       const cfg = f.attackCfg;
       const duration = attackDuration(cfg);
       const elapsed = duration - f.attackTimer;
@@ -3164,7 +3222,7 @@ const CLIP_CONFIG = {
     // ---- Throw: saját, teljesen külön idővonal (SOSEM attackTimer/attackCfg) -- nem blokkolható
     // semmilyen guarddal, csak egy dedikált startup/active/recovery ablak és saját hitbox-táv. ----
     if (f.throwTimer > 0){
-      f.throwTimer--;
+      f.throwTimer -= dtScale;
       const tDuration = attackDuration(THROW_CFG);
       const tElapsed = tDuration - f.throwTimer;
       const tActiveStart = THROW_CFG.startup, tActiveEnd = THROW_CFG.startup + THROW_CFG.active;
@@ -3262,16 +3320,19 @@ const CLIP_CONFIG = {
 
     // Training Mode: nincs időkorlát -- a "TIME" felirat helyén az resetGame()-ben beállított "∞"
     // marad a kijelzőn, a timeLeft egyáltalán nem csökken.
+    // Frame-rate-fuggetlen kor-idozito: valos ms-t gyujtunk (nem kepkocka-szamlalast), igy a kor
+    // pontosan annyi VALODI masodpercig tart, amennyi be van allitva -- fuggetlenul a kijelzo Hz-jetol.
     if (mode !== 'training'){
-      timerAcc++;
-      if (timerAcc >= 60){ timerAcc = 0; timeLeft--; document.getElementById('timer').textContent = Math.max(0,timeLeft); }
+      timerAcc += dt;
+      if (timerAcc >= 1000){ timerAcc -= 1000; timeLeft--; document.getElementById('timer').textContent = Math.max(0,timeLeft); }
     }
 
-    if (bannerTimer > 0){ bannerTimer--; if (bannerTimer===0) document.getElementById('banner').classList.remove('show'); }
-    if (shake > 0) shake--;
-    if (impactFlash > 0) impactFlash--;
+    const uiDtScale = dt / 16;
+    if (bannerTimer > 0){ bannerTimer -= uiDtScale; if (bannerTimer<=0) document.getElementById('banner').classList.remove('show'); }
+    if (shake > 0) shake -= uiDtScale;
+    if (impactFlash > 0) impactFlash -= uiDtScale;
 
-    hitSparks.forEach(s=>{ s.dist += s.speed; s.life--; });
+    hitSparks.forEach(s=>{ s.dist += s.speed*uiDtScale; s.life -= uiDtScale; });
     hitSparks = hitSparks.filter(s=>s.life>0);
 
     // Training Mode: a meccs sosem ér véget KO-val vagy idővel -- csak a Szünet menü "KILÉPÉS
@@ -3688,8 +3749,9 @@ const CLIP_CONFIG = {
     // once the match is over, update() no longer runs — let purely cosmetic timers (hit-flash/stagger)
     // keep decaying here so a fighter doesn't stay stuck flashing/dizzy forever on the end screen
     if (gameOver){
-      if (f.hitFlash > 0) f.hitFlash--;
-      if (f.staggerTimer > 0) f.staggerTimer--;
+      const postGameDtScale = lastDt / 16;
+      if (f.hitFlash > 0) f.hitFlash -= postGameDtScale;
+      if (f.staggerTimer > 0) f.staggerTimer -= postGameDtScale;
     }
 
     const anim = f.anim;
@@ -3992,6 +4054,7 @@ const CLIP_CONFIG = {
   // back at the same real-world speed no matter the monitor's refresh rate or any dropped frames,
   // instead of being tied to a fixed "N frames @ 60fps" counter.
   let lastFrameTs = null;
+  let lastDt = 16; // legutobbi valos frame-dt (ms) -- a jatekallapoton kivuli kozmetikai lecsengesekhez (ld. drawFighter gameOver ag)
   function loop(ts){
     GamepadManager.poll(); // minden képkockán fut -- menüket és a harcot is vezérli, gameState-től függetlenül
     document.body.classList.toggle('fighting', gameState === 'FIGHT' || gameState === 'PAUSED'); // on-screen touch controls only during a match
@@ -3999,6 +4062,7 @@ const CLIP_CONFIG = {
     let dt = ts - lastFrameTs;
     lastFrameTs = ts;
     if (dt > 100) dt = 100; // clamp huge gaps (tab switch/lag spike) so playback can't skip several poses at once
+    lastDt = dt;
     // the actual match (physics/AI/rendering) only runs while gameState === 'FIGHT' — during any
     // menu screen the canvas underneath simply isn't touched, so nothing moves or attacks there
     if (gameState === 'FIGHT'){
@@ -4015,7 +4079,7 @@ const CLIP_CONFIG = {
       }
       else if (RoundEndManager.isActive()){ RoundEndManager.update(dt); }
       // brief hit-stop: pause physics for a couple of frames on impact for weight/feel, rendering keeps running
-      else if (hitStopTimer > 0){ hitStopTimer--; }
+      else if (hitStopTimer > 0){ hitStopTimer -= dt / 16; }
       else { update(dt); }
       // pose selection + clip clocks run once per rendered frame, AFTER game logic, BEFORE drawing --
       // so the displayed pose always reflects this frame's final state
