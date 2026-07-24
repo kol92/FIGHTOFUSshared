@@ -10,6 +10,10 @@
   const JUMP_V = -15;
   const MOVE_SPEED = 4.2;
   const ROUND_TIME = 60;
+  // Global on-screen size multiplier for EVERY fighter's rendered sprite (all poses/clips/ultimate/
+  // enter). Purely visual — hitboxes/pushboxes are unaffected — so it just makes all four characters
+  // bigger while keeping their relative proportions. Applied once in drawFighter's poseScale().
+  const GLOBAL_FIGHTER_SCALE = 1.15;
   // --- asset manifest (paths from js/assets.js) ---
   const A = window.ASSETS;
   const SPRITE_DATA = A.sprites;
@@ -91,11 +95,12 @@
     if (!id || loadedFighters.has(id)) return;
     loadedFighters.add(id);
     if (SPRITE_DATA[id])          loadImageMap(sprites[id], SPRITE_DATA[id]);
-    if (BERSERK_SPRITE_DATA[id])  loadImageMap(sprites[id + '_special'], BERSERK_SPRITE_DATA[id]);
+    // Berserk alt-art (the old "special" sprite sets) is retired — Berserk is now a meter-gated MOVE,
+    // not a timed alt-art buff. We no longer load sprites[id+'_special'] / combat2_special; drawFighter's
+    // useSpecialArt branch is dead (f.berserkActive stays 0), so these sets are simply never consulted.
     if (SPRITE_DATA_ULTIMATES[id]){ sprites.ultimates[id] = sprites.ultimates[id] || {}; loadImageMap(sprites.ultimates[id], SPRITE_DATA_ULTIMATES[id]); }
     if (SPRITE_DATA_ENTER[id]){     sprites.enter[id]     = sprites.enter[id]     || {}; loadImageMap(sprites.enter[id], SPRITE_DATA_ENTER[id]); }
     if (SPRITE_DATA_COMBAT2[id]){   sprites.combat2[id]   = sprites.combat2[id]   || {}; loadImageMap(sprites.combat2[id], SPRITE_DATA_COMBAT2[id]); }
-    if (SPRITE_DATA_COMBAT2_SPECIAL[id]){ sprites.combat2_special[id] = sprites.combat2_special[id] || {}; loadImageMap(sprites.combat2_special[id], SPRITE_DATA_COMBAT2_SPECIAL[id]); }
     if (SPRITE_DATA_CLIPS[id]){
       sprites.clips[id] = sprites.clips[id] || {};
       for (const pose in SPRITE_DATA_CLIPS[id]){
@@ -132,6 +137,36 @@
   // data addition here -- drawFighter/pickPose never need another special case.
 
 const CLIP_CONFIG = {
+  krisz: {
+    berserk: { loop: false, frameMs: [120,140,130,130,130,110,120,160],
+      anchors: [{x:163.7,y:412.0},{x:163.7,y:400.0},{x:163.7,y:411.0},{x:163.7,y:411.0},{x:163.7,y:381.0},{x:163.7,y:380.0},{x:163.7,y:379.0},{x:163.7,y:390.0}],
+      scale: 0.435 },
+    idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:226.3,y:475.0},{x:192.0,y:475.0},{x:155.8,y:475.0},{x:117.1,y:475.0},{x:224.0,y:475.0},{x:193.4,y:475.0},{x:157.7,y:475.0},{x:120.9,y:475.0}], scale: 0.3582 },
+    walk: { loop: true, frameMs: [105,105,105,105,105,105,105,105], anchors: [{x:209.2,y:481.0},{x:173.1,y:483.0},{x:151.7,y:482.0},{x:120.8,y:487.0},{x:201.3,y:463.0},{x:175.7,y:458.0},{x:150.5,y:466.0},{x:132.0,y:468.0}], scale: 0.3684 },
+    run: { loop: true, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:240.2,y:458.0},{x:213.2,y:463.0},{x:160.4,y:442.0},{x:165.2,y:457.0},{x:204.4,y:383.0},{x:211.3,y:402.0},{x:157.5,y:374.0},{x:152.3,y:409.0}], scale: 0.4138 },
+    backwalk: { loop: true, frameMs: [110,110,110,110,110,110,110,110], anchors: [{x:170.5,y:442.0},{x:149.9,y:442.0},{x:144.5,y:442.0},{x:117.2,y:442.0},{x:162.3,y:424.0},{x:136.1,y:424.0},{x:139.5,y:424.0},{x:96.5,y:424.0}], scale: 0.3962 },
+    jump: { loop: false, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:194.8,y:464.0},{x:164.2,y:462.0},{x:139.6,y:461.0},{x:122.5,y:389.0},{x:210.3,y:290.0},{x:164.9,y:308.0},{x:159.5,y:396.0},{x:136.9,y:453.0}], scale: 0.5076 },
+    crouch: { loop: false, frameMs: [60,60,60,60,60,60,60,60], anchors: [{x:170.1,y:460.0},{x:158.5,y:461.0},{x:160.8,y:460.0},{x:139.3,y:459.0},{x:151.5,y:411.0},{x:143.1,y:413.0},{x:142.7,y:415.0},{x:122.7,y:414.0}], scale: 0.3582 },
+    block: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:277.1,y:469.0},{x:230.8,y:469.0},{x:126.2,y:469.0},{x:262.4,y:453.0},{x:209.7,y:455.0},{x:136.2,y:455.0}], scale: 0.366 },
+    crouchBlock: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:254.6,y:433.0},{x:247.6,y:433.0},{x:157.0,y:433.0},{x:253.9,y:353.0},{x:210.8,y:353.0},{x:188.8,y:352.0}], scale: 0.3582 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:352.3,y:455.0},{x:225.3,y:455.0},{x:109.0,y:455.0},{x:357.8,y:411.0},{x:243.1,y:424.0},{x:111.8,y:423.0}], scale: 0.3981 },
+    sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:185.0,y:464.0},{x:185.0,y:457.0},{x:185.0,y:432.0},{x:185.0,y:437.0},{x:185.0,y:345.0},{x:185.0,y:354.0},{x:185.0,y:404.0},{x:185.0,y:409.0}], scale: 0.3898 },
+    taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:151.2,y:473.0},{x:133.3,y:473.0},{x:133.9,y:473.0},{x:141.3,y:473.0},{x:157.6,y:431.0},{x:143.8,y:431.0},{x:125.5,y:431.0},{x:140.7,y:431.0}], scale: 0.3953 },
+    getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:135.7,y:452.0},{x:173.6,y:450.0},{x:142.6,y:453.0},{x:123.6,y:456.0},{x:140.2,y:384.0},{x:115.1,y:384.0},{x:128.5,y:388.0},{x:120.5,y:388.0}], scale: 0.3582 },
+    knockdown: { loop: false, frameMs: [95,95,95,95,95,95,95,95], anchors: [{x:155.7,y:355.0},{x:139.9,y:354.0},{x:145.8,y:351.0},{x:134.1,y:329.0},{x:144.4,y:216.0},{x:147.2,y:194.0},{x:140.3,y:205.0},{x:152.2,y:210.0}], scale: 0.4773 },
+    lose: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:153.2,y:446.0},{x:126.0,y:446.0},{x:126.8,y:446.0},{x:145.1,y:446.0},{x:158.5,y:373.0},{x:150.6,y:378.0},{x:150.5,y:380.0},{x:154.4,y:383.0}], scale: 0.3792 },
+    win: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:182.8,y:499.0},{x:163.5,y:499.0},{x:143.9,y:499.0},{x:124.0,y:499.0},{x:196.7,y:479.0},{x:168.1,y:477.0},{x:158.3,y:478.0},{x:126.6,y:478.0}], scale: 0.4 },
+    punch: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:385.0},{x:132.9,y:384.0},{x:132.9,y:385.0},{x:132.9,y:384.0}], scale: 0.48 },
+    kick: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.3,y:433.0},{x:141.3,y:432.0},{x:141.3,y:433.0},{x:141.3,y:433.0}], scale: 0.4746 },
+    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:139.3,y:325.0},{x:154.8,y:326.0},{x:123.7,y:328.0},{x:118.0,y:328.0},{x:92.1,y:328.0},{x:137.6,y:318.0},{x:183.4,y:320.0},{x:170.9,y:321.0},{x:155.7,y:322.0},{x:132.6,y:322.0}], scale: 0.3582 },
+    beingThrown: { loop: false, frameMs: [58,58,58,58,58,58,58,58,58,58], anchors: [{x:156.8,y:337.0},{x:122.6,y:337.0},{x:129.6,y:338.0},{x:150.0,y:339.0},{x:119.1,y:343.0},{x:133.0,y:247.0},{x:156.7,y:254.0},{x:144.3,y:290.0},{x:169.4,y:284.0},{x:173.3,y:285.0}], scale: 0.3582 },
+    punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:385.0},{x:132.9,y:384.0},{x:132.9,y:385.0},{x:132.9,y:384.0}], scale: 0.48 },
+    punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:384.0},{x:132.9,y:383.0},{x:132.9,y:352.0},{x:132.9,y:352.0}], scale: 0.48 },
+    punch3: { loop: false, frameMs: [46,46,46,46], anchors: [{x:132.9,y:352.0},{x:132.9,y:351.0},{x:132.9,y:352.0},{x:132.9,y:351.0}], scale: 0.48 },
+    kick1: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.3,y:433.0},{x:141.3,y:432.0},{x:141.3,y:433.0},{x:141.3,y:433.0}], scale: 0.4746 },
+    kick2: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.3,y:434.0},{x:141.3,y:333.0},{x:141.3,y:389.0},{x:141.3,y:395.0}], scale: 0.4746 },
+    kick3: { loop: false, frameMs: [58,58,58,58], anchors: [{x:141.3,y:394.0},{x:141.3,y:397.0},{x:141.3,y:393.0},{x:141.3,y:396.0}], scale: 0.4746 },
+  },
   tomi: {
     idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:106.0,y:424.0},{x:106.7,y:422.0},{x:106.5,y:422.0},{x:107.4,y:422.0},{x:105.6,y:423.0},{x:104.6,y:423.0},{x:103.2,y:423.0},{x:104.5,y:423.0}], scale: 0.4951 },
     walk: { loop: true, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:84.1,y:496.0},{x:71.6,y:494.0},{x:57.4,y:494.0},{x:48.9,y:497.0},{x:55.9,y:494.0},{x:35.0,y:496.0},{x:28.8,y:494.0},{x:49.9,y:494.0}], scale: 0.423 },
@@ -199,7 +234,7 @@ const CLIP_CONFIG = {
   // Krisz/Tomi have different proportions and the sprite art isn't on a shared fixed canvas size.
   const CHARACTERS = [
     { id: 'krisz', name: 'KRISZ', enabled: true, spriteKey: 'krisz',
-      portraitCrop: { x: 20/236, y: 0, w: 196/236, h: 196/344 } },
+      portraitCrop: { x: 77/690, y: 0, w: 562/690, h: 611/1222 } },
     { id: 'tomi', name: 'TOMI', enabled: true, spriteKey: 'tomi',
       portraitCrop: { x: 34/206, y: 0, w: 150/206, h: 170/424 } },
     { id: 'laci', name: 'LACI', enabled: true, spriteKey: 'laci',
@@ -262,6 +297,14 @@ const CLIP_CONFIG = {
       if (p) return hasClipFor(f.charId, 'ultimate') ? 'ultimate' : p.poseName;
     }
     if (f.staggerTimer > 0) return 'hit';
+    if (f.berserkTimer > 0){
+      // Berserk Move: characters with a dedicated 'berserk' clip (Krisz) play it; the interim melee
+      // versions (Tomi/Laci/Barna) reuse an existing pose (BERSERK_MOVES[id].pose) until their own
+      // sheet lands. hasClipFor keeps this the same generic check used everywhere else.
+      const bm = BERSERK_MOVES[f.charId];
+      if (bm && hasClipFor(f.charId, 'berserk')) return 'berserk';
+      if (bm && bm.pose) return bm.pose;
+    }
     if (f.tauntTimer > 0) return 'taunt'; // purely cosmetic -- see updateFighter's interrupt guard
     if (f.attackTimer > 0 && f.attackType === 'sweep') return 'sweep';
     if (f.attackTimer > 0 && f.attackType === 'punch'){
@@ -570,10 +613,17 @@ const CLIP_CONFIG = {
                                  // fekszik a BeingThrown végén), ld. posePlaybackProgress('knockdown')
       getUpTimer: 0,          // Knockdown után -- Get Up állapot, még mindig nem irányítható
       combatState: 'idle',    // pusztán derived/olvasható címke -- lásd computeCombatState()
-      // Berserk mana: starts EMPTY (not ready) and fills up in real time — 10s the very first time,
-      // then 20s every time after a use. manaMs counts UP from 0 to manaFillMs (ready at manaFillMs).
-      manaMs: 0, manaFillMs: 10000,
-      berserkActive: 0, // ms remaining on the current Berserk buff (0 = not active); 5000ms whenever triggered
+      // Berserk meter: starts EMPTY and fills in real time (BERSERK_FILL_MS, slow) PLUS a chunk every
+      // time this fighter TAKES a hit (BERSERK_DMG_FILL of the bar per hit). manaMs counts UP from 0 to
+      // manaFillMs; at full the bar flashes red + vibrates until the Berserk Move (special button) is used,
+      // which spends the whole bar. No longer a timed buff — it now GATES the Berserk Move attack.
+      manaMs: 0, manaFillMs: BERSERK_FILL_MS,
+      berserkActive: 0, // (retained as 0; the old 5s speed/damage buff was removed — Berserk is now a move)
+      // ---- Berserk Move state (see BERSERK_MOVES config) — a meter-gated special attack ----
+      berserkTimer: 0,      // ms remaining in the Berserk Move animation (0 = not performing it)
+      berserkElapsed: 0,    // ms elapsed since the Berserk Move started
+      berserkHasHit: false, // melee Berserk Move: has the single hit window already connected?
+      berserkSpawned: false,// projectile Berserk Move: has the projectile already been released?
       danceParticles: [],
       walkPhase: 0,
       hitFlash: 0,
@@ -2037,7 +2087,7 @@ const CLIP_CONFIG = {
   //   wall bounce / ground bounce / counter hit / parry: additional per-hit flags (`wallBounce:true`,
   //     `counterBonus:{...}`) read at the exact point hitStun/knock are currently applied below.
   const COMBOS = {
-    krisz: [
+    laci: [
       { name: 'Light Combo', input: ['punch','punch','kick'], hits: [
         { startup:5, active:6, recovery:9,  dmg:6,  reach:42, knock:5,  hitStun:20, blockStun:10, atkType:'high' },
         { startup:5, active:6, recovery:9,  dmg:7,  reach:44, knock:6,  hitStun:18, blockStun:10, atkType:'high' },
@@ -2074,7 +2124,13 @@ const CLIP_CONFIG = {
     { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
     { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
   ];
-  COMBOS.laci = COMBOS.krisz;
+  // Krisz now joins the 3-hit Punch/Kick Combo system too -- his refreshed punch/kick sheets are
+  // 3 hits x 4 frames, so each press plays one clean hit (punch1/2/3, kick1/2/3 clips). Laci keeps
+  // the legacy Light/Heavy combo (its own entry above), unaffected.
+  COMBOS.krisz = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
 
   const COMBO_WINDOW_MS = 300;        // Combo Window: találat/blokk után ennyi ideig fogadja el a következő inputot (250-350ms)
   const INPUT_BUFFER_MS = 130;        // Input Buffer: ha a gomb kicsit korábban jön, ennyi ideig "vár" (100-150ms)
@@ -2086,6 +2142,10 @@ const CLIP_CONFIG = {
   const KNOCKDOWN_PUSH = 14;          // hátralökés erőssége knockdownnál
   const ATTACKER_SEPARATION = 10;     // knockdownnál a TÁMADÓ is hátralép, hogy sarokban se ragadjanak egymás mellett
   const PUSHBACK_STEP = 1.6;          // extra hátralökés (tiszta) találatonként egy kombón belül
+
+  // ---- Berserk meter tuning (see makeFighter's manaMs/manaFillMs + applyDamage + BERSERK_MOVES) ----
+  const BERSERK_FILL_MS = 20000;      // real-time fill 0 -> full (slow); same for every character
+  const BERSERK_DMG_FILL = 0.05;      // + this fraction of the whole bar each time the fighter TAKES a hit
 
   function attackDuration(cfg){ return cfg.startup + cfg.active + cfg.recovery; }
   function attackBox(f){
@@ -2137,6 +2197,12 @@ const CLIP_CONFIG = {
   // Minden más módban ez pontosan a régi `hp = Math.max(0, hp - dmg)` viselkedés, változatlanul.
   function applyDamage(target, dmg){
     if (dmg <= 0) return;
+    // Taking a hit charges the victim's Berserk meter a little (BERSERK_DMG_FILL of the bar per hit),
+    // on top of the slow real-time fill — so an aggressive opponent hands you your Berserk Move faster.
+    // (Training keeps the bar pinned full anyway, so skip it there.)
+    if (mode !== 'training' && target.manaMs < target.manaFillMs){
+      target.manaMs = Math.min(target.manaFillMs, target.manaMs + target.manaFillMs * BERSERK_DMG_FILL);
+    }
     if (mode === 'training'){
       target.trainingHitCount = (target.trainingHitCount || 0) + 1;
       if (target.trainingHitCount >= 3){
@@ -2337,14 +2403,16 @@ const CLIP_CONFIG = {
   const ULTIMATES = {
     krisz: {
       poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8","ult9","ult10"],
-      // shirt-off + transformation (ult2-ult6) held a bit longer/slower; the STOP-sign swing (ult7-ult9)
-      // plays fast and fluid; the impact frame (ult10) only holds for a brief beat.
-      poseDurations: [190, 170, 180, 170, 130, 190, 90, 80, 90, 130],
+      // Refreshed sheet: stance -> reach/bend -> picks up the cone -> wears it as a hat -> pulls out the
+      // STOP sign -> raises it -> swings it forward (impact = ult10). Anchors: x locked to the neutral
+      // stance so the body stays planted while the sign swings out; y per-frame so the feet always land
+      // on the ground (the character sits higher in the later cells to make room for the cone/sign).
+      poseDurations: [170, 150, 160, 200, 150, 180, 160, 150, 140, 250],
       hitPoseIndex: 9, activeOffsetMs: 0, activeLenMs: 130,
-      ultScale: 0.541,
+      ultScale: 0.4352,
       anchors: [
-        {x:95,  y:288}, {x:93, y:295}, {x:90, y:312}, {x:95, y:310}, {x:100, y:285},
-        {x:90,  y:308}, {x:85, y:318}, {x:48, y:278}, {x:128,y:310}, {x:210, y:390},
+        {x:144.3,y:495.0}, {x:144.3,y:495.0}, {x:144.3,y:495.0}, {x:144.3,y:497.0}, {x:144.3,y:495.0},
+        {x:144.3,y:438.0}, {x:144.3,y:451.0}, {x:144.3,y:435.0}, {x:144.3,y:444.0}, {x:144.3,y:443.0},
       ],
       dmgPct: 0.33, knockVx: 18, knockVy: -6, stun: 60,
       reach: 130, hitboxH: 110,
@@ -2480,18 +2548,15 @@ const CLIP_CONFIG = {
   //   not a new code path threaded through the manager.
   const ENTER_ANIMATIONS = {
     krisz: {
-      // magabiztosan belep -> kibontja a booster packet -> csalodik -> dühösen eldobja -> harci pozba all
-      // -- gyors, pörgős tempó: a teljes bevonulás jóval a visszaszámlálás vége előtt lezajlik, utána
-      // a karakter azonnal idle pózba ("nyugalomba") all a "FIGHT!" felirat megjelenéséig.
-      poses: ["enter1","enter2","enter3","enter4","enter5"],
-      poseDurations: [400, 380, 400, 350, 320],
-      scale: 0.469,
-      // anchor = {x: talp-középpont, y: talp-vonal}, mindkettő az adott póz KÉPÉNEK saját pixel-
-      // koordinátáiban -- a talp-vonal (y) minden pózra pontosan a kép alsó szélével egyezik (a kivágás
-      // már eleve szorosan a tartalomhoz igazodik), az x-et pedig a cipők tényleges vízszintes közepéből
-      // mértük (nem a kép közepéből), hogy a kezében tartott/eldobott tárgyak ne tolják el a pivotot.
+      // Refreshed 10-frame entrance: strolls in with sunglasses -> pushes them up -> takes them off ->
+      // flings them away -> roars/flexes up -> settles into the fighting stance. Per-frame anchors
+      // (centroid x + content-bottom y) keep him planted as he walks in and pumps up.
+      poses: ["enter1","enter2","enter3","enter4","enter5","enter6","enter7","enter8","enter9","enter10"],
+      poseDurations: [280, 240, 240, 240, 220, 280, 300, 260, 240, 240],
+      scale: 0.4341,
       anchors: [
-        {x:96, y:358}, {x:85, y:354}, {x:129, y:353}, {x:118, y:340}, {x:114, y:320},
+        {x:109.3,y:428.0}, {x:91.3,y:433.0}, {x:82.2,y:434.0}, {x:74.7,y:429.0}, {x:65.8,y:433.0},
+        {x:126.4,y:378.0}, {x:125.9,y:379.0}, {x:112.8,y:379.0}, {x:100.6,y:381.0}, {x:91.3,y:381.0},
       ],
     },
     tomi: {
@@ -2785,6 +2850,15 @@ const CLIP_CONFIG = {
       dmgPct: 0.33, knockVx: 16, knockVy: -5, stun: 55,
       hitStopFrames: 6, shakeAmt: 24,
     },
+    // Krisz's Berserk Move projectile — the traffic cone he hurls. Lower damage than an Ultimate
+    // (dmgPct 0.16 vs 0.33) since the Berserk Move recharges and can be used repeatedly per round.
+    krisz_cone: {
+      spriteCharId: 'krisz', spriteKey: 'cone',
+      speedPxPerSec: 820, spinDegPerSec: 560,
+      w: 44, h: 56, maxRange: 900, drawH: 58,
+      dmgPct: 0.16, knockVx: 14, knockVy: -5, stun: 40,
+      hitStopFrames: 5, shakeAmt: 18,
+    },
   };
   let projectiles = [];
   function spawnProjectile(owner, typeKey, x, y){
@@ -2860,6 +2934,101 @@ const CLIP_CONFIG = {
     });
   }
 
+  // ---------- BERSERK MOVE MANAGER ----------
+  // Meter-gated special attack that REPLACED the old timed Berserk buff (+ per-character alt-art). When
+  // the Berserk meter is full (manaMs >= manaFillMs) the special button (R / O) fires this move and
+  // spends the whole bar. Data-driven per character (BERSERK_MOVES) — a new character's move is just one
+  // more entry here plus its own 'berserk' clip art. Two kinds:
+  //   kind:'projectile' (Krisz) — plays the berserk clip; at spawnAtMs it releases a Projectile
+  //         (PROJECTILE_TYPES[projectileType]) that carries all the damage/knockback (ranged move).
+  //   kind:'melee' (default) — one strong close-range hit, live for [hitStartMs, hitStartMs+hitLenMs].
+  //         Interim move for characters whose dedicated berserk sheet hasn't landed yet: it reuses an
+  //         existing pose (`pose`) for the visuals so the button already does something meaningful.
+  const BERSERK_MOVES = {
+    krisz: {
+      kind: 'projectile', pose: 'berserk',
+      totalMs: 1040,          // matches the 8-frame krisz berserk clip (see CLIP_CONFIG.krisz.berserk)
+      spawnAtMs: 760,         // the cone leaves his hand at the start of frame 7 (throw release)
+      projectileType: 'krisz_cone', spawnOffset: { x: 34, y: -96 },
+    },
+    // --- interim melee Berserk Moves (reuse an existing pose) until each fighter's own sheet arrives ---
+    tomi:  { kind: 'melee', pose: 'punch', totalMs: 520, hitStartMs: 150, hitLenMs: 130,
+             hitCfg: { dmg: 18, reach: 62, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
+    laci:  { kind: 'melee', pose: 'punch', totalMs: 520, hitStartMs: 150, hitLenMs: 130,
+             hitCfg: { dmg: 18, reach: 62, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
+    barna: { kind: 'melee', pose: 'kick',  totalMs: 540, hitStartMs: 160, hitLenMs: 130,
+             hitCfg: { dmg: 18, reach: 66, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
+  };
+  function berserkReady(f){
+    // full bar, on the ground, and free to act (not mid-attack/throw/stagger/knockdown/ultimate/taunt)
+    return f.manaMs >= f.manaFillMs && f.berserkTimer <= 0 && f.attackTimer <= 0 && f.throwTimer <= 0 &&
+      f.staggerTimer <= 0 && f.blockStunTimer <= 0 && f.ultimateActive <= 0 && f.tauntTimer <= 0 &&
+      !isInvulnerable(f) && f.onGround && !!BERSERK_MOVES[f.charId];
+  }
+  function startBerserkMove(f){
+    const cfg = BERSERK_MOVES[f.charId];
+    if (!cfg) return false;
+    resetCombo(f);
+    f.attackTimer = 0; f.throwTimer = 0;   // Berserk Move owns the fighter — cancel any normal attack
+    f.attackType = 'berserk'; f.attackStepPose = null; f.attackCfg = null;
+    f.berserkTimer = cfg.totalMs;
+    f.berserkElapsed = 0;
+    f.berserkHasHit = false;
+    f.berserkSpawned = false;
+    f.vx = 0;
+    f.manaMs = 0;                          // spends the whole bar
+    banner(`${charName(f.charId)} BERSERK! 🔥`, 55);
+    playUltSound('charge');
+    return true;
+  }
+  // Advances the Berserk Move each frame: melee hit window OR projectile release. Returns true while the
+  // move is still playing (so updateFighter can skip normal movement/attack handling meanwhile).
+  function updateBerserkMove(f, other, dt){
+    if (f.berserkTimer <= 0) return false;
+    const cfg = BERSERK_MOVES[f.charId];
+    f.berserkElapsed += dt;
+    f.berserkTimer -= dt;
+    f.vx *= Math.pow(0.8, dt/16);          // plant in place while the move plays
+    if (cfg.kind === 'projectile'){
+      if (!f.berserkSpawned && f.berserkElapsed >= cfg.spawnAtMs){
+        f.berserkSpawned = true;
+        const ox = f.facing === 1 ? f.x + f.w + cfg.spawnOffset.x : f.x - cfg.spawnOffset.x;
+        spawnProjectile(f, cfg.projectileType, ox, f.y + cfg.spawnOffset.y);
+      }
+    } else { // melee
+      const hitOn = f.berserkElapsed >= cfg.hitStartMs && f.berserkElapsed <= cfg.hitStartMs + cfg.hitLenMs;
+      if (!f.berserkHasHit && hitOn){
+        const reach = cfg.hitCfg.reach;
+        const bx = f.facing === 1 ? f.x + f.w : f.x - reach;
+        const box = { x: bx, y: f.y - 100, w: reach, h: 70 };
+        const otherBox = { x: other.x, y: other.y - other.h, w: other.w, h: other.h };
+        if (rectsOverlap(box, otherBox) && other.hp > 0 && !isInvulnerable(other)){
+          f.berserkHasHit = true;
+          const sparkX = other.x + other.w/2, sparkY = other.y - 90;
+          const blocked = resolveGuardOutcome(other, cfg.hitCfg.atkType);
+          if (blocked){
+            other.blockStunTimer = cfg.hitCfg.blockStun;
+            other.vx += f.facing * 3;
+            resetCombo(other);
+            spawnSparks(sparkX, sparkY, 5);
+            applyDamage(other, cfg.hitCfg.dmg * 0.2);
+            hitStopTimer = 2;
+          } else {
+            other.staggerTimer = Math.max(other.staggerTimer, cfg.hitCfg.hitStun);
+            other.vx = f.facing * (cfg.hitCfg.knock + 6);
+            other.vy = -4; other.onGround = false;
+            resetCombo(other);
+            spawnSparks(sparkX, sparkY, 12);
+            applyDamage(other, cfg.hitCfg.dmg);
+            hitStopTimer = 5; shake = Math.max(shake, 14);
+          }
+        }
+      }
+    }
+    if (f.berserkTimer <= 0){ f.berserkTimer = 0; f.attackType = null; }
+    return true;
+  }
+
   function updateFighter(f, other, input, dt){
     // Frame-rate-fuggetlenseg: minden "kepkockankenti" mennyiseg itt (regi-stilusu animacios
     // kockakban szamolt idozitok, sebesseg-integracio, surlodas/lassitas szorzok) dtScale-lel van
@@ -2921,6 +3090,7 @@ const CLIP_CONFIG = {
       f.staggerTimer -= dtScale;
       f.vx *= Math.pow(0.9, dtScale);
       if (f.ultimateActive > 0) f.ultimateActive = 0; // punished out of the ultimate mid-animation
+      if (f.berserkTimer > 0){ f.berserkTimer = 0; f.attackType = null; } // and out of a Berserk Move
     } else if (f.ultimateActive > 0){
       // ---- Ultimate playback: the player can't cancel out of this early (no input below matters
       // until it's over), but a real hit from the opponent still knocks them out of it via the
@@ -2987,6 +3157,11 @@ const CLIP_CONFIG = {
       // branch and CLIP_CONFIG.taunt (non-looping, one-shot).
       f.vx *= Math.pow(0.85, dtScale);
       f.tauntTimer = Math.max(0, f.tauntTimer - dt);
+    } else if (f.berserkTimer > 0){
+      // ---- Berserk Move playback: meter-gated special attack. Locks out normal input while it plays
+      // (like Ultimate/Taunt); a real hit from the opponent still knocks the fighter out of it via the
+      // staggerTimer branch above. updateBerserkMove handles the melee hit window / projectile release.
+      updateBerserkMove(f, other, dt);
     } else {
       // ---- Guard: külön Block gombbal, NEM automatikus. High Block (Block) / Crouch Block (Le+Block)
       // -- blockStunTimer alatt megtartjuk az utoljára beállított guardType-ot (a testtartás kényszerű).
@@ -3072,15 +3247,11 @@ const CLIP_CONFIG = {
           }
         }
       }
-      // ---- Berserk: same effect for every character (faster + harder-hitting for 5s), only the
-      // alt-art sprite set swapped in while it's active differs per character. Needs a FULL mana bar
-      // to trigger; using it drains the bar to 0 and — from then on — every future recharge takes 20s
-      // instead of the first-ever 10s (see the manaMs/manaFillMs regen block below).
-      if (motionBsk || (input.special && f.manaMs >= f.manaFillMs)){
-        f.manaMs = 0;
-        f.manaFillMs = 20000;
-        f.berserkActive = 5000;
-        banner(`${charName(f.charId)} BERSERK!! 🔥`, 60);
+      // ---- Berserk Move: meter-gated special attack (replaced the old timed buff). Needs a FULL bar;
+      // firing it (special button, or the QCB+Punch motion input) spends the whole bar and starts the
+      // move (see BERSERK MOVE MANAGER). berserkReady() also enforces on-ground + free-to-act.
+      if ((motionBsk || input.special) && berserkReady(f)){
+        startBerserkMove(f);
       }
       if (motionUlt || (input.ultimate && canUseUltimate(f))){
         startUltimate(f);
@@ -3306,13 +3477,18 @@ const CLIP_CONFIG = {
     // Facing: minden képkockán újraszámolva, a nyers x-pozíció alapján -- ez már eleve folyamatosan
     // "az ellenfél felé" fordítja a karaktert, tehát cross-up ugrás közben/landolás után magától
     // megtörténik a fordulás, amint a pozíciók átfedik/keresztezik egymást, külön kód nélkül is.
-    if (p1.staggerTimer<=0 && p1.attackTimer<=0 && p1.ultimateActive<=0 && p1.throwTimer<=0 && !isInvulnerable(p1) && p1.hp>0) p1.facing = p1.x < p2.x ? 1 : -1;
-    if (p2.staggerTimer<=0 && p2.attackTimer<=0 && p2.ultimateActive<=0 && p2.throwTimer<=0 && !isInvulnerable(p2) && p2.hp>0) p2.facing = p2.x < p1.x ? 1 : -1;
+    if (p1.staggerTimer<=0 && p1.attackTimer<=0 && p1.ultimateActive<=0 && p1.berserkTimer<=0 && p1.throwTimer<=0 && !isInvulnerable(p1) && p1.hp>0) p1.facing = p1.x < p2.x ? 1 : -1;
+    if (p2.staggerTimer<=0 && p2.attackTimer<=0 && p2.ultimateActive<=0 && p2.berserkTimer<=0 && p2.throwTimer<=0 && !isInvulnerable(p2) && p2.hp>0) p2.facing = p2.x < p1.x ? 1 : -1;
 
     document.getElementById('hpP1').style.width = p1.hp+'%';
     document.getElementById('hpP2').style.width = p2.hp+'%';
-    document.getElementById('specP1').style.width = (100*p1.manaMs/p1.manaFillMs)+'%';
-    document.getElementById('specP2').style.width = (100*p2.manaMs/p2.manaFillMs)+'%';
+    const specEl1 = document.getElementById('specP1'), specEl2 = document.getElementById('specP2');
+    specEl1.style.width = (100*p1.manaMs/p1.manaFillMs)+'%';
+    specEl2.style.width = (100*p2.manaMs/p2.manaFillMs)+'%';
+    // Berserk READY: when the meter tops out it flashes red + vibrates until the Berserk Move is used
+    // (manaMs drops back to 0 the instant it's spent, so the class clears itself). See .specFill.berserkReady.
+    specEl1.classList.toggle('berserkReady', p1.manaMs >= p1.manaFillMs);
+    specEl2.classList.toggle('berserkReady', p2.manaMs >= p2.manaFillMs);
     updateUltHud(p1, 'ultIconP1');
     updateUltHud(p2, 'ultIconP2');
     updateComboCounterUI(p1, 'comboCounterP1');
@@ -3921,7 +4097,10 @@ const CLIP_CONFIG = {
         if (c2cfg && c2cfg.scale && combat2SpriteSet && combat2SpriteSet[poseNameForScale]) return c2cfg.scale;
         return normalScale;
       };
-      const scale = poseScale(pose); // used below only for the dizzy-star/scream/dance cosmetic overlays
+      // every scale path above flows through here, so the global +15% size bump is applied in one place
+      const rawPoseScale = poseScale;
+      const scaledPoseScale = (p) => rawPoseScale(p) * GLOBAL_FIGHTER_SCALE;
+      const scale = scaledPoseScale(pose); // used below only for the dizzy-star/scream/dance cosmetic overlays
       dh = img.naturalHeight * scale; // kept as an approximate on-screen height for the cosmetic overlays below
       ctx.save();
       ctx.translate(cx + ox, baseY + oy);
@@ -3935,7 +4114,7 @@ const CLIP_CONFIG = {
       // anchor/ultScale and fall back to the previous center/bottom pivot + idle-based scale, unchanged.
       const drawOne = (image, poseNameForAnchor, alpha, clipFrameIdx) => {
         if (!(image && image.complete && image.naturalWidth > 0) || alpha <= 0) return;
-        const scale = poseScale(poseNameForAnchor);
+        const scale = scaledPoseScale(poseNameForAnchor);
         const idw = image.naturalWidth * scale, idh = image.naturalHeight * scale;
         const anchor = getPoseAnchor(person, poseNameForAnchor, useSpecialArt, clipFrameIdx);
         const ax = anchor ? anchor.x * scale : idw/2;

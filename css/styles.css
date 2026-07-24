@@ -68,6 +68,20 @@
     background: linear-gradient(90deg, #6c1e99 0%, #9934dd 40%, #ac3ff6 70%, #b043f7 100%);
     transition: width 0.2s;
   }
+  /* Berserk READY: meter is full -> the bar turns red and vibrates (flashes) until the Berserk
+     Move is spent. Two animations: a red glow pulse + a tiny horizontal shake for the "buzz". */
+  .specFill.berserkReady {
+    background: linear-gradient(90deg, #b81212 0%, #ff2d2d 45%, #ff5a2b 75%, #ff3b3b 100%);
+    animation: berserkPulse 0.45s ease-in-out infinite, berserkBuzz 0.09s steps(2) infinite;
+  }
+  @keyframes berserkPulse {
+    0%,100% { box-shadow: 0 0 4px 1px #ff2d2dcc, inset 0 0 6px #ff8a5a99; filter: brightness(1); }
+    50%     { box-shadow: 0 0 12px 4px #ff2d2dff, inset 0 0 10px #ffb08acc; filter: brightness(1.35); }
+  }
+  @keyframes berserkBuzz {
+    0%   { transform: translateX(-0.9px); }
+    100% { transform: translateX(0.9px); }
+  }
   .hudName {
     position: absolute; left: 5%; top: 4%; width: 40%; height: 30%;
     display: flex; align-items: center;

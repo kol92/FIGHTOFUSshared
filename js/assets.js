@@ -103,7 +103,8 @@ window.ASSETS = {
       "ult7": "assets/characters/krisz/ultimate/ult7.png",
       "ult8": "assets/characters/krisz/ultimate/ult8.png",
       "ult9": "assets/characters/krisz/ultimate/ult9.png",
-      "ult10": "assets/characters/krisz/ultimate/ult10.png"
+      "ult10": "assets/characters/krisz/ultimate/ult10.png",
+      "cone": "assets/characters/krisz/ultimate/cone.png"
     },
     "tomi": {
       "ult1": "assets/characters/tomi/ultimate/ult1.png",
@@ -150,7 +151,12 @@ window.ASSETS = {
       "enter2": "assets/characters/krisz/enter/enter2.png",
       "enter3": "assets/characters/krisz/enter/enter3.png",
       "enter4": "assets/characters/krisz/enter/enter4.png",
-      "enter5": "assets/characters/krisz/enter/enter5.png"
+      "enter5": "assets/characters/krisz/enter/enter5.png",
+      "enter6": "assets/characters/krisz/enter/enter6.png",
+      "enter7": "assets/characters/krisz/enter/enter7.png",
+      "enter8": "assets/characters/krisz/enter/enter8.png",
+      "enter9": "assets/characters/krisz/enter/enter9.png",
+      "enter10": "assets/characters/krisz/enter/enter10.png"
     },
     "tomi": {
       "enter1": "assets/characters/tomi/enter/enter1.png",
@@ -220,6 +226,234 @@ window.ASSETS = {
     }
   },
   "clips": {
+    "krisz": {
+      "berserk": [
+        "assets/characters/krisz/berserk/0.png",
+        "assets/characters/krisz/berserk/1.png",
+        "assets/characters/krisz/berserk/2.png",
+        "assets/characters/krisz/berserk/3.png",
+        "assets/characters/krisz/berserk/4.png",
+        "assets/characters/krisz/berserk/5.png",
+        "assets/characters/krisz/berserk/6.png",
+        "assets/characters/krisz/berserk/7.png"
+      ],
+      "idle": [
+        "assets/characters/krisz/idle/0.png",
+        "assets/characters/krisz/idle/1.png",
+        "assets/characters/krisz/idle/2.png",
+        "assets/characters/krisz/idle/3.png",
+        "assets/characters/krisz/idle/4.png",
+        "assets/characters/krisz/idle/5.png",
+        "assets/characters/krisz/idle/6.png",
+        "assets/characters/krisz/idle/7.png"
+      ],
+      "walk": [
+        "assets/characters/krisz/walk/0.png",
+        "assets/characters/krisz/walk/1.png",
+        "assets/characters/krisz/walk/2.png",
+        "assets/characters/krisz/walk/3.png",
+        "assets/characters/krisz/walk/4.png",
+        "assets/characters/krisz/walk/5.png",
+        "assets/characters/krisz/walk/6.png",
+        "assets/characters/krisz/walk/7.png"
+      ],
+      "run": [
+        "assets/characters/krisz/run/0.png",
+        "assets/characters/krisz/run/1.png",
+        "assets/characters/krisz/run/2.png",
+        "assets/characters/krisz/run/3.png",
+        "assets/characters/krisz/run/4.png",
+        "assets/characters/krisz/run/5.png",
+        "assets/characters/krisz/run/6.png",
+        "assets/characters/krisz/run/7.png"
+      ],
+      "backwalk": [
+        "assets/characters/krisz/backwalk/0.png",
+        "assets/characters/krisz/backwalk/1.png",
+        "assets/characters/krisz/backwalk/2.png",
+        "assets/characters/krisz/backwalk/3.png",
+        "assets/characters/krisz/backwalk/4.png",
+        "assets/characters/krisz/backwalk/5.png",
+        "assets/characters/krisz/backwalk/6.png",
+        "assets/characters/krisz/backwalk/7.png"
+      ],
+      "jump": [
+        "assets/characters/krisz/jump/0.png",
+        "assets/characters/krisz/jump/1.png",
+        "assets/characters/krisz/jump/2.png",
+        "assets/characters/krisz/jump/3.png",
+        "assets/characters/krisz/jump/4.png",
+        "assets/characters/krisz/jump/5.png",
+        "assets/characters/krisz/jump/6.png",
+        "assets/characters/krisz/jump/7.png"
+      ],
+      "crouch": [
+        "assets/characters/krisz/crouch/0.png",
+        "assets/characters/krisz/crouch/1.png",
+        "assets/characters/krisz/crouch/2.png",
+        "assets/characters/krisz/crouch/3.png",
+        "assets/characters/krisz/crouch/4.png",
+        "assets/characters/krisz/crouch/5.png",
+        "assets/characters/krisz/crouch/6.png",
+        "assets/characters/krisz/crouch/7.png"
+      ],
+      "block": [
+        "assets/characters/krisz/block/0.png",
+        "assets/characters/krisz/block/1.png",
+        "assets/characters/krisz/block/2.png",
+        "assets/characters/krisz/block/3.png",
+        "assets/characters/krisz/block/4.png",
+        "assets/characters/krisz/block/5.png"
+      ],
+      "crouchBlock": [
+        "assets/characters/krisz/crouchBlock/0.png",
+        "assets/characters/krisz/crouchBlock/1.png",
+        "assets/characters/krisz/crouchBlock/2.png",
+        "assets/characters/krisz/crouchBlock/3.png",
+        "assets/characters/krisz/crouchBlock/4.png",
+        "assets/characters/krisz/crouchBlock/5.png"
+      ],
+      "hit": [
+        "assets/characters/krisz/hit/0.png",
+        "assets/characters/krisz/hit/1.png",
+        "assets/characters/krisz/hit/2.png",
+        "assets/characters/krisz/hit/3.png",
+        "assets/characters/krisz/hit/4.png",
+        "assets/characters/krisz/hit/5.png"
+      ],
+      "sweep": [
+        "assets/characters/krisz/sweep/0.png",
+        "assets/characters/krisz/sweep/1.png",
+        "assets/characters/krisz/sweep/2.png",
+        "assets/characters/krisz/sweep/3.png",
+        "assets/characters/krisz/sweep/4.png",
+        "assets/characters/krisz/sweep/5.png",
+        "assets/characters/krisz/sweep/6.png",
+        "assets/characters/krisz/sweep/7.png"
+      ],
+      "taunt": [
+        "assets/characters/krisz/taunt/0.png",
+        "assets/characters/krisz/taunt/1.png",
+        "assets/characters/krisz/taunt/2.png",
+        "assets/characters/krisz/taunt/3.png",
+        "assets/characters/krisz/taunt/4.png",
+        "assets/characters/krisz/taunt/5.png",
+        "assets/characters/krisz/taunt/6.png",
+        "assets/characters/krisz/taunt/7.png"
+      ],
+      "getUp": [
+        "assets/characters/krisz/getUp/0.png",
+        "assets/characters/krisz/getUp/1.png",
+        "assets/characters/krisz/getUp/2.png",
+        "assets/characters/krisz/getUp/3.png",
+        "assets/characters/krisz/getUp/4.png",
+        "assets/characters/krisz/getUp/5.png",
+        "assets/characters/krisz/getUp/6.png",
+        "assets/characters/krisz/getUp/7.png"
+      ],
+      "knockdown": [
+        "assets/characters/krisz/knockdown/0.png",
+        "assets/characters/krisz/knockdown/1.png",
+        "assets/characters/krisz/knockdown/2.png",
+        "assets/characters/krisz/knockdown/3.png",
+        "assets/characters/krisz/knockdown/4.png",
+        "assets/characters/krisz/knockdown/5.png",
+        "assets/characters/krisz/knockdown/6.png",
+        "assets/characters/krisz/knockdown/7.png"
+      ],
+      "lose": [
+        "assets/characters/krisz/lose/0.png",
+        "assets/characters/krisz/lose/1.png",
+        "assets/characters/krisz/lose/2.png",
+        "assets/characters/krisz/lose/3.png",
+        "assets/characters/krisz/lose/4.png",
+        "assets/characters/krisz/lose/5.png",
+        "assets/characters/krisz/lose/6.png",
+        "assets/characters/krisz/lose/7.png"
+      ],
+      "win": [
+        "assets/characters/krisz/win/0.png",
+        "assets/characters/krisz/win/1.png",
+        "assets/characters/krisz/win/2.png",
+        "assets/characters/krisz/win/3.png",
+        "assets/characters/krisz/win/4.png",
+        "assets/characters/krisz/win/5.png",
+        "assets/characters/krisz/win/6.png",
+        "assets/characters/krisz/win/7.png"
+      ],
+      "punch": [
+        "assets/characters/krisz/punch/0.png",
+        "assets/characters/krisz/punch/1.png",
+        "assets/characters/krisz/punch/2.png",
+        "assets/characters/krisz/punch/3.png"
+      ],
+      "kick": [
+        "assets/characters/krisz/kick/0.png",
+        "assets/characters/krisz/kick/1.png",
+        "assets/characters/krisz/kick/2.png",
+        "assets/characters/krisz/kick/3.png"
+      ],
+      "throw": [
+        "assets/characters/krisz/throw/0.png",
+        "assets/characters/krisz/throw/1.png",
+        "assets/characters/krisz/throw/2.png",
+        "assets/characters/krisz/throw/3.png",
+        "assets/characters/krisz/throw/4.png",
+        "assets/characters/krisz/throw/5.png",
+        "assets/characters/krisz/throw/6.png",
+        "assets/characters/krisz/throw/7.png",
+        "assets/characters/krisz/throw/8.png",
+        "assets/characters/krisz/throw/9.png"
+      ],
+      "beingThrown": [
+        "assets/characters/krisz/beingThrown/0.png",
+        "assets/characters/krisz/beingThrown/1.png",
+        "assets/characters/krisz/beingThrown/2.png",
+        "assets/characters/krisz/beingThrown/3.png",
+        "assets/characters/krisz/beingThrown/4.png",
+        "assets/characters/krisz/beingThrown/5.png",
+        "assets/characters/krisz/beingThrown/6.png",
+        "assets/characters/krisz/beingThrown/7.png",
+        "assets/characters/krisz/beingThrown/8.png",
+        "assets/characters/krisz/beingThrown/9.png"
+      ],
+      "punch1": [
+        "assets/characters/krisz/punch1/0.png",
+        "assets/characters/krisz/punch1/1.png",
+        "assets/characters/krisz/punch1/2.png",
+        "assets/characters/krisz/punch1/3.png"
+      ],
+      "punch2": [
+        "assets/characters/krisz/punch2/0.png",
+        "assets/characters/krisz/punch2/1.png",
+        "assets/characters/krisz/punch2/2.png",
+        "assets/characters/krisz/punch2/3.png"
+      ],
+      "punch3": [
+        "assets/characters/krisz/punch3/0.png",
+        "assets/characters/krisz/punch3/1.png",
+        "assets/characters/krisz/punch3/2.png",
+        "assets/characters/krisz/punch3/3.png"
+      ],
+      "kick1": [
+        "assets/characters/krisz/kick1/0.png",
+        "assets/characters/krisz/kick1/1.png",
+        "assets/characters/krisz/kick1/2.png",
+        "assets/characters/krisz/kick1/3.png"
+      ],
+      "kick2": [
+        "assets/characters/krisz/kick2/0.png",
+        "assets/characters/krisz/kick2/1.png",
+        "assets/characters/krisz/kick2/2.png",
+        "assets/characters/krisz/kick2/3.png"
+      ],
+      "kick3": [
+        "assets/characters/krisz/kick3/0.png",
+        "assets/characters/krisz/kick3/1.png",
+        "assets/characters/krisz/kick3/2.png",
+        "assets/characters/krisz/kick3/3.png"
+      ]
+    },
     "tomi": {
       "idle": [
         "assets/characters/tomi/idle/0.png",
