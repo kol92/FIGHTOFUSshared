@@ -13,14 +13,15 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fight of Us">
-<link rel="stylesheet" href="css/styles.css?v=3">
+<link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 <div id="wrap">
   <picture>
-    <!-- portrait phones get the tall hero poster; only the matching source is fetched -->
+    <!-- The full-bleed menu backdrop: the tall hero poster in portrait, the wide club-scene hero
+         (same art as the menu background) in landscape. Only the matching source is fetched. -->
     <source media="(orientation: portrait)" srcset="assets/hud/logoPortrait.png">
-    <img decoding="async" id="titleLogo" src="assets/hud/logo.png" alt="Fight of Us">
+    <img decoding="async" id="titleLogo" src="assets/hud/menuBg.jpg" alt="Fight of Us">
   </picture>
   <div id="stage-container">
     <canvas id="game" width="960" height="510"></canvas>
@@ -134,7 +135,7 @@
     <div id="charSelect" class="panel">
       <div class="csTopBar">
         <h2 id="csTitle" class="csHeading">PLAYER 1 – VÁLASSZ KARAKTERT</h2>
-        <button class="csRandomBtn" id="charRandomBtn"><span class="csDice">🎲</span>RANDOM</button>
+        <button class="csRandomBtn" id="charRandomBtn"><svg class="csRandomIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>RANDOM</button>
       </div>
       <div class="csLayout">
         <div class="csLeft">
@@ -150,7 +151,7 @@
           <div class="csUltName" id="csUltName"></div>
         </div>
       </div>
-      <p class="hintSmall">Iránybillentyűk / WASD: mozgás &nbsp;•&nbsp; Enter/F: választás &nbsp;•&nbsp; 🎲 RANDOM: véletlen karakter &nbsp;•&nbsp; Esc: vissza a főmenübe</p>
+      <p class="hintSmall">Iránybillentyűk / WASD: mozgás &nbsp;•&nbsp; Enter/F: választás &nbsp;•&nbsp; RANDOM: véletlen karakter &nbsp;•&nbsp; Esc: vissza a főmenübe</p>
     </div>
 
     <div id="vsScreen" class="panel">
@@ -173,8 +174,8 @@
       <p>Válaszd ki a helyszínt, aztán irány a harc!</p>
       <div class="menuLabel">HELYSZÍN</div>
       <div class="stageGrid" id="stageGrid"></div>
-      <button class="mainBtn" id="startBtn">HARC! 🥊</button>
-      <button class="ghostBtn" id="stageBackBtn">⬅ VISSZA</button>
+      <button class="mainBtn" id="startBtn">HARC!</button>
+      <button class="ghostBtn" id="stageBackBtn">VISSZA</button>
     </div>
 
     <div id="overlay" class="panel">
@@ -183,17 +184,17 @@
       <div>
         <button class="mainBtn" id="restartBtn">ÚJRAINDÍTÁS</button>
       </div>
-      <button class="ghostBtn" id="menuBtn">⬅ VISSZA A MENÜBE</button>
+      <button class="ghostBtn" id="menuBtn">VISSZA A MENÜBE</button>
     </div>
 
     <div id="pauseMenu" class="panel">
       <h2>SZÜNET</h2>
       <div id="pauseMainView">
         <div class="pauseGrid" id="pauseGrid">
-          <button class="pauseBtn" data-action="resume" id="pauseResumeBtn">▶ FOLYTATÁS</button>
-          <button class="pauseBtn" data-action="restart" id="pauseRestartBtn">🔄 ÚJRAINDÍTÁS</button>
-          <button class="pauseBtn" data-action="cpuBehavior" id="pauseCpuBehaviorBtn" style="display:none;">🤖 CPU VISELKEDÉS</button>
-          <button class="pauseBtn" data-action="quit" id="pauseQuitBtn">⬅ KILÉPÉS A FŐMENÜBE</button>
+          <button class="pauseBtn" data-action="resume" id="pauseResumeBtn">FOLYTATÁS</button>
+          <button class="pauseBtn" data-action="restart" id="pauseRestartBtn">ÚJRAINDÍTÁS</button>
+          <button class="pauseBtn" data-action="cpuBehavior" id="pauseCpuBehaviorBtn" style="display:none;">CPU VISELKEDÉS</button>
+          <button class="pauseBtn" data-action="quit" id="pauseQuitBtn">KILÉPÉS A FŐMENÜBE</button>
         </div>
         <p class="hintSmall">Esc: folytatás &nbsp;•&nbsp; ↑/↓: navigálás &nbsp;•&nbsp; Enter: választás &nbsp;•&nbsp; egér is működik</p>
       </div>
@@ -211,7 +212,7 @@
 
     <!-- Global top-right back button for menu sub-screens (versus submenu / difficulty / character /
          stage select). Click reuses the exact Esc navigation. Shown/hidden by state (see loop). -->
-    <button id="backNav" aria-label="Vissza" title="Vissza">⬅</button>
+    <button id="backNav" aria-label="Vissza" title="Vissza"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
 
     <!-- On-screen controls (touch): analog movement stick on the left, colored fight buttons on the
          right. The stick feeds the same P1 direction inputs as keyboard/gamepad, so rolling it also
@@ -233,7 +234,7 @@
   </div>
 </div>
 
-<script src="js/assets.js?v=3"></script>
-<script src="js/game.js?v=3"></script>
+<script src="js/assets.js?v=5"></script>
+<script src="js/game.js?v=5"></script>
 </body>
 </html>

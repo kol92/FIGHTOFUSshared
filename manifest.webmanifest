@@ -10,5 +10,21 @@
   "theme_color": "#0e0b16",
   "icons": [
     { "src": "icon.jpg", "sizes": "850x850", "type": "image/jpeg", "purpose": "any" }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/hud/logoPortrait.png",
+      "sizes": "941x1672",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Fight of Us — main menu"
+    },
+    {
+      "src": "assets/hud/menuBg.jpg",
+      "sizes": "1672x941",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Fight of Us — main menu"
+    }
   ]
 }

@@ -13,36 +13,46 @@
     /* keep the fight area clear of the horizontal notch / rounded corners in landscape */
     padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right);
   }
+  /* The hero poster is the shared full-bleed backdrop for EVERY menu screen, in BOTH orientations.
+     <picture> serves the portrait or the wide (landscape) poster; CSS just makes it aspect-FILL
+     (cover) the whole viewport, centered, edge to edge -- no boxed game frame, margins or corners.
+     It's hidden whenever the game frame is on screen (match + KO/result), so the stage is untouched. */
   #titleLogo {
-    height: 130px; width: auto; display: block;
-    margin: 4px 0 0 0; filter: drop-shadow(0 0 10px #ff5fd899) drop-shadow(0 0 20px #5f9dff66);
+    position: fixed; top: 0; left: 0; z-index: 1;
+    width: 100vw; height: 100dvh; max-width: none; max-height: none;
+    margin: 0; border-radius: 0; display: block;
+    object-fit: cover; object-position: center;
+    filter: none; pointer-events: none;
   }
-  /* Portrait phones: <picture> swaps in the tall hero poster (menu_logo_portrait). */
+  body.inMatch #titleLogo { display: none; }
+  /* the HUD/timer are match chrome -- never show them over a menu poster */
+  body:not(.inMatch) #hud, body:not(.inMatch) #timerWrap { display: none; }
+
+  /* Menu panels float over the poster as full-viewport scrim layers (no boxed frame). safe-center =
+     centered when the content fits, top-anchored + scrollable when it doesn't (never clipped). */
+  #mainMenu, #difficultySelect, #charSelect, #vsScreen, #menu {
+    position: fixed; inset: 0; z-index: 5;
+    justify-content: safe center; overflow-y: auto; overscroll-behavior: contain;
+    padding-top: max(16px, env(safe-area-inset-top));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom,
+      rgba(11,7,20,0.86) 0%, rgba(11,7,20,0.72) 42%, rgba(11,7,20,0.9) 100%);
+  }
+  /* The title keeps a lighter scrim so the poster wordmark reads through it. */
+  body.atTitle #mainMenu {
+    background: linear-gradient(to bottom,
+      rgba(11,7,20,0.4) 0%, rgba(11,7,20,0.5) 55%, rgba(11,7,20,0.8) 100%);
+  }
+  /* Portrait: the poster's wordmark sits high, so drop the mode menu to the bottom over a
+     transparent-top scrim that keeps the wordmark fully clear. */
   @media (orientation: portrait) {
-    /* the tall hero poster only belongs on the title screen -- elsewhere it would crush the frame */
-    body:not(.atTitle) #titleLogo { display: none; }
-    /* Title screen: the poster is the full-bleed background -- aspect-FILL (cover) the whole
-       viewport, centered, edge to edge (no boxed card / margins / rounded corners). */
-    body.atTitle #titleLogo {
-      position: fixed; top: 0; left: 0; z-index: 1;
-      width: 100vw; height: 100dvh; max-width: none; max-height: none;
-      margin: 0; border-radius: 0;
-      object-fit: cover; object-position: center;
-      filter: none; pointer-events: none;
-    }
-    /* the mode menu floats over the poster's lower half: clear at the top so the wordmark reads,
-       fading to a dark scrim toward the bottom where the buttons sit. */
     body.atTitle #mainMenu {
-      position: fixed; inset: 0; z-index: 5;
       justify-content: flex-end;
       padding-bottom: max(26px, env(safe-area-inset-bottom));
       background: linear-gradient(to bottom,
         rgba(13,8,24,0) 0%, rgba(13,8,24,0) 40%,
         rgba(13,8,24,0.5) 64%, rgba(13,8,24,0.92) 100%);
     }
-    /* the HUD/timer are match-only chrome; the transparent top of the scrim would otherwise
-       expose them over the poster, so keep them off the title screen */
-    body.atTitle #hud, body.atTitle #timerWrap { display: none; }
   }
   #stage-container {
     position: relative; width: 100%; max-width: 960px; aspect-ratio: 16/8.5;
@@ -382,7 +392,7 @@
     border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa, 0 0 40px #8c4dff44; transform: scale(1.04);
     animation: csCursorPulse 1.5s ease-in-out infinite;
   }
-  .csDice { font-size: 20px; filter: drop-shadow(0 0 7px #ff4fd8); }
+  .csRandomIcon { width: 18px; height: 18px; flex: 0 0 auto; filter: drop-shadow(0 0 7px #ff4fd8); }
   /* char-select alsó segédsor: kompaktabb, hogy biztosan a panelen belül maradjon és
      ne csússzon rá az alatta lévő #controlsHint sávra */
   #charSelect .hintSmall { margin-top: 4px; font-size: 10px; }
@@ -425,8 +435,9 @@
   }
   .stageCard .stageRandomIcon {
     width: 100%; aspect-ratio: 16/9; border-radius: 8px; background: linear-gradient(135deg,#5f2a99,#2a1a4d);
-    display: flex; align-items: center; justify-content: center; font-size: 26px;
+    display: flex; align-items: center; justify-content: center; color: #fff;
   }
+  .stageCard .stageRandomIcon svg { width: 32px; height: 32px; filter: drop-shadow(0 0 8px #ff4fd8aa); }
   .stageCard .stageName { font-size: 10px; font-weight: bold; margin-top: 5px; letter-spacing: 0.3px; text-align: center; line-height: 1.25; }
   .stageCard.selected {
     border-color: #ff5fd8; box-shadow: 0 0 16px #ff5fd8cc; transform: scale(1.05); z-index: 1;
@@ -445,7 +456,7 @@
   }
   /* ----- Global top-right back button (menu sub-screens) ----- */
   #backNav {
-    position: fixed; top: max(8px, env(safe-area-inset-top)); right: max(10px, env(safe-area-inset-right));
+    position: fixed; top: max(8px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left));
     z-index: 8; display: none; align-items: center; justify-content: center;
     width: 42px; height: 42px; border-radius: 12px; cursor: pointer;
     background: #180f24; border: 2px solid #8c4dff; color: #fff; font-size: 20px; font-weight: 800; line-height: 1;
@@ -453,8 +464,8 @@
   }
   #backNav.show { display: flex; }
   #backNav:hover, #backNav:active { border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa; transform: scale(1.06); }
-  /* leave room next to the RANDOM button on char-select so they don't collide top-right */
-  #charSelect .csTopBar { padding-right: 48px; }
+  /* leave room for the top-left back button so it doesn't collide with the char-select heading */
+  #charSelect .csTopBar { padding-left: 48px; }
 
   /* ----- On-screen touch controls: analog stick (left) + colored fight buttons (right) ----- */
   #touchLayer { position: fixed; inset: 0; display: none; pointer-events: none; z-index: 6; }

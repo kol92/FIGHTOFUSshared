@@ -1271,7 +1271,7 @@ const CLIP_CONFIG = {
     rc.dataset.idx = randomIdx;
     const icon = document.createElement('div');
     icon.className = 'stageRandomIcon';
-    icon.textContent = '🎲';
+    icon.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>';
     rc.appendChild(icon);
     const rcName = document.createElement('div');
     rcName.className = 'stageName';
@@ -4240,6 +4240,9 @@ const CLIP_CONFIG = {
   function loop(ts){
     GamepadManager.poll(); // minden képkockán fut -- menüket és a harcot is vezérli, gameState-től függetlenül
     document.body.classList.toggle('fighting', gameState === 'FIGHT' || gameState === 'PAUSED'); // on-screen touch controls only during a match
+    // the menu poster backdrop is hidden (and the fight HUD shown) whenever the game frame is on
+    // screen -- the whole match incl. the KO/result overlay, not just FIGHT/PAUSED
+    document.body.classList.toggle('inMatch', gameState === 'FIGHT' || gameState === 'PAUSED' || gameState === 'MATCH_END');
     if (lastFrameTs === null) lastFrameTs = ts;
     let dt = ts - lastFrameTs;
     lastFrameTs = ts;
