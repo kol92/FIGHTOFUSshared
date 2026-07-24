@@ -1,13 +1,17 @@
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
   html, body {
-    margin: 0; padding: 0; height: 100%; overflow: hidden;
-    background: radial-gradient(circle at 50% 20%, #2a1f4d, #0d0818 70%);
+    margin: 0; padding: 0; height: 100%; min-height: 100dvh; overflow: hidden;
+    /* solid dark fallback + a viewport-fixed gradient so the background fills the whole screen,
+       including the iOS home-indicator / notch safe areas (no white padding) under viewport-fit=cover */
+    background: #0d0818 radial-gradient(circle at 50% 20%, #2a1f4d, #0d0818 70%) center / cover no-repeat fixed;
     font-family: 'Trebuchet MS', Arial, sans-serif;
     color: #fff;
   }
   #wrap {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     height: 100%; width: 100%; position: relative;
+    /* keep the fight area clear of the horizontal notch / rounded corners in landscape */
+    padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right);
   }
   #titleLogo {
     height: 130px; width: auto; display: block;
