@@ -17,6 +17,33 @@
     height: 130px; width: auto; display: block;
     margin: 4px 0 0 0; filter: drop-shadow(0 0 10px #ff5fd899) drop-shadow(0 0 20px #5f9dff66);
   }
+  /* Portrait phones: <picture> swaps in the tall hero poster (menu_logo_portrait). */
+  @media (orientation: portrait) {
+    /* the tall hero poster only belongs on the title screen -- elsewhere it would crush the frame */
+    body:not(.atTitle) #titleLogo { display: none; }
+    /* Title screen: the poster is the full-bleed background -- aspect-FILL (cover) the whole
+       viewport, centered, edge to edge (no boxed card / margins / rounded corners). */
+    body.atTitle #titleLogo {
+      position: fixed; top: 0; left: 0; z-index: 1;
+      width: 100vw; height: 100dvh; max-width: none; max-height: none;
+      margin: 0; border-radius: 0;
+      object-fit: cover; object-position: center;
+      filter: none; pointer-events: none;
+    }
+    /* the mode menu floats over the poster's lower half: clear at the top so the wordmark reads,
+       fading to a dark scrim toward the bottom where the buttons sit. */
+    body.atTitle #mainMenu {
+      position: fixed; inset: 0; z-index: 5;
+      justify-content: flex-end;
+      padding-bottom: max(26px, env(safe-area-inset-bottom));
+      background: linear-gradient(to bottom,
+        rgba(13,8,24,0) 0%, rgba(13,8,24,0) 40%,
+        rgba(13,8,24,0.5) 64%, rgba(13,8,24,0.92) 100%);
+    }
+    /* the HUD/timer are match-only chrome; the transparent top of the scrim would otherwise
+       expose them over the poster, so keep them off the title screen */
+    body.atTitle #hud, body.atTitle #timerWrap { display: none; }
+  }
   #stage-container {
     position: relative; width: 100%; max-width: 960px; aspect-ratio: 16/8.5;
     touch-action: none;

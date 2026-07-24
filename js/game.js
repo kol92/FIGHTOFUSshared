@@ -758,6 +758,9 @@ const CLIP_CONFIG = {
       if (pid === 'overlay') return; // overlay is managed separately (only shown on KO/timeout)
       el.style.display = (pid === id) ? 'flex' : 'none';
     });
+    // On the title/main-menu screen only, the portrait hero logo is allowed to take its full height;
+    // every other screen (char/stage/difficulty select, VS, fight) hides it so the frame has room.
+    document.body.classList.toggle('atTitle', id === 'mainMenu');
     syncBackNav();
   }
   // Show the global top-right back button only on menu sub-screens that go back one step
