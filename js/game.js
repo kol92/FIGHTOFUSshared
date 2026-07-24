@@ -1309,6 +1309,12 @@ const CLIP_CONFIG = {
   backNavEl.addEventListener('click', () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
   });
+  // In-fight menu button (mobile): same Esc, which opens the pause menu during FIGHT (and resumes
+  // from PAUSED) -- one place defines the behaviour, this just triggers it.
+  const fightMenuEl = document.getElementById('fightMenuBtn');
+  if (fightMenuEl) fightMenuEl.addEventListener('click', () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  });
 
   // ---------- INPUT ----------
   const KEYMAP = {
@@ -4278,4 +4284,56 @@ const CLIP_CONFIG = {
   GamepadManager.init();
   goToMainMenu();
   requestAnimationFrame(loop);
+})();
+
+// ---------------------------------------------------------------------------
+// "Add to Home Screen" nudge -- a dismissible bottom banner on the main menu that
+// encourages installing the PWA. Shown ONLY on touch devices, and ONLY while running
+// in a normal browser tab: if the game is already launched from the home screen
+// (installed / standalone), the banner never appears. CSS gates it to body.atTitle,
+// so it also disappears the moment you leave the main menu.
+// ---------------------------------------------------------------------------
+(function(){
+  const banner = document.getElementById('a2hsBanner');
+  if (!banner) return;
+
+  const standalone = window.matchMedia('(display-mode: standalone)').matches
+    || window.matchMedia('(display-mode: fullscreen)').matches
+    || window.matchMedia('(display-mode: minimal-ui)').matches
+    || window.navigator.standalone === true;               // iOS Safari's own flag
+  const touch = window.matchMedia('(pointer: coarse)').matches;
+  let dismissed = false;
+  try { dismissed = localStorage.getItem('a2hs-dismissed') === '1'; } catch(e){}
+
+  // Not on desktop, not inside an already-installed app, and not after the user dismissed it.
+  if (standalone || !touch || dismissed) return;
+
+  // Chromium (Android) fires beforeinstallprompt -- capture it and offer a one-tap Install button.
+  let deferredPrompt = null;
+  const installBtn = document.getElementById('a2hsInstall');
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener('click', async function(){
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    let outcome = 'dismissed';
+    try { outcome = (await deferredPrompt.userChoice).outcome; } catch(e){}
+    deferredPrompt = null;
+    installBtn.hidden = true;
+    if (outcome === 'accepted') hide();          // keep nudging if they backed out of the prompt
+  });
+
+  function hide(){
+    document.body.classList.remove('a2hs');
+    try { localStorage.setItem('a2hs-dismissed', '1'); } catch(e){}
+  }
+  document.getElementById('a2hsClose').addEventListener('click', hide);
+  // if it gets installed while open, drop the nudge immediately (and for good)
+  window.addEventListener('appinstalled', hide);
+
+  // Eligible -> let CSS reveal the banner on the main menu (body.atTitle).
+  document.body.classList.add('a2hs');
 })();

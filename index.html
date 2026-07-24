@@ -13,7 +13,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fight of Us">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=8">
 </head>
 <body>
 <div id="wrap">
@@ -210,9 +210,25 @@
       </div>
     </div>
 
-    <!-- Global top-right back button for menu sub-screens (versus submenu / difficulty / character /
+    <!-- Global top-left back button for menu sub-screens (versus submenu / difficulty / character /
          stage select). Click reuses the exact Esc navigation. Shown/hidden by state (see loop). -->
     <button id="backNav" aria-label="Vissza" title="Vissza"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+
+    <!-- In-fight menu button (mobile / touch only): opens the SZÜNET pause menu, mirroring the Esc key. -->
+    <button id="fightMenuBtn" aria-label="Menü" title="Menü"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+
+    <!-- "Add to Home Screen" nudge: a compact, closeable one-line popup shown on the main menu, on
+         touch devices only, and only when NOT already installed/standalone (see a2hs logic in game.js).
+         The Share + Add(+) icons flank the text as the visual "tap Share, then Add" cue. -->
+    <div id="a2hsBanner" aria-label="Ne feledd a Főképernyőhöz adni">
+      <span class="a2hsMsg">
+        <svg class="a2hsShare" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M6 12v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7"/></svg>
+        Ne feledd a <b>Főképernyőhöz</b> adni
+        <svg class="a2hsPlus" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 8v8M8 12h8"/></svg>
+      </span>
+      <button id="a2hsInstall" type="button" hidden>Telepítés</button>
+      <button id="a2hsClose" type="button" aria-label="Bezárás"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
 
     <!-- On-screen controls (touch): analog movement stick on the left, colored fight buttons on the
          right. The stick feeds the same P1 direction inputs as keyboard/gamepad, so rolling it also
@@ -234,7 +250,7 @@
   </div>
 </div>
 
-<script src="js/assets.js?v=5"></script>
-<script src="js/game.js?v=5"></script>
+<script src="js/assets.js?v=8"></script>
+<script src="js/game.js?v=8"></script>
 </body>
 </html>

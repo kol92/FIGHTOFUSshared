@@ -454,8 +454,8 @@
   #controlsHint {
     font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: center; max-width: 960px; padding: 0 8px;
   }
-  /* ----- Global top-right back button (menu sub-screens) ----- */
-  #backNav {
+  /* ----- Global top-left corner button: back (menu sub-screens) / menu (in a fight) ----- */
+  #backNav, #fightMenuBtn {
     position: fixed; top: max(8px, env(safe-area-inset-top)); left: max(10px, env(safe-area-inset-left));
     z-index: 8; display: none; align-items: center; justify-content: center;
     width: 42px; height: 42px; border-radius: 12px; cursor: pointer;
@@ -463,9 +463,47 @@
     box-shadow: 0 0 14px #8c4dff66; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
   }
   #backNav.show { display: flex; }
-  #backNav:hover, #backNav:active { border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa; transform: scale(1.06); }
+  /* the in-fight menu button (opens the pause menu) is touch-only and shows for the whole match */
+  #fightMenuBtn { pointer-events: auto; }
+  @media (pointer: coarse) { body.fighting #fightMenuBtn { display: flex; } }
+  #backNav:hover, #backNav:active,
+  #fightMenuBtn:hover, #fightMenuBtn:active { border-color: #ff4fd8; box-shadow: 0 0 22px #ff2dbfaa; transform: scale(1.06); }
   /* leave room for the top-left back button so it doesn't collide with the char-select heading */
   #charSelect .csTopBar { padding-left: 48px; }
+
+  /* ----- "Add to Home Screen" bottom banner (mobile, main menu only, hidden once installed) ----- */
+  /* compact, wide, single-line popup styled to match the game's neon theme (not the old grey iOS bubble):
+     a Share icon + short phrase + Add(+) icon, with a small close button. */
+  #a2hsBanner {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 7;
+    display: none; align-items: center; gap: 8px;
+    padding: 7px max(10px, env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    background: linear-gradient(to top, #12091f 0%, rgba(27,16,48,0.96) 100%);
+    border-top: 2px solid #8c4dff; box-shadow: 0 -6px 22px #8c4dff44;
+    color: #fff; font-size: 14px;
+  }
+  /* only shown on the title screen, and only after JS marks the app installable (touch + not standalone) */
+  body.a2hs.atTitle #a2hsBanner { display: flex; }
+  /* keep the bottom-anchored menu clear of the (now short) popup */
+  body.a2hs.atTitle #mainMenu { padding-bottom: calc(58px + env(safe-area-inset-bottom)); }
+  .a2hsMsg {
+    flex: 1 1 auto; min-width: 0; display: inline-flex; align-items: center; justify-content: center;
+    gap: 7px; line-height: 1.2; white-space: nowrap;
+  }
+  .a2hsMsg b { font-weight: 800; color: #ff9dee; }
+  .a2hsShare, .a2hsPlus { flex: 0 0 auto; }
+  .a2hsShare { color: #ff9dee; filter: drop-shadow(0 0 5px #ff4fd877); }
+  .a2hsPlus { color: #8fd0ff; filter: drop-shadow(0 0 5px #5f9dff77); }
+  #a2hsInstall {
+    flex: 0 0 auto; background: linear-gradient(90deg,#ff5fd8,#8c4dff); border: none; color: #fff;
+    font-weight: 800; font-family: inherit; letter-spacing: 0.5px; font-size: 13px;
+    padding: 8px 14px; border-radius: 11px; cursor: pointer; box-shadow: 0 0 14px #ff5fd866;
+  }
+  #a2hsClose {
+    flex: 0 0 auto; background: transparent; border: none; color: #ffffffb0; cursor: pointer;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; border-radius: 8px;
+  }
+  #a2hsClose:hover, #a2hsClose:active { color: #fff; background: #ffffff1a; }
 
   /* ----- On-screen touch controls: analog stick (left) + colored fight buttons (right) ----- */
   #touchLayer { position: fixed; inset: 0; display: none; pointer-events: none; z-index: 6; }
@@ -496,7 +534,7 @@
   .fb-kick    { left: 86px;  bottom: 24px; width: 66px; height: 66px; background: #34d39955; border: 2px solid #34d399dd; }
   .fb-block   { left: 2px;   bottom: 82px; background: #94a3b84d; border: 2px solid #cbd5e1cc; font-size: 20px; }
   .fb-special { left: 74px;  bottom: 98px; background: #fb923c55; border: 2px solid #fb923cdd; }
-  .fb-ult     { left: 146px; bottom: 44px; background: #e879f955; border: 2px solid #e879f9dd; font-size: 12px; }
+  .fb-ult     { left: 146px; bottom: 100px; background: #e879f955; border: 2px solid #e879f9dd; font-size: 12px; }
   @media (pointer: coarse) {
     body.fighting #touchLayer { display: block; }
     #controlsHint { display: none; }
