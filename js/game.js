@@ -685,6 +685,16 @@ const CLIP_CONFIG = {
       if (pid === 'overlay') return; // overlay is managed separately (only shown on KO/timeout)
       el.style.display = (pid === id) ? 'flex' : 'none';
     });
+    syncBackNav();
+  }
+  // Show the global top-right back button only on menu sub-screens that go back one step
+  // (never the top-level mode list, the fight, or screens with their own back/menu buttons).
+  function syncBackNav(){
+    const b = document.getElementById('backNav');
+    if (!b) return;
+    b.classList.toggle('show',
+      (gameState === 'MAIN_MENU' && mainMenuStep === 'versusSubmenu') ||
+      gameState === 'DIFFICULTY_SELECT' || gameState === 'CHARACTER_SELECT' || gameState === 'STAGE_SELECT');
   }
 
   function goToMainMenu(){
@@ -713,6 +723,7 @@ const CLIP_CONFIG = {
     mainMenuStep = step;
     document.getElementById('modeListView').style.display = (step === 'modeList') ? 'flex' : 'none';
     document.getElementById('versusSubmenu').style.display = (step === 'versusSubmenu') ? 'flex' : 'none';
+    syncBackNav();
   }
   function renderModeListCursor(){
     document.getElementById('versusModeBtn').classList.toggle('selected', modeListCursor === 0);
@@ -1216,6 +1227,12 @@ const CLIP_CONFIG = {
   });
   document.getElementById('stageBackBtn').addEventListener('click', goToMainMenu);
   document.getElementById('menuBtn').addEventListener('click', goToMainMenu);
+  // Global top-right back button: reuse the exact keyboard Esc navigation, so it always does the
+  // same "go back one screen" the game already defines per menu state (no separate logic to drift).
+  const backNavEl = document.getElementById('backNav');
+  backNavEl.addEventListener('click', () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  });
 
   // ---------- INPUT ----------
   const KEYMAP = {
