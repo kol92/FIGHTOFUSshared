@@ -345,12 +345,26 @@
   /* char-select alsó segédsor: kompaktabb, hogy biztosan a panelen belül maradjon és
      ne csússzon rá az alatta lévő #controlsHint sávra */
   #charSelect .hintSmall { margin-top: 4px; font-size: 10px; }
-  /* keskeny képernyőn a preview a rács alá kerül, minden marad használható */
-  @media (max-width: 880px) {
+  /* Keyboard control hints (WASD/Enter/Esc) don't apply on touch and were the line overlapping the
+     stats -- hide them on touch devices, same as the in-fight #controlsHint. */
+  @media (pointer: coarse) { #charSelect .hintSmall { display: none; } }
+  /* Narrow PORTRAIT only: stack the preview under the grid (no room for side-by-side). */
+  @media (max-width: 880px) and (orientation: portrait) {
     .csTopBar { flex-wrap: wrap; justify-content: center; }
     .csTopBar .csHeading { text-align: center; flex: 1 1 100%; padding-left: 0; }
     .csLayout { flex-direction: column; align-items: center; }
     .csPreview { flex: none; width: 100%; max-width: 590px; }
+  }
+  /* Short screens (landscape phones): keep grid | preview side-by-side, bound the layout to the
+     panel height, and let the GRID scroll on its own -- so the character stats panel stays visible
+     and the title/hint are never overlapped by the taller roster grid. */
+  @media (max-height: 540px) {
+    #charSelect .csLayout { flex: 1 1 auto; min-height: 0; align-items: stretch; }
+    #charSelect .csLeft { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+    /* preview at natural height, top-aligned, and scrollable if it still can't fit -- so the
+       stats + ultimate name are all reachable without being clipped */
+    #charSelect .csPreview { align-self: flex-start; max-height: 100%; overflow-y: auto; }
+    #charSelect #csPreviewCanvas { height: 150px; }
   }
 
   /* ---- stage select grid (thumbnail + name per pálya, + egy "VÉLETLEN" kártya) ---- */
