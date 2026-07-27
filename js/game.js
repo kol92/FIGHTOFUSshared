@@ -137,6 +137,34 @@
   // data addition here -- drawFighter/pickPose never need another special case.
 
 const CLIP_CONFIG = {
+  laci: {
+    berserk: { loop: false, frameMs: [130,90,80,70,70,75,95,110,120,150], anchors: [{x:156.9,y:339.0},{x:163.0,y:332.0},{x:162.9,y:334.0},{x:175.8,y:334.0},{x:176.2,y:334.0},{x:179.9,y:313.0},{x:163.7,y:317.0},{x:180.9,y:294.0},{x:162.8,y:326.0},{x:168.3,y:325.0}], scale: 0.5417 },
+    idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:153.9,y:493.0},{x:149.1,y:493.0},{x:142.9,y:490.0},{x:138.9,y:493.0},{x:153.3,y:488.0},{x:144.9,y:481.0},{x:145.6,y:485.0},{x:142.1,y:485.0}], scale: 0.3768 },
+    walk: { loop: true, frameMs: [105,105,105,105,105,105,105,105], anchors: [{x:117.7,y:447.0},{x:102.4,y:447.0},{x:101.6,y:446.0},{x:101.1,y:452.0},{x:102.2,y:445.0},{x:99.5,y:442.0},{x:108.7,y:442.0},{x:97.5,y:441.0}], scale: 0.4136 },
+    run: { loop: true, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:183.0,y:395.0},{x:194.6,y:379.0},{x:175.0,y:399.0},{x:198.9,y:373.0},{x:181.3,y:397.0},{x:181.0,y:361.0},{x:186.7,y:380.0},{x:199.2,y:390.0}], scale: 0.4715 },
+    backwalk: { loop: true, frameMs: [110,110,110,110,110,110,110,110], anchors: [{x:93.7,y:459.0},{x:92.2,y:459.0},{x:94.0,y:459.0},{x:105.5,y:459.0},{x:92.7,y:459.0},{x:94.8,y:460.0},{x:97.3,y:459.0},{x:104.9,y:459.0}], scale: 0.4072 },
+    jump: { loop: false, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:145.7,y:425.0},{x:148.4,y:419.0},{x:156.4,y:414.0},{x:133.3,y:366.0},{x:151.8,y:274.0},{x:135.9,y:396.0},{x:140.5,y:425.0},{x:148.6,y:412.0}], scale: 0.4483 },
+    crouch: { loop: false, frameMs: [60,60,60,60,60,60,60,60], anchors: [{x:110.6,y:398.0},{x:114.3,y:398.0},{x:118.0,y:398.0},{x:120.0,y:398.0},{x:113.5,y:388.0},{x:119.9,y:387.0},{x:102.7,y:390.0},{x:112.2,y:390.0}], scale: 0.3768 },
+    block: { loop: false, frameMs: [70,70,70,70], anchors: [{x:153.0,y:486.0},{x:153.3,y:486.0},{x:149.4,y:486.0},{x:147.3,y:485.0}], scale: 0.3872 },
+    crouchBlock: { loop: false, frameMs: [70,70,70], anchors: [{x:178.7,y:476.0},{x:87.5,y:471.0},{x:325.1,y:467.0}], scale: 0.3768 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70,70], anchors: [{x:195.8,y:509.0},{x:170.1,y:499.0},{x:191.8,y:496.0},{x:193.6,y:492.0},{x:188.2,y:488.0},{x:170.1,y:487.0},{x:300.7,y:528.0}], scale: 0.4155 },
+    sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:148.4,y:411.0},{x:148.4,y:409.0},{x:148.4,y:396.0},{x:148.4,y:402.0},{x:148.4,y:368.0},{x:148.4,y:365.0},{x:148.4,y:384.0},{x:148.4,y:388.0}], scale: 0.5215 },
+    taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:126.8,y:413.0},{x:129.0,y:413.0},{x:135.5,y:413.0},{x:133.5,y:405.0},{x:150.0,y:390.0},{x:143.1,y:395.0},{x:132.4,y:389.0},{x:128.7,y:391.0}], scale: 0.4727 },
+    getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:123.4,y:370.0},{x:136.5,y:378.0},{x:172.1,y:383.0},{x:152.7,y:391.0},{x:167.5,y:389.0},{x:157.5,y:389.0},{x:153.0,y:394.0},{x:143.0,y:400.0}], scale: 0.3768 },
+    knockdown: { loop: false, frameMs: [95,95,95,95,95,95,95,95], anchors: [{x:148.4,y:372.0},{x:128.5,y:363.0},{x:147.9,y:348.0},{x:167.1,y:311.0},{x:160.7,y:280.0},{x:171.7,y:292.0},{x:162.6,y:321.0},{x:172.0,y:300.0}], scale: 0.4932 },
+    lose: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:184.8,y:358.0},{x:175.9,y:358.0},{x:160.4,y:353.0},{x:162.4,y:356.0},{x:166.3,y:285.0},{x:151.9,y:300.0},{x:146.8,y:307.0},{x:152.7,y:309.0}], scale: 0.5127 },
+    win: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:158.0,y:431.0},{x:113.4,y:423.0},{x:146.2,y:431.0},{x:169.8,y:423.0},{x:171.5,y:471.0},{x:170.1,y:471.0},{x:163.7,y:471.0},{x:163.4,y:471.0}], scale: 0.4703 },
+    punch: { loop: false, frameMs: [42,42,42,42], anchors: [{x:115.8,y:328.0},{x:115.8,y:328.0},{x:115.8,y:322.0},{x:115.8,y:328.0}], scale: 0.5928 },
+    kick: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.4,y:331.0},{x:141.4,y:329.0},{x:141.4,y:330.0},{x:141.4,y:331.0}], scale: 0.5909 },
+    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:146.5,y:405.0},{x:169.2,y:399.0},{x:167.4,y:405.0},{x:164.0,y:409.0},{x:154.5,y:408.0},{x:148.3,y:383.0},{x:171.6,y:379.0},{x:163.4,y:382.0},{x:156.5,y:379.0},{x:163.2,y:387.0}], scale: 0.4777 },
+    beingThrown: { loop: false, frameMs: [58,58,58,58,58,58,58,58,58,58], anchors: [{x:136.0,y:413.0},{x:145.2,y:413.0},{x:146.8,y:410.0},{x:130.8,y:406.0},{x:124.0,y:379.0},{x:137.7,y:283.0},{x:132.8,y:332.0},{x:143.6,y:332.0},{x:140.6,y:337.0},{x:113.8,y:361.0}], scale: 0.3768 },
+    punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:115.8,y:328.0},{x:115.8,y:328.0},{x:115.8,y:322.0},{x:115.8,y:328.0}], scale: 0.5928 },
+    punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:115.8,y:323.0},{x:115.8,y:315.0},{x:115.8,y:316.0},{x:115.8,y:324.0}], scale: 0.5928 },
+    punch3: { loop: false, frameMs: [46,46,46,46], anchors: [{x:115.8,y:304.0},{x:115.8,y:304.0},{x:115.8,y:313.0},{x:115.8,y:313.0}], scale: 0.5928 },
+    kick1: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.4,y:331.0},{x:141.4,y:329.0},{x:141.4,y:330.0},{x:141.4,y:331.0}], scale: 0.5909 },
+    kick2: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.4,y:318.0},{x:141.4,y:321.0},{x:141.4,y:322.0},{x:141.4,y:325.0}], scale: 0.5909 },
+    kick3: { loop: false, frameMs: [58,58,58,58], anchors: [{x:141.4,y:303.0},{x:141.4,y:306.0},{x:141.4,y:306.0},{x:141.4,y:314.0}], scale: 0.5909 },
+  },
   krisz: {
     berserk: { loop: false, frameMs: [120,140,130,130,130,110,120,160],
       anchors: [{x:163.7,y:412.0},{x:163.7,y:400.0},{x:163.7,y:411.0},{x:163.7,y:411.0},{x:163.7,y:381.0},{x:163.7,y:380.0},{x:163.7,y:379.0},{x:163.7,y:390.0}],
@@ -147,8 +175,8 @@ const CLIP_CONFIG = {
     backwalk: { loop: true, frameMs: [110,110,110,110,110,110,110,110], anchors: [{x:170.5,y:442.0},{x:149.9,y:442.0},{x:144.5,y:442.0},{x:117.2,y:442.0},{x:162.3,y:424.0},{x:136.1,y:424.0},{x:139.5,y:424.0},{x:96.5,y:424.0}], scale: 0.3962 },
     jump: { loop: false, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:194.8,y:464.0},{x:164.2,y:462.0},{x:139.6,y:461.0},{x:122.5,y:389.0},{x:210.3,y:290.0},{x:164.9,y:308.0},{x:159.5,y:396.0},{x:136.9,y:453.0}], scale: 0.5076 },
     crouch: { loop: false, frameMs: [60,60,60,60,60,60,60,60], anchors: [{x:170.1,y:460.0},{x:158.5,y:461.0},{x:160.8,y:460.0},{x:139.3,y:459.0},{x:151.5,y:411.0},{x:143.1,y:413.0},{x:142.7,y:415.0},{x:122.7,y:414.0}], scale: 0.3582 },
-    block: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:277.1,y:469.0},{x:230.8,y:469.0},{x:126.2,y:469.0},{x:262.4,y:453.0},{x:209.7,y:455.0},{x:136.2,y:455.0}], scale: 0.366 },
-    crouchBlock: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:254.6,y:433.0},{x:247.6,y:433.0},{x:157.0,y:433.0},{x:253.9,y:353.0},{x:210.8,y:353.0},{x:188.8,y:352.0}], scale: 0.3582 },
+    block: { loop: false, frameMs: [70,70,70,70], anchors: [{x:277.1,y:469.0},{x:230.8,y:469.0},{x:126.2,y:469.0},{x:262.4,y:453.0}], scale: 0.366 },
+    crouchBlock: { loop: false, frameMs: [70,70,70], anchors: [{x:254.6,y:433.0},{x:247.6,y:433.0},{x:157.0,y:433.0}], scale: 0.3582 },
     hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:352.3,y:455.0},{x:225.3,y:455.0},{x:109.0,y:455.0},{x:357.8,y:411.0},{x:243.1,y:424.0},{x:111.8,y:423.0}], scale: 0.3981 },
     sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:185.0,y:464.0},{x:185.0,y:457.0},{x:185.0,y:432.0},{x:185.0,y:437.0},{x:185.0,y:345.0},{x:185.0,y:354.0},{x:185.0,y:404.0},{x:185.0,y:409.0}], scale: 0.3898 },
     taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:151.2,y:473.0},{x:133.3,y:473.0},{x:133.9,y:473.0},{x:141.3,y:473.0},{x:157.6,y:431.0},{x:143.8,y:431.0},{x:125.5,y:431.0},{x:140.7,y:431.0}], scale: 0.3953 },
@@ -238,7 +266,7 @@ const CLIP_CONFIG = {
     { id: 'tomi', name: 'TOMI', enabled: true, spriteKey: 'tomi',
       portraitCrop: { x: 34/206, y: 0, w: 150/206, h: 170/424 } },
     { id: 'laci', name: 'LACI', enabled: true, spriteKey: 'laci',
-      portraitCrop: { x: 15/178, y: 0, w: 148/178, h: 175/310 } },
+      portraitCrop: { x: 50/720, y: 0, w: 579/720, h: 630/1261 } },
     { id: 'barna', name: 'BARNA', enabled: true, spriteKey: 'barna',
       portraitCrop: { x: 20/267, y: 0, w: 227/267, h: 257/468 } },
     // 20 zárolt "COMING SOON" slot (6x4-es rács a 4 valódi karakterrel együtt) -- új karakter
@@ -419,7 +447,11 @@ const CLIP_CONFIG = {
       // (fekvő) kockán tartjuk a teljes időzítés alatt (ld. f.knockdownSkipFall beállítását updateFighterben).
       // Valódi ütés-eredetű Knockdownnál (Sweep, kombó-limit) a teljes 8-kockás esés-ív lejátszódik, ahogy eddig.
       if (f.knockdownSkipFall) return 1;
-      return 1 - f.knockdownTimer / KNOCKDOWN_FRAMES;
+      // Play the full fall arc over the first KNOCKDOWN_FRAMES, then HOLD the grounded last frame for
+      // any extra time (a longer knockdownTotal, e.g. Laci's Berserk shove). For a normal knockdown
+      // total === KNOCKDOWN_FRAMES so this is exactly the old `1 - knockdownTimer/KNOCKDOWN_FRAMES`.
+      const total = f.knockdownTotal || KNOCKDOWN_FRAMES;
+      return Math.min(1, (total - f.knockdownTimer) / KNOCKDOWN_FRAMES);
     }
     if (pose === 'getUp') return 1 - f.getUpTimer / GETUP_FRAMES;
     if (pose === 'beingThrown') return 1 - f.beingThrownTimer / BEING_THROWN_FRAMES;
@@ -608,6 +640,9 @@ const CLIP_CONFIG = {
       throwChordKickTimer: 0,  // ms -- ugyanez Kicknek
       beingThrownTimer: 0,    // az ELDOBOTT fél oldalán -- rövid "repülés" a földetérésig
       knockdownTimer: 0,      // (lásd lejjebb is -- ez a mező már létezett, itt csak dokumentálva)
+      knockdownTotal: 0,      // a Knockdown teljes hossza indításkor -- hosszabb knockdownnál (Laci Berserk lökés)
+                              // a klip egyszer lejátssza az esést, majd a maradék időt a földön tartja
+
       knockdownSkipFall: false, // igaz, ha ez a Knockdown egy Throw folytatása -- ilyenkor a Knockdown
                                  // klip esés-animációja NEM játszódik le újra (a karakter már a földön
                                  // fekszik a BeingThrown végén), ld. posePlaybackProgress('knockdown')
@@ -2115,13 +2150,16 @@ const CLIP_CONFIG = {
   // each hit stronger than the last, third hit strongest -- per the "Combo rendszer atalakitas"
   // spec. Tomi and Barna share the exact same stat blocks (identical mechanic for both); Krisz
   // and Laci are explicitly OUT of scope for this rework and keep their existing Light/Heavy combo.
+  // The OPENER hit (a single, un-chained press) is a full, committed punch/kick -- longer active +
+  // recovery and more reach -- so one tap reads as a real punch on a whiff, not a tiny quick jab.
+  // Hits 2-3 stay snappy so chaining still feels like an escalating combo.
   const PUNCH_CHAIN_HITS = [
-    { startup:4, active:5, recovery:7,  dmg:5,  reach:40, knock:1,  hitStun:16, blockStun:8,  atkType:'high' }, // Jab -- light push, keeps combo in range
+    { startup:4, active:8, recovery:14, dmg:6,  reach:50, knock:1,  hitStun:16, blockStun:8,  atkType:'high' }, // full committed straight (single press reads as a real punch)
     { startup:4, active:5, recovery:8,  dmg:7,  reach:44, knock:2,  hitStun:18, blockStun:9,  atkType:'high' }, // Cross -- light push, keeps combo in range
     { startup:6, active:7, recovery:12, dmg:13, reach:50, knock:12, hitStun:26, blockStun:13, atkType:'high' }, // Hook -- 3rd hit always triggers the global knockdown push (KNOCKDOWN_PUSH), sends far
   ];
   const KICK_CHAIN_HITS = [
-    { startup:6, active:7, recovery:10, dmg:8,  reach:56, knock:2,  hitStun:20, blockStun:10, atkType:'high' }, // light push, keeps combo in range
+    { startup:6, active:9, recovery:16, dmg:9,  reach:66, knock:2,  hitStun:20, blockStun:10, atkType:'high' }, // full committed kick (single press reads as a real kick)
     { startup:6, active:7, recovery:11, dmg:10, reach:58, knock:3,  hitStun:22, blockStun:11, atkType:'high' }, // light push, keeps combo in range
     { startup:8, active:9, recovery:15, dmg:17, reach:66, knock:15, hitStun:30, blockStun:16, atkType:'high' }, // 3rd hit always triggers the global knockdown push (KNOCKDOWN_PUSH), sends far
   ];
@@ -2137,6 +2175,11 @@ const CLIP_CONFIG = {
   // 3 hits x 4 frames, so each press plays one clean hit (punch1/2/3, kick1/2/3 clips). Laci keeps
   // the legacy Light/Heavy combo (its own entry above), unaffected.
   COMBOS.krisz = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
+  // Laci joins the 3-hit Punch/Kick Combo too (his refreshed sheets are PUNCHCOMBO/KICKCOMBO = 3x4).
+  COMBOS.laci = [
     { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
     { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
   ];
@@ -2445,19 +2488,22 @@ const CLIP_CONFIG = {
 
     laci: {
       kind: 'projectile',
-      poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8","ult9"],
-      // felveszi a hangfalat + célra tart (ult2-ult6) egy kicsit lassabban, a dobás (ult7) gyors és pörgős,
-      // utána a büszke pörgés + "Grand Finale" pillanat (ult8-ult9) hosszabban kitart.
-      poseDurations: [150, 220, 180, 180, 200, 220, 110, 130, 500],
-      spawnPoseIndex: 6,               // ult7 (index 6) = a dobás pillanata — a hangfal itt hagyja el a kezét
-      spawnOffset: { x: 15, y: -95 },  // kb. kéz magasságban, Laci előtt, a nézési iránya felé
-      projectileType: 'laci_speaker',
-      ultScale: 0.638,
+      poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8"],
+      // ÚJ ultimate: leguggol a macskáért (ult1-ult3), felkapja és célra tart (ult4-ult5), majd
+      // hozzávágja az ellenfélhez (ult6 = a dobás pillanata, a macska itt hagyja el a kezét) — a macska
+      // önálló projectile-ként repül tovább. Utána a büszke "Grand Finale" póz (ult7) hosszan kitart,
+      // végül vissza az alap állásba (ult8). A sheet frame-sorrendje: 1-2-3-4-5-7-9-10 (a 6. és 8. frame
+      // maga a repülő macska = a projectile sprite, nem a karakter-animáció része).
+      poseDurations: [160, 180, 180, 180, 200, 140, 360, 240],
+      spawnPoseIndex: 5,               // ult6 (index 5) = a dobás pillanata — a macska itt hagyja el a kezét
+      spawnOffset: { x: 24, y: -120 }, // kb. váll/fej magasságban, Laci előtt, a nézési iránya felé
+      projectileType: 'laci_cat',
+      ultScale: 0.4879,
       anchors: [
-        {x:78, y:280}, {x:70, y:291}, {x:80, y:296}, {x:76, y:291}, {x:65, y:250},
-        {x:95, y:362}, {x:110,y:228}, {x:115,y:247}, {x:95, y:292},
+        {x:179.7, y:381.0}, {x:179.7, y:380.0}, {x:179.7, y:357.0}, {x:179.7, y:374.0},
+        {x:179.7, y:352.0}, {x:179.7, y:354.0}, {x:179.7, y:361.0}, {x:179.7, y:370.0},
       ],
-      finalePoseIndex: 8,              // ult9 (utolsó póz) — a büszke pózolás pillanata
+      finalePoseIndex: 6,              // ult7 (a büszke pózolás/üvöltés pillanata)
       finaleText: 'LACI — GRAND FINALE! 🎆',
     },
     barna: {
@@ -2578,12 +2624,14 @@ const CLIP_CONFIG = {
     },
 
     laci: {
-      // besetal napszemüvegben -> leveszi -> kigombolja es leveszi az ingét -> eldobja az inget
-      poses: ["enter1","enter2","enter3","enter4"],
-      poseDurations: [400, 380, 480, 320],
-      scale: 0.574,
+      // refreshed 10-frame entrance (walks in shirtless, poses up into stance). Per-frame anchors
+      // (centroid x + content bottom y) keep him planted through the walk-in.
+      poses: ["enter1","enter2","enter3","enter4","enter5","enter6","enter7","enter8","enter9","enter10"],
+      poseDurations: [280, 240, 240, 240, 240, 260, 280, 240, 240, 240],
+      scale: 0.4365,
       anchors: [
-        {x:79, y:317}, {x:80, y:318}, {x:122, y:311}, {x:84, y:315},
+        {x:168.4,y:414.0}, {x:143.0,y:417.0}, {x:154.3,y:417.0}, {x:122.3,y:417.0}, {x:109.0,y:417.0},
+        {x:150.9,y:420.0}, {x:143.0,y:402.0}, {x:149.8,y:402.0}, {x:139.9,y:403.0}, {x:116.9,y:403.0},
       ],
     },
     barna: {
@@ -2845,10 +2893,12 @@ const CLIP_CONFIG = {
       dmgPct: 0.33, knockVx: 16, knockVy: -5, stun: 55,
       hitStopFrames: 6, shakeAmt: 22,
     },
-    laci_speaker: {
-      spriteCharId: 'laci', spriteKey: 'ult_speaker',
-      speedPxPerSec: 850, spinDegPerSec: 480,
-      w: 50, h: 40, maxRange: 820, drawH: 52,
+    // Laci's Ultimate projectile — the cat he hurls at the opponent. Tumbles gently through the air
+    // (low spin so it stays readable as a flying cat) and hits like a full Ultimate.
+    laci_cat: {
+      spriteCharId: 'laci', spriteKey: 'ult_cat',
+      speedPxPerSec: 820, spinDegPerSec: 190,
+      w: 64, h: 44, maxRange: 900, drawH: 66,
       dmgPct: 0.33, knockVx: 16, knockVy: -5, stun: 55,
       hitStopFrames: 6, shakeAmt: 24,
     },
@@ -2963,8 +3013,16 @@ const CLIP_CONFIG = {
     // --- interim melee Berserk Moves (reuse an existing pose) until each fighter's own sheet arrives ---
     tomi:  { kind: 'melee', pose: 'punch', totalMs: 520, hitStartMs: 150, hitLenMs: 130,
              hitCfg: { dmg: 18, reach: 62, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
-    laci:  { kind: 'melee', pose: 'punch', totalMs: 520, hitStartMs: 150, hitLenMs: 130,
-             hitCfg: { dmg: 18, reach: 62, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
+    // Laci's own Berserk Move: a run-up two-handed shove. Deals 10% max HP and knocks the opponent
+    // down for ~2s. Only lands if he actually reaches the opponent (contact-gated).
+    laci: {
+      kind: 'charge', pose: 'berserk',
+      totalMs: 990,            // matches the 10-frame laci berserk clip (CLIP_CONFIG.laci.berserk)
+      chargeStartMs: 130, chargeEndMs: 515,   // frames 1-5: the run-up (drive forward)
+      shoveStartMs: 610, shoveEndMs: 840,     // frames 7-8: the two-hand shove (contact window)
+      chargeSpeed: 9, reach: 64, pushback: 6,
+      stunFrames: 125,         // ~2000ms: staggerTimer counts down by dt/16, so 125*16ms ≈ 2.0s
+    },
     barna: { kind: 'melee', pose: 'kick',  totalMs: 540, hitStartMs: 160, hitLenMs: 130,
              hitCfg: { dmg: 18, reach: 66, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
   };
@@ -3003,6 +3061,41 @@ const CLIP_CONFIG = {
         f.berserkSpawned = true;
         const ox = f.facing === 1 ? f.x + f.w + cfg.spawnOffset.x : f.x - cfg.spawnOffset.x;
         spawnProjectile(f, cfg.projectileType, ox, f.y + cfg.spawnOffset.y);
+      }
+    } else if (cfg.kind === 'charge'){
+      // Run-up: drive forward during the charge frames (overrides the plant-in-place decay above),
+      // but only until he actually makes contact — stopping on contact prevents phasing through.
+      if (f.berserkElapsed >= cfg.chargeStartMs && f.berserkElapsed < cfg.chargeEndMs && !f.berserkHasHit){
+        f.vx = f.facing * cfg.chargeSpeed;
+      }
+      // Two-hand shove — lands the instant his hands reach the opponent, anytime across the run-up and
+      // shove frames. 0 damage, small ground pushback, exactly-2s stun, no launch/knockdown. Fully
+      // contact-gated: if he never reaches them, nothing happens (a clean whiff).
+      const active = f.berserkElapsed >= cfg.chargeStartMs && f.berserkElapsed <= cfg.shoveEndMs;
+      if (!f.berserkHasHit && active){
+        const reach = cfg.reach;
+        const bx = f.facing === 1 ? f.x + f.w : f.x - reach;
+        const box = { x: bx, y: f.y - 100, w: reach, h: 90 };
+        const otherBox = { x: other.x, y: other.y - other.h, w: other.w, h: other.h };
+        if (rectsOverlap(box, otherBox) && other.hp > 0 && !isInvulnerable(other)){
+          f.berserkHasHit = true;
+          f.vx = 0;                                   // plant on contact — no phasing through
+          applyDamage(other, other.maxHp * 0.10);     // the shove now deals 10% max HP
+          other.vx = f.facing * cfg.pushback;         // small ground push
+          other.vy = 0; other.onGround = true;
+          // Knocked down for the whole stun: the fall plays once, then he stays grounded until the
+          // timer runs out (then Get Up) — instead of standing stunned in place.
+          other.knockdownTimer = cfg.stunFrames;
+          other.knockdownTotal = cfg.stunFrames;
+          other.knockdownSkipFall = false;
+          other.staggerTimer = 0; other.attackTimer = 0; other.throwTimer = 0; other.blockStunTimer = 0;
+          resetCombo(other);
+          const sparkX = other.x + other.w/2, sparkY = other.y - 90;
+          spawnSparks(sparkX, sparkY, 10);
+          spawnDust(other.x + other.w/2, GROUND_Y);
+          hitStopTimer = 5; shake = Math.max(shake, 12);
+          banner(`${charName(other.charId)} KNOCKED DOWN! 💫`, 45);
+        }
       }
     } else { // melee
       const hitOn = f.berserkElapsed >= cfg.hitStartMs && f.berserkElapsed <= cfg.hitStartMs + cfg.hitLenMs;
@@ -3073,8 +3166,12 @@ const CLIP_CONFIG = {
     // amint lejár, automatikusan Get Up-ba lép (még mindig nem irányítható, még mindig sebezhetetlen),
     // és csak ennek a lejártával tér vissza Idle-be -- lásd isInvulnerable() + a lenti mozgás-tiltó ág.
     if (f.knockdownTimer > 0){
+      // Capture the knockdown's full length on the first frame so a LONGER-than-usual knockdown
+      // (e.g. Laci's Berserk shove) plays the fall once and then HOLDS grounded for the rest —
+      // see posePlaybackProgress('knockdown'). Normal knockdowns set it to KNOCKDOWN_FRAMES → no change.
+      if (!f.knockdownTotal || f.knockdownTotal < f.knockdownTimer) f.knockdownTotal = f.knockdownTimer;
       f.knockdownTimer -= dtScale;
-      if (f.knockdownTimer <= 0) f.getUpTimer = GETUP_FRAMES;
+      if (f.knockdownTimer <= 0){ f.getUpTimer = GETUP_FRAMES; f.knockdownTotal = 0; }
     } else if (f.getUpTimer > 0){
       f.getUpTimer -= dtScale;
     } else if (f.beingThrownTimer > 0){

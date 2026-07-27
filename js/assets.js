@@ -128,8 +128,7 @@ window.ASSETS = {
       "ult6": "assets/characters/laci/ultimate/ult6.png",
       "ult7": "assets/characters/laci/ultimate/ult7.png",
       "ult8": "assets/characters/laci/ultimate/ult8.png",
-      "ult9": "assets/characters/laci/ultimate/ult9.png",
-      "ult_speaker": "assets/characters/laci/ultimate/ult_speaker.png"
+      "ult_cat": "assets/characters/laci/ultimate/ult_cat.png"
     },
     "barna": {
       "ult1": "assets/characters/barna/ultimate/ult1.png",
@@ -174,7 +173,13 @@ window.ASSETS = {
       "enter1": "assets/characters/laci/enter/enter1.png",
       "enter2": "assets/characters/laci/enter/enter2.png",
       "enter3": "assets/characters/laci/enter/enter3.png",
-      "enter4": "assets/characters/laci/enter/enter4.png"
+      "enter4": "assets/characters/laci/enter/enter4.png",
+      "enter5": "assets/characters/laci/enter/enter5.png",
+      "enter6": "assets/characters/laci/enter/enter6.png",
+      "enter7": "assets/characters/laci/enter/enter7.png",
+      "enter8": "assets/characters/laci/enter/enter8.png",
+      "enter9": "assets/characters/laci/enter/enter9.png",
+      "enter10": "assets/characters/laci/enter/enter10.png"
     },
     "barna": {
       "enter1": "assets/characters/barna/enter/enter1.png",
@@ -226,6 +231,232 @@ window.ASSETS = {
     }
   },
   "clips": {
+    "laci": {
+      "berserk": [
+        "assets/characters/laci/berserk/0.png",
+        "assets/characters/laci/berserk/1.png",
+        "assets/characters/laci/berserk/2.png",
+        "assets/characters/laci/berserk/3.png",
+        "assets/characters/laci/berserk/4.png",
+        "assets/characters/laci/berserk/5.png",
+        "assets/characters/laci/berserk/6.png",
+        "assets/characters/laci/berserk/7.png",
+        "assets/characters/laci/berserk/8.png",
+        "assets/characters/laci/berserk/9.png"
+      ],
+      "idle": [
+        "assets/characters/laci/idle/0.png",
+        "assets/characters/laci/idle/1.png",
+        "assets/characters/laci/idle/2.png",
+        "assets/characters/laci/idle/3.png",
+        "assets/characters/laci/idle/4.png",
+        "assets/characters/laci/idle/5.png",
+        "assets/characters/laci/idle/6.png",
+        "assets/characters/laci/idle/7.png"
+      ],
+      "walk": [
+        "assets/characters/laci/walk/0.png",
+        "assets/characters/laci/walk/1.png",
+        "assets/characters/laci/walk/2.png",
+        "assets/characters/laci/walk/3.png",
+        "assets/characters/laci/walk/4.png",
+        "assets/characters/laci/walk/5.png",
+        "assets/characters/laci/walk/6.png",
+        "assets/characters/laci/walk/7.png"
+      ],
+      "run": [
+        "assets/characters/laci/run/0.png",
+        "assets/characters/laci/run/1.png",
+        "assets/characters/laci/run/2.png",
+        "assets/characters/laci/run/3.png",
+        "assets/characters/laci/run/4.png",
+        "assets/characters/laci/run/5.png",
+        "assets/characters/laci/run/6.png",
+        "assets/characters/laci/run/7.png"
+      ],
+      "backwalk": [
+        "assets/characters/laci/backwalk/0.png",
+        "assets/characters/laci/backwalk/1.png",
+        "assets/characters/laci/backwalk/2.png",
+        "assets/characters/laci/backwalk/3.png",
+        "assets/characters/laci/backwalk/4.png",
+        "assets/characters/laci/backwalk/5.png",
+        "assets/characters/laci/backwalk/6.png",
+        "assets/characters/laci/backwalk/7.png"
+      ],
+      "jump": [
+        "assets/characters/laci/jump/0.png",
+        "assets/characters/laci/jump/1.png",
+        "assets/characters/laci/jump/2.png",
+        "assets/characters/laci/jump/3.png",
+        "assets/characters/laci/jump/4.png",
+        "assets/characters/laci/jump/5.png",
+        "assets/characters/laci/jump/6.png",
+        "assets/characters/laci/jump/7.png"
+      ],
+      "crouch": [
+        "assets/characters/laci/crouch/0.png",
+        "assets/characters/laci/crouch/1.png",
+        "assets/characters/laci/crouch/2.png",
+        "assets/characters/laci/crouch/3.png",
+        "assets/characters/laci/crouch/4.png",
+        "assets/characters/laci/crouch/5.png",
+        "assets/characters/laci/crouch/6.png",
+        "assets/characters/laci/crouch/7.png"
+      ],
+      "block": [
+        "assets/characters/laci/block/0.png",
+        "assets/characters/laci/block/1.png",
+        "assets/characters/laci/block/2.png",
+        "assets/characters/laci/block/3.png"
+      ],
+      "crouchBlock": [
+        "assets/characters/laci/crouchBlock/0.png",
+        "assets/characters/laci/crouchBlock/1.png",
+        "assets/characters/laci/crouchBlock/2.png"
+      ],
+      "hit": [
+        "assets/characters/laci/hit/0.png",
+        "assets/characters/laci/hit/1.png",
+        "assets/characters/laci/hit/2.png",
+        "assets/characters/laci/hit/3.png",
+        "assets/characters/laci/hit/4.png",
+        "assets/characters/laci/hit/5.png",
+        "assets/characters/laci/hit/6.png"
+      ],
+      "sweep": [
+        "assets/characters/laci/sweep/0.png",
+        "assets/characters/laci/sweep/1.png",
+        "assets/characters/laci/sweep/2.png",
+        "assets/characters/laci/sweep/3.png",
+        "assets/characters/laci/sweep/4.png",
+        "assets/characters/laci/sweep/5.png",
+        "assets/characters/laci/sweep/6.png",
+        "assets/characters/laci/sweep/7.png"
+      ],
+      "taunt": [
+        "assets/characters/laci/taunt/0.png",
+        "assets/characters/laci/taunt/1.png",
+        "assets/characters/laci/taunt/2.png",
+        "assets/characters/laci/taunt/3.png",
+        "assets/characters/laci/taunt/4.png",
+        "assets/characters/laci/taunt/5.png",
+        "assets/characters/laci/taunt/6.png",
+        "assets/characters/laci/taunt/7.png"
+      ],
+      "getUp": [
+        "assets/characters/laci/getUp/0.png",
+        "assets/characters/laci/getUp/1.png",
+        "assets/characters/laci/getUp/2.png",
+        "assets/characters/laci/getUp/3.png",
+        "assets/characters/laci/getUp/4.png",
+        "assets/characters/laci/getUp/5.png",
+        "assets/characters/laci/getUp/6.png",
+        "assets/characters/laci/getUp/7.png"
+      ],
+      "knockdown": [
+        "assets/characters/laci/knockdown/0.png",
+        "assets/characters/laci/knockdown/1.png",
+        "assets/characters/laci/knockdown/2.png",
+        "assets/characters/laci/knockdown/3.png",
+        "assets/characters/laci/knockdown/4.png",
+        "assets/characters/laci/knockdown/5.png",
+        "assets/characters/laci/knockdown/6.png",
+        "assets/characters/laci/knockdown/7.png"
+      ],
+      "lose": [
+        "assets/characters/laci/lose/0.png",
+        "assets/characters/laci/lose/1.png",
+        "assets/characters/laci/lose/2.png",
+        "assets/characters/laci/lose/3.png",
+        "assets/characters/laci/lose/4.png",
+        "assets/characters/laci/lose/5.png",
+        "assets/characters/laci/lose/6.png",
+        "assets/characters/laci/lose/7.png"
+      ],
+      "win": [
+        "assets/characters/laci/win/0.png",
+        "assets/characters/laci/win/1.png",
+        "assets/characters/laci/win/2.png",
+        "assets/characters/laci/win/3.png",
+        "assets/characters/laci/win/4.png",
+        "assets/characters/laci/win/5.png",
+        "assets/characters/laci/win/6.png",
+        "assets/characters/laci/win/7.png"
+      ],
+      "punch": [
+        "assets/characters/laci/punch/0.png",
+        "assets/characters/laci/punch/1.png",
+        "assets/characters/laci/punch/2.png",
+        "assets/characters/laci/punch/3.png"
+      ],
+      "kick": [
+        "assets/characters/laci/kick/0.png",
+        "assets/characters/laci/kick/1.png",
+        "assets/characters/laci/kick/2.png",
+        "assets/characters/laci/kick/3.png"
+      ],
+      "throw": [
+        "assets/characters/laci/throw/0.png",
+        "assets/characters/laci/throw/1.png",
+        "assets/characters/laci/throw/2.png",
+        "assets/characters/laci/throw/3.png",
+        "assets/characters/laci/throw/4.png",
+        "assets/characters/laci/throw/5.png",
+        "assets/characters/laci/throw/6.png",
+        "assets/characters/laci/throw/7.png",
+        "assets/characters/laci/throw/8.png",
+        "assets/characters/laci/throw/9.png"
+      ],
+      "beingThrown": [
+        "assets/characters/laci/beingThrown/0.png",
+        "assets/characters/laci/beingThrown/1.png",
+        "assets/characters/laci/beingThrown/2.png",
+        "assets/characters/laci/beingThrown/3.png",
+        "assets/characters/laci/beingThrown/4.png",
+        "assets/characters/laci/beingThrown/5.png",
+        "assets/characters/laci/beingThrown/6.png",
+        "assets/characters/laci/beingThrown/7.png",
+        "assets/characters/laci/beingThrown/8.png",
+        "assets/characters/laci/beingThrown/9.png"
+      ],
+      "punch1": [
+        "assets/characters/laci/punch1/0.png",
+        "assets/characters/laci/punch1/1.png",
+        "assets/characters/laci/punch1/2.png",
+        "assets/characters/laci/punch1/3.png"
+      ],
+      "punch2": [
+        "assets/characters/laci/punch2/0.png",
+        "assets/characters/laci/punch2/1.png",
+        "assets/characters/laci/punch2/2.png",
+        "assets/characters/laci/punch2/3.png"
+      ],
+      "punch3": [
+        "assets/characters/laci/punch3/0.png",
+        "assets/characters/laci/punch3/1.png",
+        "assets/characters/laci/punch3/2.png",
+        "assets/characters/laci/punch3/3.png"
+      ],
+      "kick1": [
+        "assets/characters/laci/kick1/0.png",
+        "assets/characters/laci/kick1/1.png",
+        "assets/characters/laci/kick1/2.png",
+        "assets/characters/laci/kick1/3.png"
+      ],
+      "kick2": [
+        "assets/characters/laci/kick2/0.png",
+        "assets/characters/laci/kick2/1.png",
+        "assets/characters/laci/kick2/2.png",
+        "assets/characters/laci/kick2/3.png"
+      ],
+      "kick3": [
+        "assets/characters/laci/kick3/0.png",
+        "assets/characters/laci/kick3/1.png",
+        "assets/characters/laci/kick3/2.png",
+        "assets/characters/laci/kick3/3.png"
+      ]
+    },
     "krisz": {
       "berserk": [
         "assets/characters/krisz/berserk/0.png",
@@ -301,17 +532,12 @@ window.ASSETS = {
         "assets/characters/krisz/block/0.png",
         "assets/characters/krisz/block/1.png",
         "assets/characters/krisz/block/2.png",
-        "assets/characters/krisz/block/3.png",
-        "assets/characters/krisz/block/4.png",
-        "assets/characters/krisz/block/5.png"
+        "assets/characters/krisz/block/3.png"
       ],
       "crouchBlock": [
         "assets/characters/krisz/crouchBlock/0.png",
         "assets/characters/krisz/crouchBlock/1.png",
-        "assets/characters/krisz/crouchBlock/2.png",
-        "assets/characters/krisz/crouchBlock/3.png",
-        "assets/characters/krisz/crouchBlock/4.png",
-        "assets/characters/krisz/crouchBlock/5.png"
+        "assets/characters/krisz/crouchBlock/2.png"
       ],
       "hit": [
         "assets/characters/krisz/hit/0.png",
