@@ -43,6 +43,9 @@ window.ASSETS = {
     },
     "bence": {
       "idle": "assets/characters/bence/base/idle.png"
+    },
+    "milo": {
+      "idle": "assets/characters/milo/base/idle.png"
     }
   },
   "special": {
@@ -157,6 +160,18 @@ window.ASSETS = {
       "ult8": "assets/characters/bence/ultimate/ult8.png",
       "ult9": "assets/characters/bence/ultimate/ult9.png",
       "ult10": "assets/characters/bence/ultimate/ult10.png"
+    },
+    "milo": {
+      "ult1": "assets/characters/milo/ultimate/ult1.png",
+      "ult2": "assets/characters/milo/ultimate/ult2.png",
+      "ult3": "assets/characters/milo/ultimate/ult3.png",
+      "ult4": "assets/characters/milo/ultimate/ult4.png",
+      "ult5": "assets/characters/milo/ultimate/ult5.png",
+      "ult6": "assets/characters/milo/ultimate/ult6.png",
+      "ult7": "assets/characters/milo/ultimate/ult7.png",
+      "ult8": "assets/characters/milo/ultimate/ult8.png",
+      "ult9": "assets/characters/milo/ultimate/ult9.png",
+      "ult_bottle": "assets/characters/milo/ultimate/ult_bottle.png"
     }
   },
   "enter": {
@@ -219,6 +234,18 @@ window.ASSETS = {
       "enter8": "assets/characters/bence/enter/enter8.png",
       "enter9": "assets/characters/bence/enter/enter9.png",
       "enter10": "assets/characters/bence/enter/enter10.png"
+    },
+    "milo": {
+      "enter1": "assets/characters/milo/enter/enter1.png",
+      "enter2": "assets/characters/milo/enter/enter2.png",
+      "enter3": "assets/characters/milo/enter/enter3.png",
+      "enter4": "assets/characters/milo/enter/enter4.png",
+      "enter5": "assets/characters/milo/enter/enter5.png",
+      "enter6": "assets/characters/milo/enter/enter6.png",
+      "enter7": "assets/characters/milo/enter/enter7.png",
+      "enter8": "assets/characters/milo/enter/enter8.png",
+      "enter9": "assets/characters/milo/enter/enter9.png",
+      "enter10": "assets/characters/milo/enter/enter10.png"
     }
   },
   "combat2": {
@@ -258,6 +285,219 @@ window.ASSETS = {
     }
   },
   "clips": {
+    "milo": {
+      "idle": [
+        "assets/characters/milo/idle/0.png",
+        "assets/characters/milo/idle/1.png",
+        "assets/characters/milo/idle/2.png",
+        "assets/characters/milo/idle/3.png",
+        "assets/characters/milo/idle/4.png",
+        "assets/characters/milo/idle/5.png",
+        "assets/characters/milo/idle/6.png",
+        "assets/characters/milo/idle/7.png"
+      ],
+      "walk": [
+        "assets/characters/milo/walk/0.png",
+        "assets/characters/milo/walk/1.png",
+        "assets/characters/milo/walk/2.png",
+        "assets/characters/milo/walk/3.png",
+        "assets/characters/milo/walk/4.png",
+        "assets/characters/milo/walk/5.png",
+        "assets/characters/milo/walk/6.png",
+        "assets/characters/milo/walk/7.png"
+      ],
+      "run": [
+        "assets/characters/milo/run/0.png",
+        "assets/characters/milo/run/1.png",
+        "assets/characters/milo/run/2.png",
+        "assets/characters/milo/run/3.png",
+        "assets/characters/milo/run/4.png",
+        "assets/characters/milo/run/5.png",
+        "assets/characters/milo/run/6.png",
+        "assets/characters/milo/run/7.png"
+      ],
+      "backwalk": [
+        "assets/characters/milo/backwalk/0.png",
+        "assets/characters/milo/backwalk/1.png",
+        "assets/characters/milo/backwalk/2.png",
+        "assets/characters/milo/backwalk/3.png",
+        "assets/characters/milo/backwalk/4.png",
+        "assets/characters/milo/backwalk/5.png",
+        "assets/characters/milo/backwalk/6.png",
+        "assets/characters/milo/backwalk/7.png"
+      ],
+      "jump": [
+        "assets/characters/milo/jump/0.png",
+        "assets/characters/milo/jump/1.png",
+        "assets/characters/milo/jump/2.png",
+        "assets/characters/milo/jump/3.png",
+        "assets/characters/milo/jump/4.png",
+        "assets/characters/milo/jump/5.png",
+        "assets/characters/milo/jump/6.png",
+        "assets/characters/milo/jump/7.png"
+      ],
+      "crouch": [
+        "assets/characters/milo/crouch/0.png",
+        "assets/characters/milo/crouch/1.png",
+        "assets/characters/milo/crouch/2.png",
+        "assets/characters/milo/crouch/3.png"
+      ],
+      "block": [
+        "assets/characters/milo/block/0.png",
+        "assets/characters/milo/block/1.png",
+        "assets/characters/milo/block/2.png",
+        "assets/characters/milo/block/3.png"
+      ],
+      "crouchBlock": [
+        "assets/characters/milo/crouchBlock/0.png",
+        "assets/characters/milo/crouchBlock/1.png",
+        "assets/characters/milo/crouchBlock/2.png"
+      ],
+      "hit": [
+        "assets/characters/milo/hit/0.png",
+        "assets/characters/milo/hit/1.png",
+        "assets/characters/milo/hit/2.png",
+        "assets/characters/milo/hit/3.png",
+        "assets/characters/milo/hit/4.png",
+        "assets/characters/milo/hit/5.png"
+      ],
+      "sweep": [
+        "assets/characters/milo/sweep/0.png",
+        "assets/characters/milo/sweep/1.png",
+        "assets/characters/milo/sweep/2.png",
+        "assets/characters/milo/sweep/3.png",
+        "assets/characters/milo/sweep/4.png",
+        "assets/characters/milo/sweep/5.png",
+        "assets/characters/milo/sweep/6.png",
+        "assets/characters/milo/sweep/7.png"
+      ],
+      "taunt": [
+        "assets/characters/milo/taunt/0.png",
+        "assets/characters/milo/taunt/1.png",
+        "assets/characters/milo/taunt/2.png",
+        "assets/characters/milo/taunt/3.png",
+        "assets/characters/milo/taunt/4.png",
+        "assets/characters/milo/taunt/5.png",
+        "assets/characters/milo/taunt/6.png",
+        "assets/characters/milo/taunt/7.png"
+      ],
+      "getUp": [
+        "assets/characters/milo/getUp/0.png",
+        "assets/characters/milo/getUp/1.png",
+        "assets/characters/milo/getUp/2.png",
+        "assets/characters/milo/getUp/3.png",
+        "assets/characters/milo/getUp/4.png",
+        "assets/characters/milo/getUp/5.png",
+        "assets/characters/milo/getUp/6.png",
+        "assets/characters/milo/getUp/7.png"
+      ],
+      "knockdown": [
+        "assets/characters/milo/knockdown/0.png",
+        "assets/characters/milo/knockdown/1.png",
+        "assets/characters/milo/knockdown/2.png",
+        "assets/characters/milo/knockdown/3.png",
+        "assets/characters/milo/knockdown/4.png",
+        "assets/characters/milo/knockdown/5.png"
+      ],
+      "lose": [
+        "assets/characters/milo/lose/0.png",
+        "assets/characters/milo/lose/1.png",
+        "assets/characters/milo/lose/2.png",
+        "assets/characters/milo/lose/3.png",
+        "assets/characters/milo/lose/4.png",
+        "assets/characters/milo/lose/5.png",
+        "assets/characters/milo/lose/6.png",
+        "assets/characters/milo/lose/7.png"
+      ],
+      "win": [
+        "assets/characters/milo/win/0.png",
+        "assets/characters/milo/win/1.png",
+        "assets/characters/milo/win/2.png",
+        "assets/characters/milo/win/3.png",
+        "assets/characters/milo/win/4.png",
+        "assets/characters/milo/win/5.png",
+        "assets/characters/milo/win/6.png",
+        "assets/characters/milo/win/7.png"
+      ],
+      "punch": [
+        "assets/characters/milo/punch/0.png",
+        "assets/characters/milo/punch/1.png",
+        "assets/characters/milo/punch/2.png"
+      ],
+      "kick": [
+        "assets/characters/milo/kick/0.png",
+        "assets/characters/milo/kick/1.png",
+        "assets/characters/milo/kick/2.png"
+      ],
+      "throw": [
+        "assets/characters/milo/throw/0.png",
+        "assets/characters/milo/throw/1.png",
+        "assets/characters/milo/throw/2.png",
+        "assets/characters/milo/throw/3.png",
+        "assets/characters/milo/throw/4.png",
+        "assets/characters/milo/throw/5.png",
+        "assets/characters/milo/throw/6.png",
+        "assets/characters/milo/throw/7.png",
+        "assets/characters/milo/throw/8.png",
+        "assets/characters/milo/throw/9.png"
+      ],
+      "beingThrown": [
+        "assets/characters/milo/beingThrown/0.png",
+        "assets/characters/milo/beingThrown/1.png",
+        "assets/characters/milo/beingThrown/2.png",
+        "assets/characters/milo/beingThrown/3.png",
+        "assets/characters/milo/beingThrown/4.png",
+        "assets/characters/milo/beingThrown/5.png",
+        "assets/characters/milo/beingThrown/6.png",
+        "assets/characters/milo/beingThrown/7.png",
+        "assets/characters/milo/beingThrown/8.png",
+        "assets/characters/milo/beingThrown/9.png"
+      ],
+      "punch1": [
+        "assets/characters/milo/punch1/0.png",
+        "assets/characters/milo/punch1/1.png",
+        "assets/characters/milo/punch1/2.png"
+      ],
+      "punch2": [
+        "assets/characters/milo/punch2/0.png",
+        "assets/characters/milo/punch2/1.png",
+        "assets/characters/milo/punch2/2.png"
+      ],
+      "punch3": [
+        "assets/characters/milo/punch3/0.png",
+        "assets/characters/milo/punch3/1.png",
+        "assets/characters/milo/punch3/2.png"
+      ],
+      "kick1": [
+        "assets/characters/milo/kick1/0.png",
+        "assets/characters/milo/kick1/1.png",
+        "assets/characters/milo/kick1/2.png"
+      ],
+      "kick2": [
+        "assets/characters/milo/kick2/0.png",
+        "assets/characters/milo/kick2/1.png",
+        "assets/characters/milo/kick2/2.png"
+      ],
+      "kick3": [
+        "assets/characters/milo/kick3/0.png",
+        "assets/characters/milo/kick3/1.png",
+        "assets/characters/milo/kick3/2.png"
+      ],
+      "berserk": [
+        "assets/characters/milo/berserk/0.png",
+        "assets/characters/milo/berserk/1.png",
+        "assets/characters/milo/berserk/2.png",
+        "assets/characters/milo/berserk/3.png",
+        "assets/characters/milo/berserk/4.png",
+        "assets/characters/milo/berserk/5.png",
+        "assets/characters/milo/berserk/6.png",
+        "assets/characters/milo/berserk/7.png",
+        "assets/characters/milo/berserk/8.png",
+        "assets/characters/milo/berserk/9.png",
+        "assets/characters/milo/berserk/10.png",
+        "assets/characters/milo/berserk/11.png"
+      ]
+    },
     "bence": {
       "idle": [
         "assets/characters/bence/idle/0.png",
@@ -569,8 +809,7 @@ window.ASSETS = {
         "assets/characters/laci/hit/2.png",
         "assets/characters/laci/hit/3.png",
         "assets/characters/laci/hit/4.png",
-        "assets/characters/laci/hit/5.png",
-        "assets/characters/laci/hit/6.png"
+        "assets/characters/laci/hit/5.png"
       ],
       "sweep": [
         "assets/characters/laci/sweep/0.png",
@@ -1101,9 +1340,7 @@ window.ASSETS = {
         "assets/characters/tomi/win/4.png",
         "assets/characters/tomi/win/5.png",
         "assets/characters/tomi/win/6.png",
-        "assets/characters/tomi/win/7.png",
-        "assets/characters/tomi/win/8.png",
-        "assets/characters/tomi/win/9.png"
+        "assets/characters/tomi/win/7.png"
       ],
       "lose": [
         "assets/characters/tomi/lose/0.png",
@@ -1383,7 +1620,9 @@ window.ASSETS = {
     "laciverse": "assets/stages/laciverse.jpg",
     "siofok": "assets/stages/siofok.jpg",
     "siofok_night": "assets/stages/siofok_night.jpg",
-    "novarock": "assets/stages/novarock.jpg"
+    "novarock": "assets/stages/novarock.jpg",
+    "arzenal": "assets/stages/arzenal.jpg",
+    "barhole": "assets/stages/barhole.jpg"
   },
   "dom": {
     "logo": "assets/hud/logo.png",

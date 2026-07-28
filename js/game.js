@@ -54,7 +54,7 @@
   }
 
   const SPRITE_POSES = ["idle","walk","run","jump","block","punch","kick","hit","win","lose"];
-  const sprites = { krisz: {}, tomi: {}, laci: {}, barna: {}, bence: {}, krisz_special: {}, tomi_special: {}, laci_special: {}, barna_special: {}, ultimates: {}, enter: {}, combat2: {}, combat2_special: {}, clips: {} };
+  const sprites = { krisz: {}, tomi: {}, laci: {}, barna: {}, bence: {}, milo: {}, krisz_special: {}, tomi_special: {}, laci_special: {}, barna_special: {}, ultimates: {}, enter: {}, combat2: {}, combat2_special: {}, clips: {} };
   // refresh whichever menu screen is currently showing portraits once a sprite image finishes
   // decoding — data-URIs are basically instant, this is just a safety net against draw-before-ready
   function onSpriteReady(){
@@ -141,6 +141,34 @@
   // data addition here -- drawFighter/pickPose never need another special case.
 
 const CLIP_CONFIG = {
+  milo: {
+    idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:111.4,y:519.0},{x:210.6,y:519.0},{x:194.3,y:518.0},{x:295.4,y:518.0},{x:113.9,y:625.0},{x:227.2,y:627.0},{x:202.4,y:627.0},{x:297.9,y:627.0}], scale: 0.3527 },
+    walk: { loop: true, frameMs: [105,105,105,105,105,105,105,105], anchors: [{x:116.0,y:480.0},{x:233.9,y:481.0},{x:233.7,y:480.0},{x:342.7,y:481.0},{x:124.9,y:594.0},{x:235.1,y:590.0},{x:229.7,y:594.0},{x:343.0,y:593.0}], scale: 0.3816 },
+    run: { loop: true, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:197.2,y:410.0},{x:300.7,y:417.0},{x:287.7,y:421.0},{x:412.0,y:410.0},{x:196.8,y:484.0},{x:296.9,y:490.0},{x:286.7,y:493.0},{x:417.3,y:500.0}], scale: 0.4505 },
+    backwalk: { loop: true, frameMs: [110,110,110,110,110,110,110,110], anchors: [{x:105.8,y:417.0},{x:209.6,y:419.0},{x:224.9,y:426.0},{x:343.3,y:419.0},{x:96.0,y:513.0},{x:213.1,y:519.0},{x:225.7,y:513.0},{x:343.0,y:513.0}], scale: 0.4396 },
+    jump: { loop: false, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:82.2,y:483.0},{x:171.0,y:483.0},{x:74.0,y:439.0},{x:245.2,y:397.0},{x:69.7,y:465.0},{x:116.5,y:515.0},{x:140.8,y:552.0},{x:262.1,y:566.0}], scale: 0.4213 },
+    crouch: { loop: false, frameMs: [70,70,70,70], anchors: [{x:114.3,y:453.0},{x:223.5,y:444.0},{x:332.3,y:442.0},{x:112.1,y:513.0}], scale: 0.4044 },
+    block: { loop: false, frameMs: [80,80,80,80], anchors: [{x:149.5,y:613.0},{x:273.3,y:613.0},{x:269.8,y:613.0},{x:390.7,y:614.0}], scale: 0.2984 },
+    crouchBlock: { loop: false, frameMs: [80,80,80], anchors: [{x:130.5,y:342.0},{x:200.5,y:343.0},{x:543.9,y:342.0}], scale: 0.4044 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:221.1,y:424.0},{x:339.4,y:424.0},{x:451.6,y:424.0},{x:233.3,y:520.0},{x:286.1,y:520.0},{x:415.0,y:526.0}], scale: 0.4417 },
+    sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:129.5,y:418.0},{x:217.1,y:416.0},{x:214.7,y:410.0},{x:274.1,y:399.0},{x:154.5,y:483.0},{x:201.2,y:482.0},{x:210.1,y:481.0},{x:350.5,y:482.0}], scale: 0.4386 },
+    taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:109.4,y:447.0},{x:220.4,y:447.0},{x:236.4,y:447.0},{x:381.2,y:447.0},{x:116.0,y:534.0},{x:221.2,y:534.0},{x:211.9,y:533.0},{x:363.6,y:533.0}], scale: 0.4099 },
+    getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:204.7,y:334.0},{x:300.0,y:332.0},{x:253.8,y:327.0},{x:284.6,y:328.0},{x:149.5,y:403.0},{x:243.3,y:406.0},{x:222.1,y:410.0},{x:325.5,y:411.0}], scale: 0.4608 },
+    knockdown: { loop: false, frameMs: [95,95,95,95,95,95], anchors: [{x:159.2,y:427.0},{x:645.6,y:496.0},{x:726.3,y:451.0},{x:159.6,y:504.0},{x:751.4,y:500.0},{x:774.6,y:468.0}], scale: 0.4292 },
+    lose: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:116.0,y:441.0},{x:191.3,y:429.0},{x:296.0,y:428.0},{x:413.6,y:429.0},{x:140.7,y:472.0},{x:270.4,y:473.0},{x:277.0,y:475.0},{x:396.2,y:475.0}], scale: 0.4155 },
+    win: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:120.5,y:469.0},{x:222.5,y:468.0},{x:205.5,y:459.0},{x:330.5,y:456.0},{x:110.3,y:457.0},{x:221.0,y:459.0},{x:220.4,y:460.0},{x:340.1,y:463.0}], scale: 0.3906 },
+    punch: { loop: false, frameMs: [52,52,52], anchors: [{x:109.9,y:408.0},{x:288.9,y:407.0},{x:118.8,y:481.0}], scale: 0.4472 },
+    kick: { loop: false, frameMs: [58,58,58], anchors: [{x:230.9,y:396.0},{x:253.8,y:390.0},{x:97.8,y:453.0}], scale: 0.4619 },
+    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:127.2,y:402.0},{x:215.4,y:402.0},{x:204.8,y:401.0},{x:200.1,y:399.0},{x:317.1,y:401.0},{x:125.5,y:470.0},{x:258.3,y:475.0},{x:256.1,y:478.0},{x:219.8,y:481.0},{x:317.9,y:484.0}], scale: 0.4561 },
+    beingThrown: { loop: false, frameMs: [58,58,58,58,58,58,58,58,58,58], anchors: [{x:214.2,y:404.0},{x:303.1,y:404.0},{x:331.3,y:405.0},{x:360.5,y:404.0},{x:466.1,y:409.0},{x:342.4,y:416.0},{x:512.8,y:424.0},{x:205.8,y:424.0},{x:225.3,y:424.0},{x:379.5,y:427.0}], scale: 0.3987 },
+    punch1: { loop: false, frameMs: [52,52,52], anchors: [{x:109.9,y:408.0},{x:288.9,y:407.0},{x:118.8,y:481.0}], scale: 0.4472 },
+    punch2: { loop: false, frameMs: [52,52,52], anchors: [{x:118.8,y:481.0},{x:190.4,y:476.0},{x:166.0,y:486.0}], scale: 0.4472 },
+    punch3: { loop: false, frameMs: [56,56,56], anchors: [{x:166.0,y:486.0},{x:192.3,y:483.0},{x:355.4,y:484.0}], scale: 0.4472 },
+    kick1: { loop: false, frameMs: [58,58,58], anchors: [{x:230.9,y:396.0},{x:253.8,y:390.0},{x:97.8,y:453.0}], scale: 0.4619 },
+    kick2: { loop: false, frameMs: [58,58,58], anchors: [{x:97.8,y:453.0},{x:134.4,y:473.0},{x:343.3,y:453.0}], scale: 0.4619 },
+    kick3: { loop: false, frameMs: [62,62,62], anchors: [{x:343.3,y:453.0},{x:337.1,y:457.0},{x:363.4,y:473.0}], scale: 0.4619 },
+    berserk: { loop: false, frameMs: [120,130,150,170,150,140,160,1300,1300,220,200,180], anchors: [{x:89.8,y:378.0},{x:179.4,y:379.0},{x:155.9,y:377.0},{x:140.7,y:377.0},{x:133.2,y:373.0},{x:283.7,y:364.0},{x:99.2,y:340.0},{x:299.6,y:372.0},{x:312.8,y:375.0},{x:321.3,y:382.0},{x:178.3,y:393.0},{x:265.7,y:422.0}], scale: 0.4906 },
+  },
   bence: {
     idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:145.1,y:519.0},{x:237.9,y:519.0},{x:244.9,y:519.0},{x:355.4,y:519.0},{x:146.8,y:635.0},{x:247.1,y:637.0},{x:245.1,y:637.0},{x:358.7,y:638.0}], scale: 0.3527 },
     walk: { loop: true, frameMs: [105,105,105,105,105,105,105,105], anchors: [{x:136.8,y:450.0},{x:231.5,y:449.0},{x:202.3,y:448.0},{x:312.4,y:449.0},{x:120.9,y:546.0},{x:231.0,y:548.0},{x:207.8,y:546.0},{x:311.4,y:546.0}], scale: 0.4081 },
@@ -179,7 +207,7 @@ const CLIP_CONFIG = {
     crouch: { loop: false, frameMs: [60,60,60,60,60,60,60,60], anchors: [{x:110.6,y:398.0},{x:114.3,y:398.0},{x:118.0,y:398.0},{x:120.0,y:398.0},{x:113.5,y:388.0},{x:119.9,y:387.0},{x:102.7,y:390.0},{x:112.2,y:390.0}], scale: 0.3768 },
     block: { loop: false, frameMs: [70,70,70,70], anchors: [{x:153.0,y:486.0},{x:153.3,y:486.0},{x:149.4,y:486.0},{x:147.3,y:485.0}], scale: 0.3872 },
     crouchBlock: { loop: false, frameMs: [70,70,70], anchors: [{x:178.7,y:476.0},{x:87.5,y:471.0},{x:325.1,y:467.0}], scale: 0.3768 },
-    hit: { loop: false, frameMs: [70,70,70,70,70,70,70], anchors: [{x:195.8,y:509.0},{x:170.1,y:499.0},{x:191.8,y:496.0},{x:193.6,y:492.0},{x:188.2,y:488.0},{x:170.1,y:487.0},{x:300.7,y:528.0}], scale: 0.4155 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:195.8,y:493.0},{x:170.1,y:483.0},{x:191.8,y:480.0},{x:193.6,y:476.0},{x:188.2,y:472.0},{x:170.1,y:471.0}], scale: 0.4155 },
     sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:148.4,y:411.0},{x:148.4,y:409.0},{x:148.4,y:396.0},{x:148.4,y:402.0},{x:148.4,y:368.0},{x:148.4,y:365.0},{x:148.4,y:384.0},{x:148.4,y:388.0}], scale: 0.5215 },
     taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:126.8,y:413.0},{x:129.0,y:413.0},{x:135.5,y:413.0},{x:133.5,y:405.0},{x:150.0,y:390.0},{x:143.1,y:395.0},{x:132.4,y:389.0},{x:128.7,y:391.0}], scale: 0.4727 },
     getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:123.4,y:370.0},{x:136.5,y:378.0},{x:172.1,y:383.0},{x:152.7,y:391.0},{x:167.5,y:389.0},{x:157.5,y:389.0},{x:153.0,y:394.0},{x:143.0,y:400.0}], scale: 0.3768 },
@@ -209,7 +237,7 @@ const CLIP_CONFIG = {
     crouch: { loop: false, frameMs: [60,60,60,60,60,60,60,60], anchors: [{x:170.1,y:460.0},{x:158.5,y:461.0},{x:160.8,y:460.0},{x:139.3,y:459.0},{x:151.5,y:411.0},{x:143.1,y:413.0},{x:142.7,y:415.0},{x:122.7,y:414.0}], scale: 0.3582 },
     block: { loop: false, frameMs: [70,70,70,70], anchors: [{x:277.1,y:469.0},{x:230.8,y:469.0},{x:126.2,y:469.0},{x:262.4,y:453.0}], scale: 0.366 },
     crouchBlock: { loop: false, frameMs: [70,70,70], anchors: [{x:254.6,y:433.0},{x:247.6,y:433.0},{x:157.0,y:433.0}], scale: 0.3582 },
-    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:352.3,y:455.0},{x:225.3,y:455.0},{x:109.0,y:455.0},{x:357.8,y:411.0},{x:243.1,y:424.0},{x:111.8,y:423.0}], scale: 0.3981 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:352.3,y:471.0},{x:225.3,y:471.0},{x:109.0,y:471.0},{x:357.3,y:427.0},{x:242.9,y:440.0},{x:111.9,y:439.0}], scale: 0.3981 },
     sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:185.0,y:464.0},{x:185.0,y:457.0},{x:185.0,y:432.0},{x:185.0,y:437.0},{x:185.0,y:345.0},{x:185.0,y:354.0},{x:185.0,y:404.0},{x:185.0,y:409.0}], scale: 0.3898 },
     taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:151.2,y:473.0},{x:133.3,y:473.0},{x:133.9,y:473.0},{x:141.3,y:473.0},{x:157.6,y:431.0},{x:143.8,y:431.0},{x:125.5,y:431.0},{x:140.7,y:431.0}], scale: 0.3953 },
     getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:135.7,y:452.0},{x:173.6,y:450.0},{x:142.6,y:453.0},{x:123.6,y:456.0},{x:140.2,y:384.0},{x:115.1,y:384.0},{x:128.5,y:388.0},{x:120.5,y:388.0}], scale: 0.3582 },
@@ -218,7 +246,7 @@ const CLIP_CONFIG = {
     win: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:182.8,y:499.0},{x:163.5,y:499.0},{x:143.9,y:499.0},{x:124.0,y:499.0},{x:196.7,y:479.0},{x:168.1,y:477.0},{x:158.3,y:478.0},{x:126.6,y:478.0}], scale: 0.4 },
     punch: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:385.0},{x:132.9,y:384.0},{x:132.9,y:385.0},{x:132.9,y:384.0}], scale: 0.48 },
     kick: { loop: false, frameMs: [52,52,52,52], anchors: [{x:141.3,y:433.0},{x:141.3,y:432.0},{x:141.3,y:433.0},{x:141.3,y:433.0}], scale: 0.4746 },
-    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:139.3,y:325.0},{x:154.8,y:326.0},{x:123.7,y:328.0},{x:118.0,y:328.0},{x:92.1,y:328.0},{x:137.6,y:318.0},{x:183.4,y:320.0},{x:170.9,y:321.0},{x:155.7,y:322.0},{x:132.6,y:322.0}], scale: 0.3582 },
+    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:139.3,y:325.0},{x:154.8,y:326.0},{x:123.7,y:328.0},{x:118.0,y:328.0},{x:92.1,y:328.0},{x:137.6,y:318.0},{x:183.4,y:320.0},{x:170.9,y:321.0},{x:155.7,y:322.0},{x:132.6,y:322.0}], scale: 0.5217 },
     beingThrown: { loop: false, frameMs: [58,58,58,58,58,58,58,58,58,58], anchors: [{x:156.8,y:337.0},{x:122.6,y:337.0},{x:129.6,y:338.0},{x:150.0,y:339.0},{x:119.1,y:343.0},{x:133.0,y:247.0},{x:156.7,y:254.0},{x:144.3,y:290.0},{x:169.4,y:284.0},{x:173.3,y:285.0}], scale: 0.3582 },
     punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:385.0},{x:132.9,y:384.0},{x:132.9,y:385.0},{x:132.9,y:384.0}], scale: 0.48 },
     punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:132.9,y:384.0},{x:132.9,y:383.0},{x:132.9,y:352.0},{x:132.9,y:352.0}], scale: 0.48 },
@@ -303,10 +331,12 @@ const CLIP_CONFIG = {
       portraitCrop: { x: 20/267, y: 0, w: 227/267, h: 257/468 } },
     { id: 'bence', name: 'BENCE', enabled: true, spriteKey: 'bence',
       portraitCrop: { x: 0, y: 0, w: 1, h: 549/1221 } },
-    // 19 zárolt "COMING SOON" slot (6x4-es rács az 5 valódi karakterrel együtt) -- új karakter
+    { id: 'milo', name: 'MILO', enabled: true, spriteKey: 'milo',
+      portraitCrop: { x: 0, y: 0, w: 1, h: 554/1233 } },
+    // 18 zárolt "COMING SOON" slot (6x4-es rács a 6 valódi karakterrel együtt) -- új karakter
     // hozzáadásához csak cseréld le az egyik zárolt bejegyzést egy valódi definícióra
     // (id/name/enabled/spriteKey/portraitCrop), a rács és a kurzor-navigáció automatikusan követi
-    ...Array.from({ length: 19 }, (_, i) => ({ id: 'locked' + (i + 1), name: '', enabled: false })),
+    ...Array.from({ length: 18 }, (_, i) => ({ id: 'locked' + (i + 1), name: '', enabled: false })),
   ];
   // Karakterválasztó preview panel adatai: statok (1-10 skálán, egyelőre csak vizuális jelzés,
   // NEM hat a harcrendszerre) és az Ultimate megjelenített neve karakterenként.
@@ -316,6 +346,7 @@ const CLIP_CONFIG = {
     laci:  { stats: { POWER: 7, SPEED: 6, RANGE: 8, DEFENSE: 5, TECHNIQUE: 6 }, ultName: 'GRAND FINALE' },
     barna: { stats: { POWER: 7, SPEED: 7, RANGE: 5, DEFENSE: 6, TECHNIQUE: 8 }, ultName: 'GOLDEN GOAL' },
     bence: { stats: { POWER: 9, SPEED: 4, RANGE: 7, DEFENSE: 8, TECHNIQUE: 5 }, ultName: 'ABSINTHE SPRAY' },
+    milo:  { stats: { POWER: 6, SPEED: 8, RANGE: 8, DEFENSE: 5, TECHNIQUE: 7 }, ultName: 'LAST CALL' },
   };
   function charById(id){ return CHARACTERS.find(c => c.id === id) || CHARACTERS[0]; }
   function charName(id){ return charById(id).name; }
@@ -601,8 +632,8 @@ const CLIP_CONFIG = {
   let mode = '2p';   // '2p' | '1p' | 'training'
   let stage = 'akacfa'; // 'akacfa' (a 'club'/'pub'/'garden' kikapcsolva, de a rajzoló-függvények megmaradtak későbbre)
   // ---- pályaválasztó: adatvezérelt lista + "VÉLETLEN" opció (a stageGrid-et ebből építjük fel) ----
-  const STAGE_LIST = ['akacfa', 'morrisons2', 'laciverse', 'siofok', 'siofok_night', 'novarock']; // ide kerül majd egy új pálya id-je is, ha bővül a lista
-  const STAGE_NAMES = { akacfa: 'AKÁCFA SÖRÖZŐ', morrisons2: "MORRISON'S 2", laciverse: 'LACIVERSE', siofok: 'SIÓFOK (NAPPAL)', siofok_night: 'SIÓFOK (ÉJSZAKA)', novarock: 'NOVAROCK' };
+  const STAGE_LIST = ['akacfa', 'morrisons2', 'laciverse', 'siofok', 'siofok_night', 'novarock', 'arzenal', 'barhole']; // ide kerül majd egy új pálya id-je is, ha bővül a lista
+  const STAGE_NAMES = { akacfa: 'AKÁCFA SÖRÖZŐ', morrisons2: "MORRISON'S 2", laciverse: 'LACIVERSE', siofok: 'SIÓFOK (NAPPAL)', siofok_night: 'SIÓFOK (ÉJSZAKA)', novarock: 'NOVAROCK', arzenal: 'ARZENÁL', barhole: 'BARHOLE' };
   let stageCursor = 0;        // highlighted/selected card index a stageGrid-ben (0..STAGE_LIST.length-1 = konkrét pálya, utolsó = VÉLETLEN)
   let stageIsRandom = false;  // true, ha a VÉLETLEN kártya van kiválasztva -- a tényleges pálya csak HARC!-kor sorsolódik ki
 
@@ -2223,6 +2254,12 @@ const CLIP_CONFIG = {
     { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
     { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
   ];
+  // Milo (6th) — his combo sheets are 5x2 with the strikes on frames 4/6/8, split into three
+  // guard->strike->recover clips, so he uses the same shared 3-hit chains as everyone else.
+  COMBOS.milo = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
 
   const COMBO_WINDOW_MS = 300;        // Combo Window: találat/blokk után ennyi ideig fogadja el a következő inputot (250-350ms)
   const INPUT_BUFFER_MS = 130;        // Input Buffer: ha a gomb kicsit korábban jön, ennyi ideig "vár" (100-150ms)
@@ -2501,13 +2538,11 @@ const CLIP_CONFIG = {
       // on the ground (the character sits higher in the later cells to make room for the cone/sign).
       poseDurations: [170, 150, 160, 200, 150, 180, 160, 150, 140, 250],
       hitPoseIndex: 9, activeOffsetMs: 0, activeLenMs: 130,
-      ultScale: 0.4292,
+      ultScale: 0.4352,
       anchors: [
-        {x:113.7, y:445.0}, {x:237.2, y:445.0}, {x:216.5, y:445.0}, {x:169.4, y:445.0}, {x:301.3, y:445.0},
-        {x:120.0, y:457.0}, {x:188.2, y:451.0}, {x:179.1, y:452.0}, {x:280.9, y:457.0}, {x:332.5, y:468.0},
+        {x:144.3, y:495.0}, {x:144.3, y:495.0}, {x:144.3, y:495.0}, {x:144.3, y:497.0}, {x:144.3, y:495.0},
+        {x:144.3, y:438.0}, {x:144.3, y:451.0}, {x:144.3, y:435.0}, {x:144.3, y:444.0}, {x:144.3, y:443.0},
       ],
-      finalePoseIndex: 6,              // ult7 (a büszke pózolás/üvöltés pillanata)
-      finaleText: 'LACI — GRAND FINALE! 🎆',
     },
     tomi: {
       poses: ['ult1','ult2','ult3','ult4','ult5','ult6','ult7','ult8','ult9','ult10'],
@@ -2544,6 +2579,25 @@ const CLIP_CONFIG = {
       ],
       finalePoseIndex: 6,              // ult7 (a büszke pózolás/üvöltés pillanata)
       finaleText: 'LACI — GRAND FINALE! 🎆',
+    },
+    milo: {
+      // LAST CALL — grabs the bottle off the floor (ult1), swigs from it (ult2-ult4), the burn hits
+      // (ult5-ult6), then he winds up and HURLS it downrange (ult7 = the release) before settling back
+      // into stance (ult9). A true long-range ultimate: the bottle is its own Projectile and keeps
+      // flying independently of the animation (same mechanic as Laci's cat).
+      kind: 'projectile',
+      poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8","ult9"],
+      poseDurations: [200, 190, 200, 200, 180, 170, 130, 200, 260],
+      spawnPoseIndex: 6,               // ult7 = the throw — the bottle leaves his hand here
+      spawnOffset: { x: 26, y: -104 }, // roughly hand height, in front of him, facing-aware
+      projectileType: 'milo_bottle',
+      ultScale: 0.4608,
+      anchors: [
+        {x:60.4, y:371.0}, {x:179.7, y:398.0}, {x:171.7, y:398.0}, {x:109.9, y:398.0}, {x:237.1, y:398.0},
+        {x:106.4, y:384.0}, {x:251.7, y:392.0}, {x:246.6, y:400.0}, {x:246.1, y:420.0},
+      ],
+      finalePoseIndex: 7,
+      finaleText: 'MILO — LAST CALL! 🍾',
     },
     bence: {
       // ABSINTHE SPRAY — swigs from the bottle (ult1-ult5), then sprays a caustic cone forward (ult6-ult8;
@@ -2693,6 +2747,17 @@ const CLIP_CONFIG = {
       anchors: [
         {x:168.4,y:414.0}, {x:143.0,y:417.0}, {x:154.3,y:417.0}, {x:122.3,y:417.0}, {x:109.0,y:417.0},
         {x:150.9,y:420.0}, {x:143.0,y:402.0}, {x:149.8,y:402.0}, {x:139.9,y:403.0}, {x:116.9,y:403.0},
+      ],
+    },
+    milo: {
+      // 10-frame entrance, same convention as the rest of the roster (per-frame anchors keep him
+      // planted through the walk-in, scale calibrated to the shared on-screen fighter height).
+      poses: ["enter1","enter2","enter3","enter4","enter5","enter6","enter7","enter8","enter9","enter10"],
+      poseDurations: [270, 240, 240, 240, 240, 260, 280, 240, 240, 240],
+      scale: 0.4282,
+      anchors: [
+        {x:99.2,y:434.0}, {x:202.2,y:434.0}, {x:192.3,y:434.0}, {x:189.3,y:434.0}, {x:277.5,y:434.0},
+        {x:98.4,y:518.0}, {x:205.6,y:516.0}, {x:181.2,y:517.0}, {x:186.7,y:517.0}, {x:275.8,y:517.0},
       ],
     },
     bence: {
@@ -2929,8 +2994,8 @@ const CLIP_CONFIG = {
   function spawnSparks(x,y,n,kind){
     kind = kind || 'spark';
     for (let i=0;i<n;i++){
-      const speed = kind==='dust' ? 0.6+Math.random()*1.2 : (kind==='shard' ? 3+Math.random()*4.5 : (kind==='firework' ? 2.5+Math.random()*4.5 : (kind==='acid' ? 0.5+Math.random()*1.6 : 2+Math.random()*3)));
-      const life = kind==='dust' ? 34+Math.random()*12 : (kind==='shard' ? 22+Math.random()*10 : (kind==='firework' ? 40+Math.random()*20 : (kind==='acid' ? 14+Math.random()*10 : 16)));
+      const speed = kind==='dust' ? 0.6+Math.random()*1.2 : (kind==='shard' ? 3+Math.random()*4.5 : (kind==='firework' ? 2.5+Math.random()*4.5 : (kind==='acid' ? 0.5+Math.random()*1.6 : (kind==='heal' ? 0.4+Math.random()*0.9 : 2+Math.random()*3))));
+      const life = kind==='dust' ? 34+Math.random()*12 : (kind==='shard' ? 22+Math.random()*10 : (kind==='firework' ? 40+Math.random()*20 : (kind==='acid' ? 14+Math.random()*10 : (kind==='heal' ? 30+Math.random()*16 : 16))));
       const hue = kind==='firework' ? Math.floor(Math.random()*360) : 0;
       hitSparks.push({ x, y, angle: Math.random()*Math.PI*2, dist: 0, speed, life, maxLife: life, kind, rot: Math.random()*Math.PI*2, hue });
     }
@@ -2964,6 +3029,16 @@ const CLIP_CONFIG = {
       w: 42, h: 64, maxRange: 820, drawH: 46,
       dmgPct: 0.33, knockVx: 16, knockVy: -5, stun: 55,
       hitStopFrames: 6, shakeAmt: 22,
+    },
+    // Milo's Ultimate projectile — the bottle he hurls downrange. It uses the clean bottle art from
+    // his sheet, laid flat, and deliberately does NOT spin (spinDegPerSec 0): it flies dead straight
+    // so the label stays readable instead of smearing into an unrecognisable blur.
+    milo_bottle: {
+      spriteCharId: 'milo', spriteKey: 'ult_bottle',
+      speedPxPerSec: 940, spinDegPerSec: 0,
+      w: 46, h: 40, maxRange: 900, drawH: 48,
+      dmgPct: 0.33, knockVx: 17, knockVy: -5, stun: 56,
+      hitStopFrames: 6, shakeAmt: 24,
     },
     // Laci's Ultimate projectile — the cat he hurls at the opponent. Tumbles gently through the air
     // (low spin so it stays readable as a flying cat) and hits like a full Ultimate.
@@ -3059,7 +3134,11 @@ const CLIP_CONFIG = {
       const dw = img.naturalWidth*scale, dh = img.naturalHeight*scale;
       ctx.save();
       ctx.translate(pr.x, pr.y);
-      ctx.rotate(pr.rot * Math.PI/180);
+      // Non-spinning projectiles (Milo's bottle) are drawn as a flat, forward-pointing sprite, so they
+      // mirror with the direction of travel exactly like the fighters do. Spinning ones ignore facing —
+      // their rotation already reads as "thrown" from either side.
+      if (!cfg.spinDegPerSec) ctx.scale(pr.facing, 1);
+      else ctx.rotate(pr.rot * Math.PI/180);
       ctx.drawImage(img, -dw/2, -dh/2, dw, dh);
       ctx.restore();
     });
@@ -3103,6 +3182,15 @@ const CLIP_CONFIG = {
     // which is why the hit window opens at 880ms (see CLIP_CONFIG.bence.berserk frameMs).
     bence: { kind: 'melee', pose: 'berserk', totalMs: 1370, hitStartMs: 880, hitLenMs: 190,
              hitCfg: { dmg: 40, reach: 74, knock: 12, hitStun: 34, blockStun: 16, atkType: 'high' } },
+    // Milo's Berserk Move is the roster's first HEAL: he swallows the "horse medicine", passes out,
+    // and regenerates 33% of his max HP while asleep. It deals no damage and has no hitbox — the
+    // cost is that he lies there defenceless for the full 2s, and a hit wakes him up and cancels
+    // whatever healing he hadn't collected yet.
+    milo: { kind: 'heal', pose: 'berserk', totalMs: 4220,
+            // he is flat out on the floor from ~0.86s to ~3.62s of the clip (the two Zzz frames),
+            // i.e. ~2.8s asleep. The heal is paid out across exactly that window.
+            healStartMs: 1020, healEndMs: 3600, healPct: 0.33,
+            banner: 'MILO USED HORSE MEDICINE! 💊' },
   };
   function berserkReady(f){
     // full bar, on the ground, and free to act (not mid-attack/throw/stagger/knockdown/ultimate/taunt)
@@ -3122,7 +3210,10 @@ const CLIP_CONFIG = {
     f.berserkSpawned = false;
     f.vx = 0;
     f.manaMs = 0;                          // spends the whole bar
-    banner(`${charName(f.charId)} BERSERK! 🔥`, 55);
+    f.berserkHealed = 0;                   // ms of healing already paid out (kind:'heal')
+    // A Berserk Move can opt out of the generic red "BERSERK!" shout with its own line — Milo's heal
+    // is not a rage move, so it announces the medicine instead.
+    banner(cfg.banner || `${charName(f.charId)} BERSERK! 🔥`, 55);
     playUltSound('charge');
     return true;
   }
@@ -3139,6 +3230,24 @@ const CLIP_CONFIG = {
         f.berserkSpawned = true;
         const ox = f.facing === 1 ? f.x + f.w + cfg.spawnOffset.x : f.x - cfg.spawnOffset.x;
         spawnProjectile(f, cfg.projectileType, ox, f.y + cfg.spawnOffset.y);
+      }
+    } else if (cfg.kind === 'heal'){
+      // ---- HEAL Berserk Move (Milo): the only non-damaging Berserk Move. He downs the "horse
+      // medicine", drops asleep, and regenerates healPct of his max HP while he's out cold.
+      // The HP is paid out GRADUALLY across the sleep window (not in one lump) so the bar visibly
+      // ticks up, and so being woken early by a hit costs him the rest of it — the staggerTimer
+      // branch in updateFighter cancels berserkTimer, which stops this from paying out any further.
+      // That's the risk: he is a sitting target for the whole animation.
+      const t0 = cfg.healStartMs, t1 = cfg.healEndMs;
+      if (f.berserkElapsed >= t0 && f.hp > 0){
+        const prog = Math.min(1, (f.berserkElapsed - t0) / Math.max(1, t1 - t0));
+        const want = f.maxHp * cfg.healPct * prog;      // total HP owed by now
+        const give = want - (f.berserkHealed || 0);
+        if (give > 0){
+          f.hp = Math.min(f.maxHp, f.hp + give);
+          f.berserkHealed = want;
+          if (Math.random() < 0.10) spawnSparks(f.x + f.w/2, f.y - 70, 1, 'heal');
+        }
       }
     } else if (cfg.kind === 'charge'){
       // Run-up: drive forward during the charge frames (overrides the plant-in-place decay above),
@@ -4057,6 +4166,8 @@ const CLIP_CONFIG = {
     else if (stage === 'siofok') drawPhotoBg('siofok', '#2a2318');
     else if (stage === 'siofok_night') drawPhotoBg('siofok_night', '#0d1220');
     else if (stage === 'novarock') drawPhotoBg('novarock', '#3a2412');
+    else if (stage === 'arzenal') drawPhotoBg('arzenal', '#150c12');
+    else if (stage === 'barhole') drawPhotoBg('barhole', '#140d16');
     else if (stage === 'pub') drawPubBg();
     else if (stage === 'garden') drawGardenBg();
     else drawClubBg();
@@ -4392,6 +4503,13 @@ const CLIP_CONFIG = {
       } else if (s.kind === 'dust'){
         ctx.fillStyle = `rgba(195,185,175,${lifeRatio*0.35})`;
         ctx.beginPath(); ctx.arc(x,y, 3+(1-lifeRatio)*5, 0, Math.PI*2); ctx.fill();
+      } else if (s.kind === 'heal'){
+        // Milo's Horse Medicine: soft green motes drifting UP off him while he sleeps it off
+        ctx.save();
+        ctx.fillStyle = `rgba(120,240,150,${lifeRatio*0.85})`;
+        ctx.shadowColor = `rgba(90,230,130,${lifeRatio*0.6})`; ctx.shadowBlur = 6;
+        ctx.beginPath(); ctx.arc(x, y - (s.maxLife-s.life)*0.9, 2.2+(1-lifeRatio)*1.6, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
       } else if (s.kind === 'acid'){
         // Bence's Acid Spit: caustic yellow-green droplets that sag as they fly, drawn along the
         // whole cone so the (deliberately long) fixed reach of the move is readable on screen.
