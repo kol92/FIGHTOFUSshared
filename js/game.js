@@ -54,7 +54,7 @@
   }
 
   const SPRITE_POSES = ["idle","walk","run","jump","block","punch","kick","hit","win","lose"];
-  const sprites = { krisz: {}, tomi: {}, laci: {}, barna: {}, krisz_special: {}, tomi_special: {}, laci_special: {}, barna_special: {}, ultimates: {}, enter: {}, combat2: {}, combat2_special: {}, clips: {} };
+  const sprites = { krisz: {}, tomi: {}, laci: {}, barna: {}, bence: {}, krisz_special: {}, tomi_special: {}, laci_special: {}, barna_special: {}, ultimates: {}, enter: {}, combat2: {}, combat2_special: {}, clips: {} };
   // refresh whichever menu screen is currently showing portraits once a sprite image finishes
   // decoding — data-URIs are basically instant, this is just a safety net against draw-before-ready
   function onSpriteReady(){
@@ -69,9 +69,13 @@
   // img.complete/naturalWidth, so a sprite still decoding just isn't drawn for a frame or two.
   //
   // Eager: only each character's idle sprite. drawPortrait (character-select grid + VS screen)
-  // reads sprites[charDef.spriteKey].idle directly; Barna's SPRITE_DATA holds only idle (its
-  // full moveset lives in the clip system), so this covers every portrait.
-  for (const person of ["krisz","tomi","laci","barna"]){
+  // reads sprites[charDef.spriteKey].idle directly; Barna/Bence's SPRITE_DATA holds only idle
+  // (their full moveset lives in the clip system), so this covers every portrait.
+  // Driven off SPRITE_DATA itself rather than a hardcoded name list, so a newly added character's
+  // portrait shows up on the select screen automatically (this list used to silently miss them).
+  for (const person of Object.keys(SPRITE_DATA)){
+    if (!SPRITE_DATA[person] || !SPRITE_DATA[person].idle) continue;
+    sprites[person] = sprites[person] || {};
     const img = new Image();
     img.onload = onSpriteReady;
     img.src = SPRITE_DATA[person].idle;
@@ -137,6 +141,34 @@
   // data addition here -- drawFighter/pickPose never need another special case.
 
 const CLIP_CONFIG = {
+  bence: {
+    idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:145.1,y:519.0},{x:237.9,y:519.0},{x:244.9,y:519.0},{x:355.4,y:519.0},{x:146.8,y:635.0},{x:247.1,y:637.0},{x:245.1,y:637.0},{x:358.7,y:638.0}], scale: 0.3527 },
+    walk: { loop: true, frameMs: [105,105,105,105,105,105,105,105], anchors: [{x:136.8,y:450.0},{x:231.5,y:449.0},{x:202.3,y:448.0},{x:312.4,y:449.0},{x:120.9,y:546.0},{x:231.0,y:548.0},{x:207.8,y:546.0},{x:311.4,y:546.0}], scale: 0.4081 },
+    run: { loop: true, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:158.6,y:390.0},{x:233.1,y:397.0},{x:255.3,y:381.0},{x:393.4,y:396.0},{x:161.0,y:468.0},{x:267.6,y:451.0},{x:234.6,y:466.0},{x:361.3,y:473.0}], scale: 0.4973 },
+    backwalk: { loop: true, frameMs: [110,110,110,110,110,110,110,110], anchors: [{x:117.2,y:428.0},{x:215.7,y:428.0},{x:177.0,y:428.0},{x:267.0,y:428.0},{x:92.5,y:498.0},{x:189.5,y:498.0},{x:177.4,y:498.0},{x:266.8,y:498.0}], scale: 0.4282 },
+    jump: { loop: false, frameMs: [90,90,90,90,90,90,90,90], anchors: [{x:87.2,y:447.0},{x:152.7,y:447.0},{x:162.9,y:446.0},{x:278.2,y:427.0},{x:117.4,y:528.0},{x:193.5,y:418.0},{x:191.1,y:474.0},{x:274.8,y:564.0}], scale: 0.3982 },
+    crouch: { loop: false, frameMs: [70,70,70,70], anchors: [{x:140.4,y:453.0},{x:284.5,y:449.0},{x:415.1,y:448.0},{x:128.6,y:528.0}], scale: 0.4044 },
+    block: { loop: false, frameMs: [70,70,70], anchors: [{x:162.1,y:434.0},{x:281.7,y:435.0},{x:379.3,y:435.0}], scale: 0.4242 },
+    crouchBlock: { loop: false, frameMs: [70,70,70], anchors: [{x:148.8,y:358.0},{x:273.7,y:357.0},{x:390.1,y:357.0}], scale: 0.4044 },
+    hit: { loop: false, frameMs: [70,70,70,70,70,70], anchors: [{x:187.0,y:427.0},{x:383.2,y:433.0},{x:560.0,y:433.0},{x:175.2,y:536.0},{x:274.3,y:544.0},{x:430.2,y:546.0}], scale: 0.4292 },
+    sweep: { loop: false, frameMs: [72,72,72,72,72,72,72,72], anchors: [{x:100.8,y:323.0},{x:222.4,y:339.0},{x:112.6,y:338.0},{x:384.8,y:335.0},{x:213.1,y:366.0},{x:276.7,y:364.0},{x:198.4,y:378.0},{x:338.5,y:391.0}], scale: 0.4691 },
+    taunt: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:123.7,y:467.0},{x:254.6,y:467.0},{x:251.7,y:467.0},{x:372.6,y:466.0},{x:126.0,y:527.0},{x:261.8,y:529.0},{x:242.5,y:530.0},{x:378.2,y:532.0}], scale: 0.3922 },
+    getUp: { loop: false, frameMs: [85,85,85,85,85,85,85,85], anchors: [{x:187.9,y:353.0},{x:313.1,y:372.0},{x:282.7,y:375.0},{x:397.4,y:377.0},{x:200.6,y:436.0},{x:268.4,y:439.0},{x:258.2,y:443.0},{x:366.4,y:444.0}], scale: 0.4262 },
+    knockdown: { loop: false, frameMs: [95,95,95,95,95,95,95,95], anchors: [{x:148.6,y:406.0},{x:283.3,y:413.0},{x:364.6,y:410.0},{x:528.8,y:393.0},{x:267.4,y:422.0},{x:346.2,y:395.0},{x:389.9,y:435.0},{x:543.2,y:435.0}], scale: 0.4516 },
+    lose: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:138.6,y:417.0},{x:301.9,y:416.0},{x:308.1,y:412.0},{x:394.9,y:408.0},{x:161.8,y:406.0},{x:284.2,y:409.0},{x:272.5,y:410.0},{x:386.3,y:410.0}], scale: 0.4396 },
+    win: { loop: false, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:124.3,y:469.0},{x:226.6,y:469.0},{x:199.6,y:470.0},{x:308.0,y:472.0},{x:124.8,y:557.0},{x:211.4,y:555.0},{x:179.1,y:556.0},{x:294.8,y:557.0}], scale: 0.3914 },
+    punch: { loop: false, frameMs: [42,42,42,42], anchors: [{x:124.4,y:320.0},{x:205.9,y:321.0},{x:167.4,y:321.0},{x:316.8,y:321.0}], scale: 0.5741 },
+    kick: { loop: false, frameMs: [52,52,52,52], anchors: [{x:92.1,y:336.0},{x:139.1,y:335.0},{x:93.1,y:333.0},{x:151.1,y:336.0}], scale: 0.5549 },
+    throw: { loop: false, frameMs: [55,55,55,55,55,55,55,55,55,55], anchors: [{x:105.6,y:377.0},{x:204.5,y:372.0},{x:205.0,y:373.0},{x:187.9,y:367.0},{x:284.3,y:371.0},{x:122.2,y:383.0},{x:205.6,y:383.0},{x:240.8,y:397.0},{x:223.6,y:390.0},{x:300.1,y:402.0}], scale: 0.4892 },
+    beingThrown: { loop: false, frameMs: [58,58,58,58,58,58,58,58,58,58], anchors: [{x:202.2,y:356.0},{x:261.6,y:356.0},{x:222.7,y:358.0},{x:362.8,y:357.0},{x:447.9,y:358.0},{x:398.7,y:294.0},{x:518.4,y:321.0},{x:211.4,y:321.0},{x:263.5,y:328.0},{x:348.5,y:330.0}], scale: 0.4513 },
+    punch1: { loop: false, frameMs: [42,42,42,42], anchors: [{x:124.4,y:320.0},{x:205.9,y:321.0},{x:167.4,y:321.0},{x:316.8,y:321.0}], scale: 0.5741 },
+    punch2: { loop: false, frameMs: [42,42,42,42], anchors: [{x:121.6,y:332.0},{x:218.1,y:331.0},{x:159.5,y:332.0},{x:306.7,y:342.0}], scale: 0.5741 },
+    punch3: { loop: false, frameMs: [46,46,46,46], anchors: [{x:106.5,y:353.0},{x:214.9,y:356.0},{x:186.7,y:363.0},{x:306.7,y:363.0}], scale: 0.5741 },
+    kick1: { loop: false, frameMs: [52,52,52,52], anchors: [{x:92.1,y:336.0},{x:139.1,y:335.0},{x:93.1,y:333.0},{x:151.1,y:336.0}], scale: 0.5549 },
+    kick2: { loop: false, frameMs: [52,52,52,52], anchors: [{x:126.8,y:334.0},{x:130.7,y:338.0},{x:84.2,y:357.0},{x:160.3,y:360.0}], scale: 0.5549 },
+    kick3: { loop: false, frameMs: [58,58,58,58], anchors: [{x:144.9,y:360.0},{x:153.9,y:361.0},{x:131.4,y:362.0},{x:260.1,y:360.0}], scale: 0.5549 },
+    berserk: { loop: false, frameMs: [110,100,110,110,120,120,110,100,160,150,180], anchors: [{x:145.8,y:332.0},{x:245.1,y:332.0},{x:236.0,y:332.0},{x:185.4,y:332.0},{x:180.4,y:332.0},{x:359.4,y:332.0},{x:172.5,y:414.0},{x:280.6,y:410.0},{x:257.6,y:413.0},{x:304.2,y:409.0},{x:358.1,y:400.0}], scale: 0.5617 },
+  },
   laci: {
     berserk: { loop: false, frameMs: [130,90,80,70,70,75,95,110,120,150], anchors: [{x:156.9,y:339.0},{x:163.0,y:332.0},{x:162.9,y:334.0},{x:175.8,y:334.0},{x:176.2,y:334.0},{x:179.9,y:313.0},{x:163.7,y:317.0},{x:180.9,y:294.0},{x:162.8,y:326.0},{x:168.3,y:325.0}], scale: 0.5417 },
     idle: { loop: true, frameMs: [150,150,150,150,150,150,150,150], anchors: [{x:153.9,y:493.0},{x:149.1,y:493.0},{x:142.9,y:490.0},{x:138.9,y:493.0},{x:153.3,y:488.0},{x:144.9,y:481.0},{x:145.6,y:485.0},{x:142.1,y:485.0}], scale: 0.3768 },
@@ -269,10 +301,12 @@ const CLIP_CONFIG = {
       portraitCrop: { x: 50/720, y: 0, w: 579/720, h: 630/1261 } },
     { id: 'barna', name: 'BARNA', enabled: true, spriteKey: 'barna',
       portraitCrop: { x: 20/267, y: 0, w: 227/267, h: 257/468 } },
-    // 20 zárolt "COMING SOON" slot (6x4-es rács a 4 valódi karakterrel együtt) -- új karakter
+    { id: 'bence', name: 'BENCE', enabled: true, spriteKey: 'bence',
+      portraitCrop: { x: 0, y: 0, w: 1, h: 549/1221 } },
+    // 19 zárolt "COMING SOON" slot (6x4-es rács az 5 valódi karakterrel együtt) -- új karakter
     // hozzáadásához csak cseréld le az egyik zárolt bejegyzést egy valódi definícióra
     // (id/name/enabled/spriteKey/portraitCrop), a rács és a kurzor-navigáció automatikusan követi
-    ...Array.from({ length: 20 }, (_, i) => ({ id: 'locked' + (i + 1), name: '', enabled: false })),
+    ...Array.from({ length: 19 }, (_, i) => ({ id: 'locked' + (i + 1), name: '', enabled: false })),
   ];
   // Karakterválasztó preview panel adatai: statok (1-10 skálán, egyelőre csak vizuális jelzés,
   // NEM hat a harcrendszerre) és az Ultimate megjelenített neve karakterenként.
@@ -281,6 +315,7 @@ const CLIP_CONFIG = {
     tomi:  { stats: { POWER: 6, SPEED: 8, RANGE: 5, DEFENSE: 5, TECHNIQUE: 7 }, ultName: 'DRUNKEN FURY' },
     laci:  { stats: { POWER: 7, SPEED: 6, RANGE: 8, DEFENSE: 5, TECHNIQUE: 6 }, ultName: 'GRAND FINALE' },
     barna: { stats: { POWER: 7, SPEED: 7, RANGE: 5, DEFENSE: 6, TECHNIQUE: 8 }, ultName: 'GOLDEN GOAL' },
+    bence: { stats: { POWER: 9, SPEED: 4, RANGE: 7, DEFENSE: 8, TECHNIQUE: 5 }, ultName: 'ABSINTHE SPRAY' },
   };
   function charById(id){ return CHARACTERS.find(c => c.id === id) || CHARACTERS[0]; }
   function charName(id){ return charById(id).name; }
@@ -2183,6 +2218,11 @@ const CLIP_CONFIG = {
     { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
     { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
   ];
+  // Bence (5th character) ships with the same 3x4 PUNCHCOMBO/KICKCOMBO sheets -> same shared chains.
+  COMBOS.bence = [
+    { name: 'Punch Combo', input: ['punch','punch','punch'], hits: PUNCH_CHAIN_HITS },
+    { name: 'Kick Combo',  input: ['kick','kick','kick'],   hits: KICK_CHAIN_HITS },
+  ];
 
   const COMBO_WINDOW_MS = 300;        // Combo Window: találat/blokk után ennyi ideig fogadja el a következő inputot (250-350ms)
   const INPUT_BUFFER_MS = 130;        // Input Buffer: ha a gomb kicsit korábban jön, ennyi ideig "vár" (100-150ms)
@@ -2461,14 +2501,13 @@ const CLIP_CONFIG = {
       // on the ground (the character sits higher in the later cells to make room for the cone/sign).
       poseDurations: [170, 150, 160, 200, 150, 180, 160, 150, 140, 250],
       hitPoseIndex: 9, activeOffsetMs: 0, activeLenMs: 130,
-      ultScale: 0.4352,
+      ultScale: 0.4292,
       anchors: [
-        {x:144.3,y:495.0}, {x:144.3,y:495.0}, {x:144.3,y:495.0}, {x:144.3,y:497.0}, {x:144.3,y:495.0},
-        {x:144.3,y:438.0}, {x:144.3,y:451.0}, {x:144.3,y:435.0}, {x:144.3,y:444.0}, {x:144.3,y:443.0},
+        {x:113.7, y:445.0}, {x:237.2, y:445.0}, {x:216.5, y:445.0}, {x:169.4, y:445.0}, {x:301.3, y:445.0},
+        {x:120.0, y:457.0}, {x:188.2, y:451.0}, {x:179.1, y:452.0}, {x:280.9, y:457.0}, {x:332.5, y:468.0},
       ],
-      dmgPct: 0.33, knockVx: 18, knockVy: -6, stun: 60,
-      reach: 130, hitboxH: 110,
-      hitStopFrames: 6, shakeAmt: 26,
+      finalePoseIndex: 6,              // ult7 (a büszke pózolás/üvöltés pillanata)
+      finaleText: 'LACI — GRAND FINALE! 🎆',
     },
     tomi: {
       poses: ['ult1','ult2','ult3','ult4','ult5','ult6','ult7','ult8','ult9','ult10'],
@@ -2505,6 +2544,28 @@ const CLIP_CONFIG = {
       ],
       finalePoseIndex: 6,              // ult7 (a büszke pózolás/üvöltés pillanata)
       finaleText: 'LACI — GRAND FINALE! 🎆',
+    },
+    bence: {
+      // ABSINTHE SPRAY — swigs from the bottle (ult1-ult5), then sprays a caustic cone forward (ult6-ult8;
+      // the spray itself is drawn INTO those frames), and recovers (ult9-ult10).
+      // Deliberately NOT a projectile: nothing flies across the stage the way Laci's cat does. It is a
+      // fixed-range forward cone — long (reach 190, ~1.7x Tomi's melee ultimate) but it stops there.
+      // `sprayFx` makes the active window spit acid droplets along the whole cone so that long reach
+      // is actually visible (the drawn spray alone is limited by the sprite's cell).
+      poses: ["ult1","ult2","ult3","ult4","ult5","ult6","ult7","ult8","ult9","ult10"],
+      poseDurations: [180, 200, 200, 200, 190, 150, 230, 200, 220, 260],
+      hitPoseIndex: 6, activeOffsetMs: 0, activeLenMs: 230, // ult7 (index 6) = the big spray frame
+      dmgPct: 0.33, knockVx: 15, knockVy: -5, stun: 58,
+      reach: 190, hitboxH: 130,
+      sprayFx: 'acid',
+      hitStopFrames: 6, shakeAmt: 22,
+      ultScale: 0.4292,
+      anchors: [
+        {x:113.7, y:445.0}, {x:237.2, y:445.0}, {x:216.5, y:445.0}, {x:169.4, y:445.0}, {x:301.3, y:445.0},
+        {x:120.0, y:457.0}, {x:188.2, y:451.0}, {x:179.1, y:452.0}, {x:280.9, y:457.0}, {x:332.5, y:468.0},
+      ],
+      finalePoseIndex: 6,
+      finaleText: 'BENCE — ABSINTHE SPRAY! 🧪',
     },
     barna: {
       kind: 'projectile',
@@ -2632,6 +2693,17 @@ const CLIP_CONFIG = {
       anchors: [
         {x:168.4,y:414.0}, {x:143.0,y:417.0}, {x:154.3,y:417.0}, {x:122.3,y:417.0}, {x:109.0,y:417.0},
         {x:150.9,y:420.0}, {x:143.0,y:402.0}, {x:149.8,y:402.0}, {x:139.9,y:403.0}, {x:116.9,y:403.0},
+      ],
+    },
+    bence: {
+      // 10-frame entrance. Per-frame anchors (centroid x + content bottom y) keep him planted
+      // through the walk-in, same convention as the other fighters.
+      poses: ["enter1","enter2","enter3","enter4","enter5","enter6","enter7","enter8","enter9","enter10"],
+      poseDurations: [260, 240, 240, 240, 240, 260, 280, 240, 240, 240],
+      scale: 0.4643,
+      anchors: [
+        {x:105.4,y:395.0}, {x:149.8,y:398.0}, {x:115.5,y:402.0}, {x:179.5,y:331.0}, {x:265.8,y:396.0},
+        {x:166.6,y:410.0}, {x:261.9,y:417.0}, {x:234.1,y:434.0}, {x:225.6,y:435.0}, {x:318.8,y:434.0},
       ],
     },
     barna: {
@@ -2857,8 +2929,8 @@ const CLIP_CONFIG = {
   function spawnSparks(x,y,n,kind){
     kind = kind || 'spark';
     for (let i=0;i<n;i++){
-      const speed = kind==='dust' ? 0.6+Math.random()*1.2 : (kind==='shard' ? 3+Math.random()*4.5 : (kind==='firework' ? 2.5+Math.random()*4.5 : 2+Math.random()*3));
-      const life = kind==='dust' ? 34+Math.random()*12 : (kind==='shard' ? 22+Math.random()*10 : (kind==='firework' ? 40+Math.random()*20 : 16));
+      const speed = kind==='dust' ? 0.6+Math.random()*1.2 : (kind==='shard' ? 3+Math.random()*4.5 : (kind==='firework' ? 2.5+Math.random()*4.5 : (kind==='acid' ? 0.5+Math.random()*1.6 : 2+Math.random()*3)));
+      const life = kind==='dust' ? 34+Math.random()*12 : (kind==='shard' ? 22+Math.random()*10 : (kind==='firework' ? 40+Math.random()*20 : (kind==='acid' ? 14+Math.random()*10 : 16)));
       const hue = kind==='firework' ? Math.floor(Math.random()*360) : 0;
       hitSparks.push({ x, y, angle: Math.random()*Math.PI*2, dist: 0, speed, life, maxLife: life, kind, rot: Math.random()*Math.PI*2, hue });
     }
@@ -3025,6 +3097,12 @@ const CLIP_CONFIG = {
     },
     barna: { kind: 'melee', pose: 'kick',  totalMs: 540, hitStartMs: 160, hitLenMs: 130,
              hitCfg: { dmg: 18, reach: 66, knock: 9, hitStun: 28, blockStun: 14, atkType: 'high' } },
+    // Bence's own Berserk Move: he flares up and throws ONE huge close-range punch for 40 damage —
+    // by far the hardest single hit in the game, but it has to land in close (reach 74) and the long
+    // 1.37s animation makes whiffing it very punishable. Frame index 8 is the fully extended punch,
+    // which is why the hit window opens at 880ms (see CLIP_CONFIG.bence.berserk frameMs).
+    bence: { kind: 'melee', pose: 'berserk', totalMs: 1370, hitStartMs: 880, hitLenMs: 190,
+             hitCfg: { dmg: 40, reach: 74, knock: 12, hitStun: 34, blockStun: 16, atkType: 'high' } },
   };
   function berserkReady(f){
     // full bar, on the ground, and free to act (not mid-attack/throw/stagger/knockdown/ultimate/taunt)
@@ -3234,6 +3312,15 @@ const CLIP_CONFIG = {
           // ---- melee ultimate (Krisz-style): single hitbox live during one specific pose window
           const inActiveWindow = info.poseIndex === ucfg.hitPoseIndex &&
             info.msIntoPose >= ucfg.activeOffsetMs && info.msIntoPose < ucfg.activeOffsetMs + ucfg.activeLenMs;
+          // optional cone FX (Bence's Acid Spit): while the hitbox is live, sprinkle particles across
+          // the FULL reach so a deliberately long fixed-range cone reads on screen — the baked-in
+          // spray art alone only covers the near part of it. Purely cosmetic, no gameplay effect.
+          if (inActiveWindow && ucfg.sprayFx){
+            const box = ultimateBox(f);
+            for (let i = 0; i < 3; i++){
+              spawnSparks(box.x + Math.random()*box.w, box.y + 20 + Math.random()*(box.h - 30), 1, ucfg.sprayFx);
+            }
+          }
           if (inActiveWindow && !f.ultimateHasHit){
             const box = ultimateBox(f);
             const otherBox = { x: other.x, y: other.y - other.h, w: other.w, h: other.h };
@@ -4305,6 +4392,16 @@ const CLIP_CONFIG = {
       } else if (s.kind === 'dust'){
         ctx.fillStyle = `rgba(195,185,175,${lifeRatio*0.35})`;
         ctx.beginPath(); ctx.arc(x,y, 3+(1-lifeRatio)*5, 0, Math.PI*2); ctx.fill();
+      } else if (s.kind === 'acid'){
+        // Bence's Acid Spit: caustic yellow-green droplets that sag as they fly, drawn along the
+        // whole cone so the (deliberately long) fixed reach of the move is readable on screen.
+        ctx.save();
+        ctx.fillStyle = `rgba(206,226,74,${lifeRatio*0.95})`;
+        ctx.shadowColor = `rgba(180,225,60,${lifeRatio*0.7})`;
+        ctx.shadowBlur = 5;
+        const r = 2 + (1-lifeRatio)*2.4;
+        ctx.beginPath(); ctx.arc(x, y + (s.maxLife-s.life)*0.5, r, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
       } else {
         ctx.strokeStyle = `rgba(255,255,150,${lifeRatio})`;
         ctx.lineWidth = 3;

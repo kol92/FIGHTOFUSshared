@@ -40,6 +40,9 @@ window.ASSETS = {
     },
     "barna": {
       "idle": "assets/characters/barna/base/idle.png"
+    },
+    "bence": {
+      "idle": "assets/characters/bence/base/idle.png"
     }
   },
   "special": {
@@ -142,6 +145,18 @@ window.ASSETS = {
       "ult9": "assets/characters/barna/ultimate/ult9.png",
       "ult10": "assets/characters/barna/ultimate/ult10.png",
       "ult_ball": "assets/characters/barna/ultimate/ult_ball.png"
+    },
+    "bence": {
+      "ult1": "assets/characters/bence/ultimate/ult1.png",
+      "ult2": "assets/characters/bence/ultimate/ult2.png",
+      "ult3": "assets/characters/bence/ultimate/ult3.png",
+      "ult4": "assets/characters/bence/ultimate/ult4.png",
+      "ult5": "assets/characters/bence/ultimate/ult5.png",
+      "ult6": "assets/characters/bence/ultimate/ult6.png",
+      "ult7": "assets/characters/bence/ultimate/ult7.png",
+      "ult8": "assets/characters/bence/ultimate/ult8.png",
+      "ult9": "assets/characters/bence/ultimate/ult9.png",
+      "ult10": "assets/characters/bence/ultimate/ult10.png"
     }
   },
   "enter": {
@@ -192,6 +207,18 @@ window.ASSETS = {
       "enter8": "assets/characters/barna/enter/enter8.png",
       "enter9": "assets/characters/barna/enter/enter9.png",
       "enter10": "assets/characters/barna/enter/enter10.png"
+    },
+    "bence": {
+      "enter1": "assets/characters/bence/enter/enter1.png",
+      "enter2": "assets/characters/bence/enter/enter2.png",
+      "enter3": "assets/characters/bence/enter/enter3.png",
+      "enter4": "assets/characters/bence/enter/enter4.png",
+      "enter5": "assets/characters/bence/enter/enter5.png",
+      "enter6": "assets/characters/bence/enter/enter6.png",
+      "enter7": "assets/characters/bence/enter/enter7.png",
+      "enter8": "assets/characters/bence/enter/enter8.png",
+      "enter9": "assets/characters/bence/enter/enter9.png",
+      "enter10": "assets/characters/bence/enter/enter10.png"
     }
   },
   "combat2": {
@@ -231,6 +258,227 @@ window.ASSETS = {
     }
   },
   "clips": {
+    "bence": {
+      "idle": [
+        "assets/characters/bence/idle/0.png",
+        "assets/characters/bence/idle/1.png",
+        "assets/characters/bence/idle/2.png",
+        "assets/characters/bence/idle/3.png",
+        "assets/characters/bence/idle/4.png",
+        "assets/characters/bence/idle/5.png",
+        "assets/characters/bence/idle/6.png",
+        "assets/characters/bence/idle/7.png"
+      ],
+      "walk": [
+        "assets/characters/bence/walk/0.png",
+        "assets/characters/bence/walk/1.png",
+        "assets/characters/bence/walk/2.png",
+        "assets/characters/bence/walk/3.png",
+        "assets/characters/bence/walk/4.png",
+        "assets/characters/bence/walk/5.png",
+        "assets/characters/bence/walk/6.png",
+        "assets/characters/bence/walk/7.png"
+      ],
+      "run": [
+        "assets/characters/bence/run/0.png",
+        "assets/characters/bence/run/1.png",
+        "assets/characters/bence/run/2.png",
+        "assets/characters/bence/run/3.png",
+        "assets/characters/bence/run/4.png",
+        "assets/characters/bence/run/5.png",
+        "assets/characters/bence/run/6.png",
+        "assets/characters/bence/run/7.png"
+      ],
+      "backwalk": [
+        "assets/characters/bence/backwalk/0.png",
+        "assets/characters/bence/backwalk/1.png",
+        "assets/characters/bence/backwalk/2.png",
+        "assets/characters/bence/backwalk/3.png",
+        "assets/characters/bence/backwalk/4.png",
+        "assets/characters/bence/backwalk/5.png",
+        "assets/characters/bence/backwalk/6.png",
+        "assets/characters/bence/backwalk/7.png"
+      ],
+      "jump": [
+        "assets/characters/bence/jump/0.png",
+        "assets/characters/bence/jump/1.png",
+        "assets/characters/bence/jump/2.png",
+        "assets/characters/bence/jump/3.png",
+        "assets/characters/bence/jump/4.png",
+        "assets/characters/bence/jump/5.png",
+        "assets/characters/bence/jump/6.png",
+        "assets/characters/bence/jump/7.png"
+      ],
+      "crouch": [
+        "assets/characters/bence/crouch/0.png",
+        "assets/characters/bence/crouch/1.png",
+        "assets/characters/bence/crouch/2.png",
+        "assets/characters/bence/crouch/3.png"
+      ],
+      "block": [
+        "assets/characters/bence/block/0.png",
+        "assets/characters/bence/block/1.png",
+        "assets/characters/bence/block/2.png"
+      ],
+      "crouchBlock": [
+        "assets/characters/bence/crouchBlock/0.png",
+        "assets/characters/bence/crouchBlock/1.png",
+        "assets/characters/bence/crouchBlock/2.png"
+      ],
+      "hit": [
+        "assets/characters/bence/hit/0.png",
+        "assets/characters/bence/hit/1.png",
+        "assets/characters/bence/hit/2.png",
+        "assets/characters/bence/hit/3.png",
+        "assets/characters/bence/hit/4.png",
+        "assets/characters/bence/hit/5.png"
+      ],
+      "sweep": [
+        "assets/characters/bence/sweep/0.png",
+        "assets/characters/bence/sweep/1.png",
+        "assets/characters/bence/sweep/2.png",
+        "assets/characters/bence/sweep/3.png",
+        "assets/characters/bence/sweep/4.png",
+        "assets/characters/bence/sweep/5.png",
+        "assets/characters/bence/sweep/6.png",
+        "assets/characters/bence/sweep/7.png"
+      ],
+      "taunt": [
+        "assets/characters/bence/taunt/0.png",
+        "assets/characters/bence/taunt/1.png",
+        "assets/characters/bence/taunt/2.png",
+        "assets/characters/bence/taunt/3.png",
+        "assets/characters/bence/taunt/4.png",
+        "assets/characters/bence/taunt/5.png",
+        "assets/characters/bence/taunt/6.png",
+        "assets/characters/bence/taunt/7.png"
+      ],
+      "getUp": [
+        "assets/characters/bence/getUp/0.png",
+        "assets/characters/bence/getUp/1.png",
+        "assets/characters/bence/getUp/2.png",
+        "assets/characters/bence/getUp/3.png",
+        "assets/characters/bence/getUp/4.png",
+        "assets/characters/bence/getUp/5.png",
+        "assets/characters/bence/getUp/6.png",
+        "assets/characters/bence/getUp/7.png"
+      ],
+      "knockdown": [
+        "assets/characters/bence/knockdown/0.png",
+        "assets/characters/bence/knockdown/1.png",
+        "assets/characters/bence/knockdown/2.png",
+        "assets/characters/bence/knockdown/3.png",
+        "assets/characters/bence/knockdown/4.png",
+        "assets/characters/bence/knockdown/5.png",
+        "assets/characters/bence/knockdown/6.png",
+        "assets/characters/bence/knockdown/7.png"
+      ],
+      "lose": [
+        "assets/characters/bence/lose/0.png",
+        "assets/characters/bence/lose/1.png",
+        "assets/characters/bence/lose/2.png",
+        "assets/characters/bence/lose/3.png",
+        "assets/characters/bence/lose/4.png",
+        "assets/characters/bence/lose/5.png",
+        "assets/characters/bence/lose/6.png",
+        "assets/characters/bence/lose/7.png"
+      ],
+      "win": [
+        "assets/characters/bence/win/0.png",
+        "assets/characters/bence/win/1.png",
+        "assets/characters/bence/win/2.png",
+        "assets/characters/bence/win/3.png",
+        "assets/characters/bence/win/4.png",
+        "assets/characters/bence/win/5.png",
+        "assets/characters/bence/win/6.png",
+        "assets/characters/bence/win/7.png"
+      ],
+      "punch": [
+        "assets/characters/bence/punch/0.png",
+        "assets/characters/bence/punch/1.png",
+        "assets/characters/bence/punch/2.png",
+        "assets/characters/bence/punch/3.png"
+      ],
+      "kick": [
+        "assets/characters/bence/kick/0.png",
+        "assets/characters/bence/kick/1.png",
+        "assets/characters/bence/kick/2.png",
+        "assets/characters/bence/kick/3.png"
+      ],
+      "throw": [
+        "assets/characters/bence/throw/0.png",
+        "assets/characters/bence/throw/1.png",
+        "assets/characters/bence/throw/2.png",
+        "assets/characters/bence/throw/3.png",
+        "assets/characters/bence/throw/4.png",
+        "assets/characters/bence/throw/5.png",
+        "assets/characters/bence/throw/6.png",
+        "assets/characters/bence/throw/7.png",
+        "assets/characters/bence/throw/8.png",
+        "assets/characters/bence/throw/9.png"
+      ],
+      "beingThrown": [
+        "assets/characters/bence/beingThrown/0.png",
+        "assets/characters/bence/beingThrown/1.png",
+        "assets/characters/bence/beingThrown/2.png",
+        "assets/characters/bence/beingThrown/3.png",
+        "assets/characters/bence/beingThrown/4.png",
+        "assets/characters/bence/beingThrown/5.png",
+        "assets/characters/bence/beingThrown/6.png",
+        "assets/characters/bence/beingThrown/7.png",
+        "assets/characters/bence/beingThrown/8.png",
+        "assets/characters/bence/beingThrown/9.png"
+      ],
+      "punch1": [
+        "assets/characters/bence/punch1/0.png",
+        "assets/characters/bence/punch1/1.png",
+        "assets/characters/bence/punch1/2.png",
+        "assets/characters/bence/punch1/3.png"
+      ],
+      "punch2": [
+        "assets/characters/bence/punch2/0.png",
+        "assets/characters/bence/punch2/1.png",
+        "assets/characters/bence/punch2/2.png",
+        "assets/characters/bence/punch2/3.png"
+      ],
+      "punch3": [
+        "assets/characters/bence/punch3/0.png",
+        "assets/characters/bence/punch3/1.png",
+        "assets/characters/bence/punch3/2.png",
+        "assets/characters/bence/punch3/3.png"
+      ],
+      "kick1": [
+        "assets/characters/bence/kick1/0.png",
+        "assets/characters/bence/kick1/1.png",
+        "assets/characters/bence/kick1/2.png",
+        "assets/characters/bence/kick1/3.png"
+      ],
+      "kick2": [
+        "assets/characters/bence/kick2/0.png",
+        "assets/characters/bence/kick2/1.png",
+        "assets/characters/bence/kick2/2.png",
+        "assets/characters/bence/kick2/3.png"
+      ],
+      "kick3": [
+        "assets/characters/bence/kick3/0.png",
+        "assets/characters/bence/kick3/1.png",
+        "assets/characters/bence/kick3/2.png",
+        "assets/characters/bence/kick3/3.png"
+      ],
+      "berserk": [
+        "assets/characters/bence/berserk/0.png",
+        "assets/characters/bence/berserk/1.png",
+        "assets/characters/bence/berserk/2.png",
+        "assets/characters/bence/berserk/3.png",
+        "assets/characters/bence/berserk/4.png",
+        "assets/characters/bence/berserk/5.png",
+        "assets/characters/bence/berserk/6.png",
+        "assets/characters/bence/berserk/7.png",
+        "assets/characters/bence/berserk/8.png",
+        "assets/characters/bence/berserk/9.png",
+        "assets/characters/bence/berserk/10.png"
+      ]
+    },
     "laci": {
       "berserk": [
         "assets/characters/laci/berserk/0.png",
