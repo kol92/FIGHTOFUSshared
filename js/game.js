@@ -854,7 +854,7 @@ const CLIP_CONFIG = {
 
   // ---------- MENU WIRING ----------
   function showPanel(id){
-    ['mainMenu','difficultySelect','charSelect','vsScreen','menu','overlay'].forEach(pid=>{
+    ['splash','mainMenu','difficultySelect','charSelect','vsScreen','menu','overlay'].forEach(pid=>{
       const el = document.getElementById(pid);
       if (pid === 'overlay') return; // overlay is managed separately (only shown on KO/timeout)
       el.style.display = (pid === id) ? 'flex' : 'none';
@@ -872,6 +872,25 @@ const CLIP_CONFIG = {
     b.classList.toggle('show',
       (gameState === 'MAIN_MENU' && mainMenuStep === 'versusSubmenu') ||
       gameState === 'DIFFICULTY_SELECT' || gameState === 'CHARACTER_SELECT' || gameState === 'STAGE_SELECT');
+  }
+
+  // ---------- TITLE / ATTRACT SCREEN ----------
+  // Shown once at launch, before the menu. Any key, tap or gamepad button moves on. It also doubles
+  // as the browser's required "first user gesture", which is the moment audio is allowed to start —
+  // so leaving this screen is exactly where the AudioManager gets unlocked.
+  function enterSplash(){
+    gameState = 'SPLASH';
+    document.body.classList.remove('inMatch');
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('pauseMenu').style.display = 'none';
+    showPanel('splash');
+  }
+  function leaveSplash(){
+    if (gameState !== 'SPLASH') return false;
+    Audio.unlock();
+    Audio.play('uiConfirm');
+    goToMainMenu();
+    return true;
   }
 
   function goToMainMenu(){
@@ -1085,6 +1104,7 @@ const CLIP_CONFIG = {
   // ha lefelé lépve már nincs több feloldott slot, a kurzor a rács alatti RANDOM gombra kerül,
   // onnan felfelé pedig vissza az utoljára kiemelt rács-pozícióra.
   function moveCursor(dx, dy){
+    Audio.play('uiMove');
     if (csCursor === RANDOM_CURSOR_IDX){
       if (dy < 0){ csCursor = csLastGridCursor; } // Fel a RANDOM gombról -> vissza a rácsba
       highlightCharGridCursor();
@@ -1511,6 +1531,7 @@ const CLIP_CONFIG = {
   }
 
   window.addEventListener('keydown', e=>{
+    if (gameState === 'SPLASH'){ leaveSplash(); e.preventDefault(); return; }
     if (gameState === 'FIGHT' && e.key === 'Escape'){ pauseGame(); e.preventDefault(); return; }
     if (gameState !== 'FIGHT'){ handleMenuKeydown(e); return; }
     const action = actionFromKey(e.key);
@@ -1519,6 +1540,9 @@ const CLIP_CONFIG = {
   window.addEventListener('keyup', e=>{
     const action = actionFromKey(e.key);
     if (action){ pressed[action] = false; e.preventDefault(); }
+  });
+  ['pointerdown','touchstart'].forEach(ev=>{
+    window.addEventListener(ev, ()=>{ leaveSplash(); }, {passive:true});
   });
   document.querySelectorAll('.tBtn').forEach(btn=>{
     const action = btn.dataset.key;
@@ -2950,40 +2974,164 @@ const CLIP_CONFIG = {
   // tiny placeholder WebAudio "sound effect" so the ultimate doesn't feel silent — no external
   // audio assets needed, easy to swap out for real sound files later.
   let _audioCtx = null;
+  // ========================================================================
+  // AUDIO MANAGER
+  // One AudioContext, three buses (master -> music / sfx), and a single entry point: Audio.play(id).
+  //
+  // Every sound is SYNTHESISED in code right now (no audio files ship with the game yet), which is
+  // why each entry in SOUNDS is a tiny recipe rather than a URL. When real recordings arrive, give
+  // that entry a `src` instead of a `make` and nothing else in the game has to change — the call
+  // sites stay `Audio.play('hit')`.
+  //
+  // Browsers refuse to start audio until the player interacts, so everything routes through
+  // Audio.unlock(), which the title screen calls on the very first key/tap.
+  // ========================================================================
+  const Audio = (function(){
+    let ctx = null, master = null, musicBus = null, sfxBus = null, unlocked = false;
+    let buffers = {};                 // decoded file sounds (unused until real audio lands)
+    let music = null, musicId = null; // currently looping track
+    const state = { master: 0.8, music: 0.5, sfx: 0.9, muted: false };
+    try {
+      const saved = JSON.parse(localStorage.getItem('fou-audio') || 'null');
+      if (saved) Object.assign(state, saved);
+    } catch(e){}
+    function save(){ try { localStorage.setItem('fou-audio', JSON.stringify(state)); } catch(e){} }
+
+    function ensure(){
+      if (ctx) return ctx;
+      try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      master = ctx.createGain(); master.connect(ctx.destination);
+      musicBus = ctx.createGain(); musicBus.connect(master);
+      sfxBus = ctx.createGain(); sfxBus.connect(master);
+      applyVolumes();
+      return ctx;
+      } catch(e){ ctx = null; return null; }
+    }
+    function applyVolumes(){
+      try {
+      if (!ctx) return;
+      const m = state.muted ? 0 : state.master;
+      master.gain.setTargetAtTime(m, ctx.currentTime, 0.02);
+      musicBus.gain.setTargetAtTime(state.music, ctx.currentTime, 0.02);
+      sfxBus.gain.setTargetAtTime(state.sfx, ctx.currentTime, 0.02);
+      } catch(e){}
+    }
+
+    // ---- tiny synth helpers ----
+    function env(g, t, peak, attack, decay){
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + attack);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+    }
+    function tone(bus, t, {type='sine', f0=440, f1=null, peak=0.3, attack=0.005, decay=0.2}){
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type;
+      o.frequency.setValueAtTime(f0, t);
+      if (f1) o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t + attack + decay);
+      env(g, t, peak, attack, decay);
+      o.connect(g); g.connect(bus);
+      o.start(t); o.stop(t + attack + decay + 0.02);
+    }
+    function noise(bus, t, {peak=0.3, decay=0.2, hp=0, lp=0}){
+      const len = Math.max(1, Math.ceil(ctx.sampleRate * (decay + 0.02)));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i=0;i<len;i++) d[i] = (Math.random()*2-1) * (1 - i/len);
+      const src = ctx.createBufferSource(); src.buffer = buf;
+      let node = src;
+      if (hp){ const f = ctx.createBiquadFilter(); f.type='highpass'; f.frequency.value=hp; node.connect(f); node=f; }
+      if (lp){ const f = ctx.createBiquadFilter(); f.type='lowpass';  f.frequency.value=lp; node.connect(f); node=f; }
+      const g = ctx.createGain(); env(g, t, peak, 0.004, decay);
+      node.connect(g); g.connect(bus);
+      src.start(t);
+    }
+
+    // ---- the sound set. `make(t)` draws one instance at AudioContext time t. ----
+    const SOUNDS = {
+      // --- combat ---
+      hitLight:  { make:(t)=>{ tone(sfxBus,t,{type:'square',f0:220,f1:90,peak:0.22,attack:0.004,decay:0.12});
+                               noise(sfxBus,t,{peak:0.20,decay:0.09,hp:900}); } },
+      hitHeavy:  { make:(t)=>{ tone(sfxBus,t,{type:'square',f0:170,f1:48,peak:0.34,attack:0.005,decay:0.24});
+                               noise(sfxBus,t,{peak:0.30,decay:0.18,hp:500}); } },
+      block:     { make:(t)=>{ tone(sfxBus,t,{type:'triangle',f0:520,f1:300,peak:0.16,attack:0.003,decay:0.09});
+                               noise(sfxBus,t,{peak:0.16,decay:0.07,hp:2200}); } },
+      whiff:     { make:(t)=>  noise(sfxBus,t,{peak:0.11,decay:0.13,hp:700,lp:3200}) },
+      jump:      { make:(t)=>  tone(sfxBus,t,{type:'sine',f0:300,f1:700,peak:0.13,attack:0.01,decay:0.13}) },
+      land:      { make:(t)=>{ tone(sfxBus,t,{type:'sine',f0:150,f1:60,peak:0.16,attack:0.004,decay:0.12});
+                               noise(sfxBus,t,{peak:0.12,decay:0.10,lp:1400}); } },
+      throwGrab: { make:(t)=>{ tone(sfxBus,t,{type:'triangle',f0:260,f1:150,peak:0.20,attack:0.006,decay:0.16}); } },
+      knockdown: { make:(t)=>{ tone(sfxBus,t,{type:'sine',f0:120,f1:45,peak:0.30,attack:0.006,decay:0.34});
+                               noise(sfxBus,t,{peak:0.26,decay:0.28,lp:1100}); } },
+      ko:        { make:(t)=>{ tone(sfxBus,t,{type:'sawtooth',f0:300,f1:60,peak:0.34,attack:0.01,decay:0.75});
+                               noise(sfxBus,t,{peak:0.28,decay:0.55,lp:2000}); } },
+      // --- specials ---
+      berserkReady:{ make:(t)=>{ tone(sfxBus,t,{type:'sine',f0:520,f1:880,peak:0.16,attack:0.02,decay:0.30});
+                                 tone(sfxBus,t+0.08,{type:'sine',f0:780,f1:1240,peak:0.12,attack:0.02,decay:0.26}); } },
+      berserk:   { make:(t)=>{ tone(sfxBus,t,{type:'sawtooth',f0:120,f1:520,peak:0.22,attack:0.05,decay:0.38}); } },
+      ultCharge: { make:(t)=>{ tone(sfxBus,t,{type:'sawtooth',f0:120,f1:640,peak:0.20,attack:0.05,decay:0.42}); } },
+      ultImpact: { make:(t)=>{ tone(sfxBus,t,{type:'square',f0:180,f1:40,peak:0.38,attack:0.005,decay:0.32});
+                               noise(sfxBus,t,{peak:0.32,decay:0.26,lp:2600}); } },
+      heal:      { make:(t)=>{ tone(sfxBus,t,{type:'sine',f0:520,f1:900,peak:0.13,attack:0.04,decay:0.36});
+                               tone(sfxBus,t+0.12,{type:'sine',f0:660,f1:1180,peak:0.10,attack:0.04,decay:0.34}); } },
+      // --- flow / UI ---
+      countdown: { make:(t)=>  tone(sfxBus,t,{type:'square',f0:660,peak:0.16,attack:0.005,decay:0.16}) },
+      fight:     { make:(t)=>{ tone(sfxBus,t,{type:'square',f0:520,peak:0.22,attack:0.006,decay:0.22});
+                               tone(sfxBus,t+0.10,{type:'square',f0:880,peak:0.22,attack:0.006,decay:0.32}); } },
+      roundWin:  { make:(t)=>{ [523,659,784].forEach((f,i)=> tone(sfxBus,t+i*0.10,{type:'triangle',f0:f,peak:0.18,attack:0.01,decay:0.26})); } },
+      matchWin:  { make:(t)=>{ [523,659,784,1047].forEach((f,i)=> tone(sfxBus,t+i*0.12,{type:'triangle',f0:f,peak:0.20,attack:0.01,decay:0.40})); } },
+      uiMove:    { make:(t)=>  tone(sfxBus,t,{type:'triangle',f0:440,peak:0.10,attack:0.003,decay:0.07}) },
+      uiConfirm: { make:(t)=>{ tone(sfxBus,t,{type:'triangle',f0:600,peak:0.14,attack:0.004,decay:0.10});
+                               tone(sfxBus,t+0.06,{type:'triangle',f0:900,peak:0.12,attack:0.004,decay:0.12}); } },
+      uiBack:    { make:(t)=>  tone(sfxBus,t,{type:'triangle',f0:400,f1:240,peak:0.12,attack:0.004,decay:0.12}) },
+    };
+
+    // per-sound throttle so a burst of identical events (many sparks in one frame) can't stack
+    // into a distorted blast — a real problem with synthesised audio.
+    const lastAt = {};
+    function play(id, opts){
+      // Audio is cosmetic: nothing in here may ever break gameplay, so the WHOLE call is guarded —
+      // not just the synth step. (A missing/!broken AudioContext used to be able to throw while
+      // simply reading currentTime.)
+      try {
+        if (!unlocked || state.muted) return;
+        const def = SOUNDS[id]; if (!def || !ensure()) return;
+        const now = Number(ctx.currentTime);
+        if (!isFinite(now)) return;
+        const gap = (opts && opts.minGap != null) ? opts.minGap : 0.045;
+        if (lastAt[id] != null && now - lastAt[id] < gap) return;
+        lastAt[id] = now;
+        def.make(now + 0.001);
+      } catch(e){ /* no audio available — carry on silently */ }
+    }
+
+    function unlock(){
+      try {
+        if (unlocked) return;
+        if (!ensure()) return;
+        if (ctx.state === 'suspended') ctx.resume();
+        unlocked = true;
+      } catch(e){ /* audio unavailable — the game runs fine muted */ }
+    }
+    return {
+      unlock, play,
+      isUnlocked: ()=>unlocked,
+      get: ()=>({...state}),
+      set(k, v){
+        if (k === 'muted') state.muted = !!v; else state[k] = Math.max(0, Math.min(1, v));
+        applyVolumes(); save();
+      },
+      toggleMute(){ state.muted = !state.muted; applyVolumes(); save(); return state.muted; },
+      _sounds: SOUNDS,
+    };
+  })();
+
+  // Kept as a thin alias so the existing ultimate/berserk call sites keep working; the actual
+  // synthesis now lives in the AudioManager above.
   function playUltSound(kind){
-    try{
-      if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (_audioCtx.state === 'suspended') _audioCtx.resume();
-      const ctx2 = _audioCtx;
-      const now = ctx2.currentTime;
-      if (kind === 'charge'){
-        const osc = ctx2.createOscillator(), gain = ctx2.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(120, now);
-        osc.frequency.exponentialRampToValueAtTime(520, now+0.35);
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(0.18, now+0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now+0.38);
-        osc.connect(gain); gain.connect(ctx2.destination);
-        osc.start(now); osc.stop(now+0.4);
-      } else if (kind === 'impact'){
-        const osc = ctx2.createOscillator(), gain = ctx2.createGain();
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(180, now);
-        osc.frequency.exponentialRampToValueAtTime(40, now+0.25);
-        gain.gain.setValueAtTime(0.35, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now+0.3);
-        osc.connect(gain); gain.connect(ctx2.destination);
-        osc.start(now); osc.stop(now+0.3);
-        const noiseBuf = ctx2.createBuffer(1, ctx2.sampleRate*0.15, ctx2.sampleRate);
-        const data = noiseBuf.getChannelData(0);
-        for (let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * (1 - i/data.length);
-        const noise = ctx2.createBufferSource(); noise.buffer = noiseBuf;
-        const ngain = ctx2.createGain(); ngain.gain.setValueAtTime(0.25, now);
-        noise.connect(ngain); ngain.connect(ctx2.destination);
-        noise.start(now);
-      }
-    }catch(e){ /* audio not available — silently skip, purely cosmetic */ }
+    Audio.play(kind === 'charge' ? 'ultCharge' : 'ultImpact');
   }
   function rectsOverlap(a,b){
     return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
@@ -3214,6 +3362,7 @@ const CLIP_CONFIG = {
     // A Berserk Move can opt out of the generic red "BERSERK!" shout with its own line — Milo's heal
     // is not a rage move, so it announces the medicine instead.
     banner(cfg.banner || `${charName(f.charId)} BERSERK! 🔥`, 55);
+    Audio.play('berserk');
     playUltSound('charge');
     return true;
   }
@@ -3246,7 +3395,7 @@ const CLIP_CONFIG = {
         if (give > 0){
           f.hp = Math.min(f.maxHp, f.hp + give);
           f.berserkHealed = want;
-          if (Math.random() < 0.10) spawnSparks(f.x + f.w/2, f.y - 70, 1, 'heal');
+          if (Math.random() < 0.10){ spawnSparks(f.x + f.w/2, f.y - 70, 1, 'heal'); Audio.play('heal', {minGap:0.35}); }
         }
       }
     } else if (cfg.kind === 'charge'){
@@ -3296,6 +3445,7 @@ const CLIP_CONFIG = {
           const sparkX = other.x + other.w/2, sparkY = other.y - 90;
           const blocked = resolveGuardOutcome(other, cfg.hitCfg.atkType);
           if (blocked){
+            Audio.play('block');
             other.blockStunTimer = cfg.hitCfg.blockStun;
             other.vx += f.facing * 3;
             resetCombo(other);
@@ -3483,7 +3633,7 @@ const CLIP_CONFIG = {
         if (input.left){ f.vx = -MOVE_SPEED*speedMul; }
         else if (input.right){ f.vx = MOVE_SPEED*speedMul; }
         else { f.vx *= Math.pow(0.75, dtScale); }
-        if (input.up && f.onGround){ f.vy = JUMP_V; f.onGround = false; }
+        if (input.up && f.onGround){ f.vy = JUMP_V; f.onGround = false; Audio.play('jump'); }
       } else {
         f.vx *= Math.pow(0.8, dtScale);
         f.movingBack = false;
@@ -3579,7 +3729,7 @@ const CLIP_CONFIG = {
     f.vy += GRAVITY*dtScale;
     f.x += f.vx*dtScale;
     f.y += f.vy*dtScale;
-    if (f.y >= GROUND_Y){ f.y = GROUND_Y; f.vy = 0; f.onGround = true; }
+    if (f.y >= GROUND_Y){ if (!f.onGround && f.vy > 6) Audio.play('land'); f.y = GROUND_Y; f.vy = 0; f.onGround = true; }
     f.x = Math.max(10, Math.min(W - f.w - 10, f.x));
 
     // ---- Back Throw: folyamatos, íves pozícióváltás (NEM teleport) ----
@@ -3622,6 +3772,7 @@ const CLIP_CONFIG = {
           const atkType = cfg.atkType || 'high';
           const blocked = resolveGuardOutcome(other, atkType);
           if (blocked){
+            Audio.play('block');
             // blokkolás: Block Stun — az ellenfél rövid ideig nem tud azonnal visszaütni, de a
             // kombó a támadó oldalán MEHET tovább (Hit Confirm = blokkolt találat is számít), a
             // védekező oldalán viszont a saját (ha lett volna) kombója megszakad
@@ -3639,6 +3790,7 @@ const CLIP_CONFIG = {
             let dmg = cfg.dmg;
             if (f.berserkActive > 0) dmg *= 1.6;
             other.knockdownTimer = KNOCKDOWN_FRAMES;
+            Audio.play('knockdown');
             other.knockdownSkipFall = false; // valódi ütés-eredetű Knockdown -- a teljes esés-animáció lejátszandó
             other.vx = f.facing * KNOCKDOWN_PUSH;
             other.vy = -4;
@@ -3669,6 +3821,7 @@ const CLIP_CONFIG = {
               f.vx = -f.facing * ATTACKER_SEPARATION;
             } else {
               // Hit Stun: minden ütéshez saját (a hit config-ban megadott) bénulás-érték tartozik
+              Audio.play(cfg.dmg >= 12 ? 'hitHeavy' : 'hitLight');
               other.staggerTimer = Math.max(other.staggerTimer, cfg.hitStun);
               resetCombo(other);
               // Pushback: minden találat jobban eltolja az ellenfelet, hosszú kombó végén már távol kerülnek
@@ -3791,6 +3944,12 @@ const CLIP_CONFIG = {
     // (manaMs drops back to 0 the instant it's spent, so the class clears itself). See .specFill.berserkReady.
     specEl1.classList.toggle('berserkReady', p1.manaMs >= p1.manaFillMs);
     specEl2.classList.toggle('berserkReady', p2.manaMs >= p2.manaFillMs);
+    // one-shot chime the moment a bar tops up (re-arms once it is spent again)
+    [p1, p2].forEach(f => {
+      const full = f.manaMs >= f.manaFillMs;
+      if (full && !f._berserkAnnounced){ f._berserkAnnounced = true; Audio.play('berserkReady'); }
+      if (!full) f._berserkAnnounced = false;
+    });
     updateUltHud(p1, 'ultIconP1');
     updateUltHud(p2, 'ultIconP2');
     updateComboCounterUI(p1, 'comboCounterP1');
@@ -3881,6 +4040,7 @@ const CLIP_CONFIG = {
     function el(){ return document.getElementById('countdownDisplay'); }
     function show(text){
       const e = el();
+      Audio.play(text === 'FIGHT!' ? 'fight' : 'countdown');
       e.textContent = text;
       e.classList.remove('show');
       void e.offsetWidth; // force a reflow so the pop-in transition restarts on every single step
@@ -3916,6 +4076,7 @@ const CLIP_CONFIG = {
     let active = false, timer = 0, winnerKey = null, matchOver = false;
 
     function start(wKey, isMatchOver){
+      Audio.play(isMatchOver ? 'matchWin' : 'roundWin');
       active = true; timer = HOLD_MS; winnerKey = wKey; matchOver = isMatchOver;
     }
     function update(dt){
@@ -4597,6 +4758,33 @@ const CLIP_CONFIG = {
 
   GamepadManager.init();
   goToMainMenu();
+  // ---- audio settings UI (pause menu) ----
+  (function wireAudioUI(){
+    const ids = { volMaster:'master', volSfx:'sfx', volMusic:'music' };
+    Object.entries(ids).forEach(([elId, key])=>{
+      const el = document.getElementById(elId); if (!el) return;
+      el.value = Math.round(Audio.get()[key] * 100);
+      el.addEventListener('input', ()=>{
+        Audio.unlock();
+        Audio.set(key, el.value / 100);
+        if (key !== 'music') Audio.play('uiMove', {minGap: 0.12});
+      });
+    });
+    const mute = document.getElementById('muteBtn');
+    if (mute){
+      const sync = ()=>{
+        const m = Audio.get().muted;
+        mute.classList.toggle('on', m);
+        mute.textContent = m ? 'NÉMÍTVA' : 'NÉMÍTÁS';
+      };
+      sync();
+      mute.addEventListener('click', ()=>{ Audio.unlock(); Audio.toggleMute(); sync(); });
+    }
+  })();
+
+  // The game opens on the title screen; the first key/tap there both dismisses it and unlocks audio.
+  enterSplash();
+
   requestAnimationFrame(loop);
 })();
 

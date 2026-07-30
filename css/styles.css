@@ -555,3 +555,52 @@
     body.fighting #touchLayer { display: block; }
     #controlsHint { display: none; }
   }
+
+  /* ---------- TITLE / ATTRACT SCREEN ---------- */
+  /* The artwork already contains the wordmark and the "PRESS ANY KEY" line, so instead of
+     overlaying new text we re-draw the same image clipped to those two regions and blend it
+     additively. Pulsing that copy's opacity makes the baked-in art itself glow. */
+  #splash { padding: 0; background: #06040c; overflow: hidden; }
+  #splashArt, .splashGlow {
+    position: absolute; inset: 0;
+    background: url(../assets/ui/introscreen.jpg) center/cover no-repeat;
+    pointer-events: none;
+  }
+  /* very slow push-in so the still image breathes instead of sitting dead */
+  #splashArt { animation: splashDrift 24s ease-in-out infinite alternate; }
+  .splashGlow { mix-blend-mode: screen; will-change: opacity, transform; }
+  /* the FIGHT OF US wordmark */
+  #splashLogoGlow {
+    clip-path: inset(37% 32% 36% 28%);
+    animation: splashDrift 24s ease-in-out infinite alternate, logoBreathe 3.4s ease-in-out infinite;
+  }
+  /* the PRESS ANY KEY line */
+  #splashKeyGlow {
+    clip-path: inset(86% 28% 2% 28%);
+    animation: splashDrift 24s ease-in-out infinite alternate, keyPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes splashDrift { from { transform: scale(1); } to { transform: scale(1.045); } }
+  @keyframes logoBreathe { 0%,100% { opacity: 0.10; } 50% { opacity: 0.46; } }
+  /* pulse + a sub-pixel shiver so the prompt reads as "alive" without being twitchy */
+  @keyframes keyPulse {
+    0%,100% { opacity: 0.05; transform: scale(1) translate(0,0); }
+    45%     { opacity: 0.60; transform: scale(1) translate(0.7px,-0.5px); }
+    55%     { opacity: 0.55; transform: scale(1) translate(-0.6px,0.4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #splashArt, .splashGlow { animation: none; }
+    #splashKeyGlow { opacity: 0.4; }
+  }
+
+  /* ---------- AUDIO SETTINGS (pause menu) ---------- */
+  .audioPanel {
+    display: flex; flex-direction: column; gap: 6px;
+    margin: 10px auto 4px; padding: 10px 14px; max-width: 320px; width: 100%;
+    border: 1px solid rgba(255,95,216,0.35); border-radius: 10px;
+    background: rgba(20,10,32,0.55);
+  }
+  .audioRow { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 1px; }
+  .audioRow span { flex: 0 0 92px; text-align: left; opacity: 0.85; }
+  .audioRow input[type=range] { flex: 1; accent-color: #ff5fd8; height: 18px; }
+  .audioMuteBtn { margin-top: 4px; font-size: 12px; padding: 6px 10px; }
+  .audioMuteBtn.on { background: rgba(255,95,216,0.28); border-color: #ff5fd8; }

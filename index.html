@@ -81,6 +81,16 @@
     <div id="banner"></div>
     <div id="countdownDisplay"></div>
 
+    <!-- Title/attract screen: the first thing shown on launch. Any key/tap/gamepad button
+         moves on to the main menu (see SPLASH handling in js/game.js). The logo and the
+         "PRESS ANY KEY" line are baked into the artwork, so they are brought to life by
+         re-drawing the SAME image on top, clipped to just those two regions and blended
+         additively with a pulsing opacity -- no separate assets needed. -->
+    <div id="splash" class="panel">
+      <div id="splashArt"></div>
+      <div id="splashLogoGlow" class="splashGlow"></div>
+      <div id="splashKeyGlow" class="splashGlow"></div>
+    </div>
     <div id="mainMenu" class="panel">
       <div id="modeListView">
         <p class="mainMenuSub">Válassz játékmódot</p>
@@ -195,6 +205,15 @@
           <button class="pauseBtn" data-action="restart" id="pauseRestartBtn">ÚJRAINDÍTÁS</button>
           <button class="pauseBtn" data-action="cpuBehavior" id="pauseCpuBehaviorBtn" style="display:none;">CPU VISELKEDÉS</button>
           <button class="pauseBtn" data-action="quit" id="pauseQuitBtn">KILÉPÉS A FŐMENÜBE</button>
+        </div>
+        <div class="audioPanel">
+          <label class="audioRow"><span>HANGERŐ</span>
+            <input type="range" id="volMaster" min="0" max="100" step="1"></label>
+          <label class="audioRow"><span>HANGHATÁSOK</span>
+            <input type="range" id="volSfx" min="0" max="100" step="1"></label>
+          <label class="audioRow"><span>ZENE</span>
+            <input type="range" id="volMusic" min="0" max="100" step="1"></label>
+          <button class="pauseBtn audioMuteBtn" id="muteBtn">NÉMÍTÁS</button>
         </div>
         <p class="hintSmall">Esc: folytatás &nbsp;•&nbsp; ↑/↓: navigálás &nbsp;•&nbsp; Enter: választás &nbsp;•&nbsp; egér is működik</p>
       </div>
